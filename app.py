@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify
-from script import verificar_ips_sem_uso
+from ip_operations import verificar_ips
 import time
 app = Flask(__name__)
 
@@ -9,7 +9,8 @@ def index():
 
 @app.route('/api/ip-status')
 def ip_status():
-    check_ip = verificar_ips_sem_uso()
+    rede_base = '172.17.86.'
+    check_ip = verificar_ips(rede_base)
     return jsonify(check_ip)
 
 if __name__ == '__main__': 
