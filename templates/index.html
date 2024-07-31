@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Status</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>IP</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="ipTableBody">
+        </tbody>
+    </table>
+
+    <script>
+        // Fetch the IP status list from the Flask endpoint and populate the table
+        fetch('/api/ip-status')
+            .then(response => response.json())
+            .then(data => populateTable(data));
+
+        // Function to populate the table
+        function populateTable(ipStatusList) {
+            const tbody = document.getElementById('ipTableBody');
+            
+            ipStatusList.forEach(item => {
+            const row = document.createElement('tr');
+
+            const ipCell = document.createElement('td');
+            ipCell.textContent = item.ip;
+            row.appendChild(ipCell);
+
+            const statusCell = document.createElement('td');
+            const circle = document.createElement('span');
+            circle.classList.add('circle', item.status === 'on' ? 'green' : 'red');
+            statusCell.appendChild(circle);
+            row.appendChild(statusCell);
+
+            tbody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
