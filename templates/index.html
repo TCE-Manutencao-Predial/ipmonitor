@@ -19,31 +19,43 @@
     </table>
 
     <script>
-        // Fetch the IP status list from the Flask endpoint and populate the table
-        fetch('/api/ip-status')
-            .then(response => response.json())
-            .then(data => populateTable(data));
+        async function fetchIpStatus(){
 
-        // Function to populate the table
-        function populateTable(ipStatusList) {
-            const tbody = document.getElementById('ipTableBody');
-            
-            ipStatusList.forEach(item => {
-            const row = document.createElement('tr');
+            const response = await fetch('/api/ip-status');
 
-            const ipCell = document.createElement('td');
-            ipCell.textContent = item.ip;
-            row.appendChild(ipCell);
+            if(response.status !== 200){
+                console.error('Falhou para obter os dados dos IPs');
+                setTimeout(fetchIpStatus, 5000);
+                return;
+            }
+            else{
+                const data = await response.json();
+                const tbody = document.getElementById('ipTableBody');
+                tbody.innerHTML = '';  // Limpa a tabela antes de inserir novos elementos
 
-            const statusCell = document.createElement('td');
-            const circle = document.createElement('span');
-            circle.classList.add('circle', item.status === 'on' ? 'green' : 'red');
-            statusCell.appendChild(circle);
-            row.appendChild(statusCell);
+                data.forEach(item => {
+                    if(item.status ==='off'){ 
+                        const row = document.createElement('tr');
+                        const ipCell = document.createElement('td');
 
-            tbody.appendChild(row);
-            });
+                        ipCell.textContent = item.ip;
+                        row.appendChild(ipCell);
+
+                        const statusCell = document.createElement('td');
+                        const circle = document.createElement('span');
+                        circle.classList.add('circle','red');
+                        statusCell.appendChild(circle);
+                        row.appendChild(statusCell);
+
+                        tbody.appendChild(row);
+                    }
+                });
+            }
         }
+        // atualiza a tabela a cada 5 minutos
+        setInterval(fetchIpStatus, 300000);
+        fetchIpStatus();  // Chama a função pela primeira vez
+        
     </script>
 </body>
 </html>
