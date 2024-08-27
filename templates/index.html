@@ -12,11 +12,16 @@
             <tr>
                 <th>IP</th>
                 <th>Status</th>
+                <th>IP</th>
+                <th>Status</th>
+                <th>IP</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody id="ipTableBody">
         </tbody>
     </table>
+    
 
     <script>
         async function fetchIpStatus(){
@@ -33,27 +38,30 @@
                 const tbody = document.getElementById('ipTableBody');
                 tbody.innerHTML = '';  // Limpa a tabela antes de inserir novos elementos
 
-                data.forEach(item => {
-                    if(item.status ==='off'){ 
-                        const row = document.createElement('tr');
+                for (let i = 0; i < data.length; i += 3) {
+                    const row = document.createElement('tr');
+
+                    for (let j = 0; j < 3; j++) {
                         const ipCell = document.createElement('td');
-
-                        ipCell.textContent = item.ip;
-                        row.appendChild(ipCell);
-
                         const statusCell = document.createElement('td');
                         const circle = document.createElement('span');
-                        circle.classList.add('circle','red');
-                        statusCell.appendChild(circle);
-                        row.appendChild(statusCell);
 
-                        tbody.appendChild(row);
+                        if (data[i + j]) {
+                            ipCell.textContent = data[i + j].ip;
+                            circle.classList.add('circle','red');
+                        }
+
+                        statusCell.appendChild(circle);
+                        row.appendChild(ipCell);
+                        row.appendChild(statusCell);
                     }
-                });
+
+                    tbody.appendChild(row);
+                }
             }
         }
-        // atualiza a tabela a cada 5 minutos
-        setInterval(fetchIpStatus, 300000);
+        // atualiza a tabela a cada 30s
+        setInterval(fetchIpStatus, 30000);
         fetchIpStatus();  // Chama a função pela primeira vez
         
     </script>
