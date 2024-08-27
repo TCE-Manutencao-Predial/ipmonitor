@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, make_response
 from ip_operations import verificar_ips
 import time
 import threading
@@ -28,7 +28,7 @@ def index():
 @app.route('/api/ip-status')
 def ip_status():
     if not check_ip:
-        return 204
+        return make_response('Lista vazia',204)
     return jsonify(check_ip)
 
 if __name__ == '__main__':
