@@ -22,6 +22,7 @@
         </tbody>
     </table>
     
+    <div id="mensagem_preliminar" class="center" >Aguardando obtenção de dados...</div>
 
     <script>
         async function fetchIpStatus(){
@@ -34,6 +35,8 @@
                 return;
             }
             else{
+                mensagem_preliminar.textContent = ``;
+                
                 const data = await response.json();
                 const tbody = document.getElementById('ipTableBody');
                 tbody.innerHTML = '';  // Limpa a tabela antes de inserir novos elementos
