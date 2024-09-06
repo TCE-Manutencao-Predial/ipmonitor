@@ -7,6 +7,18 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    <div>
+        <label for="vlanSelect">Select VLAN:</label>
+        <select id="vlanSelect">
+            <option value="80">VLAN 80</option>
+            <option value="85">VLAN 85</option>
+            <option value="86">VLAN 86</option>
+            <option value="200">VLAN 200</option>
+            <option value="204">VLAN 204</option>
+        </select>
+        <button onclick="searchByVlan()">Search</button>
+    </div>
+
     <table>
         <thead>
             <tr>
@@ -27,6 +39,7 @@
     <script>
         async function fetchIpStatus(){
 
+            
             const response = await fetch('/api/ip-status');
 
             if(response.status !== 200){
@@ -63,9 +76,22 @@
                 }
             }
         }
+        function searchByVlan() {
+            const vlanSelect = document.getElementById('vlanSelect');
+            const vlan = encodeURIComponent(vlanSelect.value);  
+            const start_search = fetch(`/start-check/${vlan}`)
+            if(start_search.status = 200)
+                fetchIpStatus();
+    
+        }
         // atualiza a tabela a cada 30s
-        setInterval(fetchIpStatus, 30000);
-        fetchIpStatus();  // Chama a função pela primeira vez
+        const vlanSelect = document.getElementById('vlanSelect');
+        const selectedVlan = vlanSelect.value;
+        if(selectedVlan !== '')
+            setInterval(fetchIpStatus, 30000);
+        
+        
+        
         
     </script>
 </body>

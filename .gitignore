@@ -9,5 +9,3 @@ htmlcov/
 .tox/
 docs/_build/
 .vscode
-__pycache__/app.cpython-312.pyc
-__pycache__/script.cpython-312.pyc
