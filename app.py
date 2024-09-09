@@ -30,8 +30,10 @@ def ip_status():
 
 @app.route('/start-check/<string:vlan>', methods=['GET'])
 def check(vlan):
-    global background_thread, stop_event
+    global background_thread, stop_event, check_ip
 
+    check_ip = []
+    
     # Acaba com a thread anterior se estiver rodando
     if background_thread and background_thread.is_alive():
         stop_event.set()  

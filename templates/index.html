@@ -80,6 +80,12 @@
             const vlanSelect = document.getElementById('vlanSelect');
             const vlan = encodeURIComponent(vlanSelect.value);  
             const start_search = fetch(`/start-check/${vlan}`)
+            const tbody = document.getElementById('ipTableBody');
+            tbody.innerHTML = '';
+            const text = documento.getElementById('mensagem_preliminar')
+            text.textContent = `Aguardando obtenção de dados...`;
+            
+            
             if(start_search.status = 200)
                 fetchIpStatus();
     
