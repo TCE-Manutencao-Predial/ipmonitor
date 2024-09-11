@@ -17,7 +17,7 @@ def verificar_ips(rede_base: str):
     ip_checked = {ip: "on" for ip in ip_list}
 
     def verificar_ip(ip):
-        if ping(ip, timeout=63): 
+        if ping(ip, timeout=5): 
             ip_status_dict[ip].append("on")
         
     with concurrent.futures.ThreadPoolExecutor(max_workers=255) as executor:

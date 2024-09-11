@@ -77,25 +77,29 @@
                 }
             }
         }
+
+        document.getElementById("vlanSelect").addEventListener("change", function() {
+            localStorage.setItem("selectedOption", this.value);
+        });
+
+        // When the page loads, retrieve and set the selected option from localStorage
+        window.onload = function() {
+            const savedOption = localStorage.getItem("selectedOption");
+            if (savedOption) {
+                document.getElementById("vlanSelect").value = savedOption;
+            }
+        };
         function searchByVlan() {
             const vlanSelect = document.getElementById('vlanSelect');
             const vlan = encodeURIComponent(vlanSelect.value);  
             const start_search = fetch(`/start-check/${vlan}`)
-            const tbody = document.getElementById('ipTableBody');
-            tbody.innerHTML = '';
-            const text = documento.getElementById('mensagem_preliminar')
-            text.textContent = `Aguardando obtenção de dados...`;
-            
             
             if(start_search.status = 200)
                 fetchIpStatus();
-    
+                location.reload();
         }
-        // atualiza a tabela a cada 30s
-        const vlanSelect = document.getElementById('vlanSelect');
-        const selectedVlan = vlanSelect.value;
-        if(selectedVlan !== '')
-            setInterval(fetchIpStatus, 30000);
+        
+        setInterval(fetchIpStatus, 30000);
         
         
         
