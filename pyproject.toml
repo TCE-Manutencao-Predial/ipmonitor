@@ -1,0 +1,12 @@
+[project]
+name = "ipmonitor"
+version = "1.0.0"
+description = "Web app for monitoring IP"
+readme = "README.md"
+dependencies = [
+    "flask",
+]
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"
