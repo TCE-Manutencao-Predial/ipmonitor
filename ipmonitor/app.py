@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, make_response, request
-from ip_operations import verificar_ips
+from .ip_operations import verificar_ips
 import time
 import threading
 
