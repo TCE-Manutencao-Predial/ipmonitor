@@ -12,6 +12,8 @@ dependencies = [
     "MarkupSafe==2.1.5",
     "ping3==4.0.8",
     "Werkzeug==3.0.3",
+    "python-dotenv==1.0.1",
+    "waitress==3.0.0",
 ]
 
 [build-system]
