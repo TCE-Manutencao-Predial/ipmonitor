@@ -1,9 +1,9 @@
 from flask import Flask, render_template, jsonify, make_response, request
-from .ip_operations import verificar_ips
+from ipmonitor import ip_operations
 import time
 import threading
+from ipmonitor import app
 
-app = Flask(__name__)
 
 check_ip = []
 background_thread = None
@@ -15,7 +15,7 @@ def background_ip_check(vlan):
     rede_base = '172.17.' + vlan + '.'
 
     while not stop_event.is_set():  # Usa o evento de parada para verificar se a thread deve parar
-        check_ip = verificar_ips(rede_base)
+        check_ip = ip_operations.verificar_ips(rede_base)
         stop_event.wait(30) 
 
 @app.route('/')

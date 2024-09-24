@@ -1,12 +1,19 @@
 [project]
-name = "Ipmonitor"
+name = "ipmonitor"
 version = "1.0.0"
 description = "Web app for monitoring IP"
-readme = "README.md"
 dependencies = [
-    "flask",
+    "blinker==1.8.2",
+    "click==8.1.7",
+    "colorama==0.4.6",
+    "Flask==3.0.3",
+    "itsdangerous==2.2.0",
+    "Jinja2==3.1.4",
+    "MarkupSafe==2.1.5",
+    "ping3==4.0.8",
+    "Werkzeug==3.0.3",
 ]
 
 [build-system]
-requires = ["flit_core<4"]
+requires = ["flit_core<4","setuptools", "wheel"]
 build-backend = "flit_core.buildapi"
