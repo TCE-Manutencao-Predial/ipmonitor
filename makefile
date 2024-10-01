@@ -12,7 +12,7 @@ setup:
 
 # Executa o projeto
 run:
-	./.venv/bin/waitress-serve --host 127.0.0.1 --port 8000 ipmonitor:app
+	./.venv/bin/waitress-serve --host 127.0.0.1 --port 8000 config:app
 
 
 # Apaga a venv

@@ -1,5 +1,5 @@
 [project]
-name = "ipmonitor"
+name = "config"
 version = "1.0.0"
 description = "Web app for monitoring IP"
 dependencies = [
