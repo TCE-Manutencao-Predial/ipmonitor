@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IP Status</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
     <div>
@@ -41,7 +41,7 @@
         async function fetchIpStatus(){
 
             
-            const response = await fetch('/api/ip-status');
+            const response = await fetch('api/ip-status');
 
             if(response.status !== 200){
                 console.error('Falhou para obter os dados dos IPs');
@@ -92,7 +92,7 @@
         function searchByVlan() {
             const vlanSelect = document.getElementById('vlanSelect');
             const vlan = encodeURIComponent(vlanSelect.value);  
-            const start_search = fetch(`/start-check/${vlan}`)
+            const start_search = fetch(`start-check/${vlan}`)
             
             if(start_search.status = 200)
                 fetchIpStatus();

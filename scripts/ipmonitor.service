@@ -1,0 +1,12 @@
+[Unit]
+Description=Ipmonitor API
+
+[Service]
+User=root
+WorkingDirectory=/var/softwaresTCE/ipmonitor
+ExecStart=/var/softwaresTCE/ipmonitor/scripts/run.sh
+Restart=always
+RestartSec=9
+
+[Install]
+WantedBy=multi-user.target

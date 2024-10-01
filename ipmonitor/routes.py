@@ -9,6 +9,8 @@ check_ip = []
 background_thread = None
 stop_event = threading.Event()
 
+RAIZ = '/ipmonitor'
+
 # Rotina background para verificar os IPs
 def background_ip_check(vlan):
     global check_ip
@@ -18,17 +20,17 @@ def background_ip_check(vlan):
         check_ip = ip_operations.verificar_ips(rede_base)
         stop_event.wait(30) 
 
-@app.route('/')
+@app.route(RAIZ + '/')
 def index():
     return render_template('index.html')
 
-@app.route('/api/ip-status')
+@app.route(RAIZ + '/api/ip-status')
 def ip_status():
     if not check_ip:
         return make_response('Lista vazia', 204)
     return jsonify(check_ip)
 
-@app.route('/start-check/<string:vlan>', methods=['GET'])
+@app.route(RAIZ + '/start-check/<string:vlan>', methods=['GET'])
 def check(vlan):
     global background_thread, stop_event, check_ip
 
