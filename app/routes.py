@@ -30,7 +30,7 @@ def ip_status():
         return make_response('Lista vazia', 204)
     return jsonify(check_ip)
 
-@app.route(RAIZ + '/start-check/<string:vlan>', methods=['GET'])
+@app.route(RAIZ + '/api/start-check/<string:vlan>', methods=['GET'])
 def check(vlan):
     global background_thread, stop_event, check_ip
 
