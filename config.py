@@ -1,1 +1,1 @@
-from ipmonitor import app
+from app import app
