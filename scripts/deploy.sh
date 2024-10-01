@@ -25,8 +25,8 @@ GIT_REPO_LINK="https://github.com/wilsoncf/$GIT_REPO_NAME.git"
 
 # Copiar o frontend para o diretório reconhecido pelo apache.
 sudo mkdir -p $ROOT_FRONTEND
-sudo cp "ipmonitor/templates/index.html" $ROOT_FRONTEND"/index.html"
-sudo cp -r "ipmonitor/static" $ROOT_FRONTEND"/static"
+sudo cp "app/templates/index.html" $ROOT_FRONTEND"/index.html"
+sudo cp -r "app/static" $ROOT_FRONTEND"/static"
 
 # Baixar uma cópia do repositório e mover para o diretório do backend
 sudo mkdir -p $ROOT_SOFTWARES
