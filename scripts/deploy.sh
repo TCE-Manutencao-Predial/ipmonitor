@@ -39,3 +39,5 @@ sudo cp scripts/$SERVICE_NAME /usr/lib/systemd/system/$SERVICE_NAME
 # Realizar o setup no projeto
 cd $ROOT_BACKEND
 make setup
+
+sudo chmod +x $ROOT_BACKEND/scripts/run.sh
