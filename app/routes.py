@@ -20,16 +20,22 @@ def background_ip_check(vlan):
         check_ip = ip_operations.verificar_ips(rede_base)
         stop_event.wait(30) 
 
+
+'''API ENDPOINTS'''        
+
+@app.route('/') # Para rodar localmente
 @app.route(RAIZ + '/')
 def index():
     return render_template('index.html')
 
+@app.route('/api/ip-status') # Para rodar localmente
 @app.route(RAIZ + '/api/ip-status')
 def ip_status():
     if not check_ip:
         return make_response('Lista vazia', 204)
     return jsonify(check_ip)
 
+@app.route('/api/start-check/<string:vlan>', methods=['GET']) # Para rodar localmente
 @app.route(RAIZ + '/api/start-check/<string:vlan>', methods=['GET'])
 def check(vlan):
     global background_thread, stop_event, check_ip

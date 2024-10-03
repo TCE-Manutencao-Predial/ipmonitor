@@ -1,6 +1,7 @@
 import concurrent.futures
 from ping3 import ping
 from collections import deque
+import json
 
 
 def verificar_ips(rede_base: str):
@@ -27,11 +28,27 @@ def verificar_ips(rede_base: str):
             if ip_status_dict[ip].count("on") == 0:
                 ip_checked[ip] = "off"
             else:
-                ip_checked[ip] = "on"
+                ip_checked[ip] = "on"   
+    vlan = rede_base.split('.')[2]
+    all_vlan_list = vlan_loader()
+    vlan_list = all_vlan_list.get('vlans').get(vlan)
                 
     ip_status_list = [{"ip": ip, "status": status} for ip, status in ip_checked.items() if status == "off"]
 
+    for item in ip_status_list:
+        for vlan in vlan_list:
+                if item['ip'] == vlan['ip']:
+                     item['descricao'] = vlan['descricao']
+                     break
+                else:
+                    item['descricao'] = '-'
+
     return ip_status_list
 
-    
+
+def vlan_loader():
+    file_path = 'ips_list.json'
+    with open(file_path, 'r', encoding = 'utf-8') as file:
+        data = json.load(file)
+    return data    
 
