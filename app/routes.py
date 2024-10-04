@@ -18,7 +18,7 @@ def background_ip_check(vlan):
 
     while not stop_event.is_set():  # Usa o evento de parada para verificar se a thread deve parar
         check_ip = ip_operations.verificar_ips(rede_base)
-        stop_event.wait(30) 
+        #stop_event.wait(30) 
 
 
 '''API ENDPOINTS'''        
@@ -31,8 +31,6 @@ def index():
 @app.route('/api/ip-status') # Para rodar localmente
 @app.route(RAIZ + '/api/ip-status')
 def ip_status():
-    if not check_ip:
-        return make_response('Lista vazia', 204)
     return jsonify(check_ip)
 
 @app.route('/api/start-check/<string:vlan>', methods=['GET']) # Para rodar localmente
