@@ -1,11 +1,12 @@
- async function fetchIpStatus(){
+ async function searchByVlan(){
 
             
-            const response = await fetch('api/ip-status');
+            const vlanSelect = document.getElementById('vlanSelect');
+            const vlan = encodeURIComponent(vlanSelect.value);  
+            const response = await fetch(`api/start-check/${vlan}`)
 
             if(response.status !== 200){
                 console.error('Falhou para obter os dados dos IPs');
-                setTimeout(fetchIpStatus, 5000);
                 return;
             }
             else{
@@ -52,14 +53,4 @@
                 document.getElementById("vlanSelect").value = savedOption;
             }
         };
-        function searchByVlan() {
-            const vlanSelect = document.getElementById('vlanSelect');
-            const vlan = encodeURIComponent(vlanSelect.value);  
-            const start_search = fetch(`api/start-check/${vlan}`)
-            
-            if(start_search.status = 200)
-                fetchIpStatus();
-                location.reload();
-        }
-        
-        setInterval(fetchIpStatus, 30000);
+        setInterval(searchByVlan, 30000);
