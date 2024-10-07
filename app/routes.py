@@ -71,7 +71,9 @@ def start_initial_checks():
         background_threads[vlan] = threading.Thread(target=background_ip_check, args=(vlan,))
         background_threads[vlan].start()
 
-# PH: Chama a função para iniciar as verificações iniciais quando o app inicia
+
 if __name__ == '__main__':
-    start_initial_checks()
     app.run(debug=True)
+
+# PH: Chama a função para iniciar as verificações iniciais quando o app inicia
+start_initial_checks()
