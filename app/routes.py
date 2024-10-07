@@ -5,11 +5,20 @@ import threading
 from app import app
 
 
+
 check_ip = []
 background_thread = None
 stop_event = threading.Event()
 
 RAIZ = '/ipmonitor'
+
+# Inicializar sistema com essa rotina para já verificar todas as vlans:
+def verificacao_inicial_vlans():
+    # PH: Lista de VLANs para iniciar na inicialização
+    initial_vlans = ['70', '80', '85', '86', '200', '204']
+    
+    for vlan in initial_vlans:
+        background_ip_check(vlan)
 
 # Rotina background para verificar os IPs
 def background_ip_check(vlan):
@@ -38,6 +47,9 @@ def ip_status():
 def check(vlan):
     global background_thread, stop_event, check_ip
 
+    # PH: somente para debugging:
+    print(f"Verificando VLAN {vlan}.")
+    
     check_ip = []
     
     # Acaba com a thread anterior se estiver rodando
@@ -57,3 +69,5 @@ def check(vlan):
 if __name__ == '__main__':
     app.run(debug=True)
     
+# Função inicial de verificação:
+verificacao_inicial_vlans()
