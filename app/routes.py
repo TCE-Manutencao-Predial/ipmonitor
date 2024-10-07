@@ -4,55 +4,74 @@ import time
 import threading
 from app import app
 
-
-check_ip = []
-background_thread = None
-stop_event = threading.Event()
+# PH: Alterado check_ip para um dicionário para lidar com múltiplas VLANs
+check_ip = {}  # PH: Dados em cache por VLAN
+background_threads = {}  # PH: Threads por VLAN
+stop_events = {}  # PH: Eventos de parada por VLAN
 
 RAIZ = '/ipmonitor'
 
-# Rotina background para verificar os IPs
+# PH: Lista de VLANs para iniciar na inicialização
+initial_vlans = ['70', '80', '85', '86', '200', '204']
+
+# Rotina de background para verificar os IPs
 def background_ip_check(vlan):
-    global check_ip
     rede_base = '172.17.' + vlan + '.'
 
-    while not stop_event.is_set():  # Usa o evento de parada para verificar se a thread deve parar
-        check_ip = ip_operations.verificar_ips(rede_base)
-        #stop_event.wait(30) 
+    while not stop_events[vlan].is_set():  # PH: Usa o evento de parada para a VLAN específica
+        # PH: Atualiza o cache para a VLAN específica
+        check_ip[vlan] = ip_operations.verificar_ips(rede_base)
+        time.sleep(30)  # PH: Aguarda antes da próxima atualização
 
+'''API ENDPOINTS'''
 
-'''API ENDPOINTS'''        
-
-@app.route('/') # Para rodar localmente
+@app.route('/')  # Para rodar localmente
 @app.route(RAIZ + '/')
 def index():
     return render_template('index.html')
 
-@app.route('/api/ip-status') # Para rodar localmente
+@app.route('/api/ip-status')  # Para rodar localmente
 @app.route(RAIZ + '/api/ip-status')
 def ip_status():
+    # PH: Retorna os dados em cache para todas as VLANs
     return jsonify(check_ip)
 
-@app.route('/api/start-check/<string:vlan>', methods=['GET']) # Para rodar localmente
+@app.route('/api/start-check/<string:vlan>', methods=['GET'])  # Para rodar localmente
 @app.route(RAIZ + '/api/start-check/<string:vlan>', methods=['GET'])
 def check(vlan):
-    global background_thread, stop_event, check_ip
-
-    check_ip = []
+    vlan = vlan.strip()
     
-    # Acaba com a thread anterior se estiver rodando
-    if background_thread and background_thread.is_alive():
-        stop_event.set()  
-        background_thread.join()  
+    print(f"Verificando a VLAN {vlan}.")
 
-    # recomeça o evento de parada
-    stop_event = threading.Event()
+    # PH: Inicia a verificação para a VLAN especificada
+    if vlan in background_threads and background_threads[vlan].is_alive():
+        # PH: Se já estiver rodando, para e reinicia
+        stop_events[vlan].set()
+        background_threads[vlan].join()
 
-    # Começa a nova thread
-    background_thread = threading.Thread(target=background_ip_check, args=(vlan,))
-    background_thread.start()
+    # PH: Inicializa o evento de parada e o cache para a VLAN
+    stop_events[vlan] = threading.Event()
+    check_ip[vlan] = []
+
+    # PH: Inicia uma nova thread de background para esta VLAN
+    background_threads[vlan] = threading.Thread(target=background_ip_check, args=(vlan,))
+    background_threads[vlan].start()
 
     return jsonify({"status": "Search started", "vlan": vlan})
 
+# PH: Inicia as verificações de background para as VLANs iniciais na inicialização
+def start_initial_checks():
+    print("Iniciando verificação inicial das VLANs.")
+    
+    for vlan in initial_vlans:
+        vlan = vlan.strip()
+        stop_events[vlan] = threading.Event()
+        check_ip[vlan] = []
+
+        background_threads[vlan] = threading.Thread(target=background_ip_check, args=(vlan,))
+        background_threads[vlan].start()
+
+# PH: Chama a função para iniciar as verificações iniciais quando o app inicia
 if __name__ == '__main__':
+    start_initial_checks()
     app.run(debug=True)
