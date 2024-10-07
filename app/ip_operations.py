@@ -20,7 +20,7 @@ def verificar_ips(rede_base: str):
     ip_checked = {ip: "on" for ip in ip_list}
 
     def verificar_ip(ip):
-        print(f"Verificando IP n° {ip}.")
+        print(f"IP n° {ip}", end='-')
         if ping(ip, timeout=5): 
             ip_status_dict[ip].append("on")
         else:
