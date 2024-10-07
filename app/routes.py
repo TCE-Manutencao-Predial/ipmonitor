@@ -24,6 +24,9 @@ def verificacao_inicial_vlans():
 def background_ip_check(vlan):
     global check_ip
     rede_base = '172.17.' + vlan + '.'
+    
+    # PH: somente para debugging:
+    print(f"Verificando em background a VLAN {vlan}.")
 
     while not stop_event.is_set():  # Usa o evento de parada para verificar se a thread deve parar
         check_ip = ip_operations.verificar_ips(rede_base)
