@@ -8,6 +8,8 @@ def verificar_ips(rede_base: str):
     ip_list = [rede_base + str(i) for i in range(1, 255)]
     ip_history = deque(maxlen=10)
     
+    print(f"Verificando rede base n° {str}.")
+    
     for i in range(0,10):
         ip_history.append("off")
     
@@ -18,6 +20,7 @@ def verificar_ips(rede_base: str):
     ip_checked = {ip: "on" for ip in ip_list}
 
     def verificar_ip(ip):
+        print(f"Verificando IP n° {ip}.")
         if ping(ip, timeout=5): 
             ip_status_dict[ip].append("on")
         
