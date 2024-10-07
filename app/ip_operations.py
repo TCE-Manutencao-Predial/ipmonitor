@@ -3,6 +3,8 @@ from ping3 import ping
 from collections import deque
 import json
 
+# TESTE
+
 def verificar_ips(rede_base: str):
     ip_list = [rede_base + str(i) for i in range(1, 255)]
     ip_history = deque(maxlen=10)
