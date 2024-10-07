@@ -8,7 +8,7 @@ def verificar_ips(rede_base: str):
     ip_list = [rede_base + str(i) for i in range(1, 255)]
     ip_history = deque(maxlen=10)
     
-    print(f"Verificando rede base n° {str}.")
+    print(f"Verificando rede base n° {rede_base}.")
     
     for i in range(0,10):
         ip_history.append("off")
