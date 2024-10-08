@@ -1,5 +1,5 @@
+ 
  async function searchByVlan(){
-
             
             const vlanSelect = document.getElementById('vlanSelect');
             const vlan = encodeURIComponent(vlanSelect.value);  
@@ -43,15 +43,26 @@
             }
         }
 
-        document.getElementById("vlanSelect").addEventListener("change", function() {
+document.getElementById("vlanSelect").addEventListener("change", function() {
             localStorage.setItem("selectedOption", this.value);
-        });
+});
 
-        // When the page loads, retrieve and set the selected option from localStorage
-        window.onload = function() {
-            const savedOption = localStorage.getItem("selectedOption");
-            if (savedOption) {
-                document.getElementById("vlanSelect").value = savedOption;
-            }
-        };
-        setInterval(searchByVlan, 30000);
+// When the page loads, retrieve and set the selected option from localStorage
+window.onload = function() {
+    const savedOption = localStorage.getItem("selectedOption");
+    if (savedOption) {
+        document.getElementById("vlanSelect").value = savedOption;
+    }
+
+    // VLAN inicial é sempre a 85
+    document.getElementById('vlanSelect').value = '85';
+
+    // Iniciar o processo de busca:
+    searchByVlan();
+
+    // Adiciona o event listener no select para disparar a função quando o valor mudar
+    document.getElementById('vlanSelect').addEventListener('change', searchByVlan);
+};
+
+// Eu acho que isso não é mais necessário:
+// setInterval(searchByVlan, 30000);
