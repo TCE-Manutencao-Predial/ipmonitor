@@ -43,7 +43,7 @@
             }
         }
 
-//document.getElementById("vlanSelect").addEventListener("change", function() {
+//document.getElementById("filtroVLAN").addEventListener("change", function() {
             //localStorage.setItem("selectedOption", this.value);
 //});
 
@@ -51,17 +51,17 @@
 window.onload = function() {
     //const savedOption = localStorage.getItem("selectedOption");
     //if (savedOption) {
-    //    document.getElementById("vlanSelect").value = savedOption;
+    //    document.getElementById("filtroVLAN").value = savedOption;
     //}
 
     // VLAN inicial é sempre a 85
-    document.getElementById('vlanSelect').value = '85';
+    document.getElementById('filtroVLAN').value = '85';
 
     // Iniciar o processo de busca:
     searchByVlan();
 
     // Adiciona o event listener no select para disparar a função quando o valor mudar
-    //document.getElementById('vlanSelect').addEventListener('change', searchByVlan);
+    //document.getElementById('filtroVLAN').addEventListener('change', searchByVlan);
 };
 
 // Eu acho que isso não é mais necessário:
