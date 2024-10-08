@@ -1,7 +1,7 @@
  
  async function searchByVlan(){
             
-            const vlanSelect = document.getElementById('vlanSelect');
+            const vlanSelect = document.getElementById('filtroVLAN');
             const vlan = encodeURIComponent(vlanSelect.value);  
             const response = await fetch(`api/start-check/${vlan}`)
 
