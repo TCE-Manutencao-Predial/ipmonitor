@@ -31,11 +31,16 @@ def index():
 @app.route(RAIZ + '/api/ip-status')
 def ip_status():
     return jsonify(check_ip)
+    
 
 @app.route('/api/start-check/<string:vlan>', methods=['GET']) # Para rodar localmente
 @app.route(RAIZ + '/api/start-check/<string:vlan>', methods=['GET'])
 def check(vlan):
-    return jsonify(check_ip[int(vlan)])
+    try:
+        return jsonify(check_ip[int(vlan)])
+    except KeyError:
+        print(f"VLAN {vlan} não encontrada em check_ip por enquanto.")
+        return '', 204  # Resposta vazia com status 204 (No Content)
 
 def start_background_service():
     def check_loop():
