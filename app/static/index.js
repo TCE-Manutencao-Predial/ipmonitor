@@ -45,9 +45,13 @@ async function searchByVlan() {
                 if (data[i + j]) {
                     descriptionCell.textContent = data[i + j].descricao;
                     ipCell.textContent = data[i + j].ip;
-                    
-                    // Adiciona a classe CSS 'circle' e 'red' para o status do IP
-                    circle.classList.add('circle', 'red');
+
+                    // Verifica o status do dispositivo e aplica a classe correta
+                    if (data[i + j].status === "on") {
+                        circle.classList.add('circle', 'green'); // Aplica a classe 'green' para dispositivos online
+                    } else if (data[i + j].status === "off") {
+                        circle.classList.add('circle', 'red'); // Aplica a classe 'red' para dispositivos offline
+                    }
                 }
 
                 // Adiciona o círculo de status à célula de status
