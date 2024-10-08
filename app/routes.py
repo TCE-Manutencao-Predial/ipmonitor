@@ -43,6 +43,7 @@ def check(vlan):
         return '', 204  # Resposta vazia com status 204 (No Content)
 
 def start_background_service():
+    print("Iniciando serviço de verificação em background.")
     def check_loop():
         vlan_list = [70,80,85,86,200,204]
         while True:
@@ -50,7 +51,7 @@ def start_background_service():
                 executor.map(background_ip_check, vlan_list)
             time.sleep(10)
 
-    #threading.Thread(target=check_loop).start()
+    threading.Thread(target=check_loop).start()
     
 if __name__ == '__main__':
     app.run(debug=True)
