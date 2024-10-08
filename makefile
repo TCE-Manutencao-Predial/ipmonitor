@@ -32,3 +32,18 @@ deploy:
 undeploy:
 	sudo chmod +x ./scripts/undeploy.sh
 	./scripts/undeploy.sh
+
+# Configurações do Servico
+# ----------------------------
+SERVICE_NAME=ipmonitor
+
+service-reload:
+	sudo systemctl daemon-reload
+
+service-restart:
+	sudo setenforce 0
+	sudo systemctl restart $(SERVICE_NAME)
+	sudo setenforce 1
+
+service-status:
+	sudo systemctl status $(SERVICE_NAME)
