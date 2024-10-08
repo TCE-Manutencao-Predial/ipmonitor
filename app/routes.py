@@ -47,7 +47,7 @@ def start_background_service():
     def check_loop():
         vlan_list = [70,80,85,86,200,204]
         while True:
-            with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
                 executor.map(background_ip_check, vlan_list)
             time.sleep(10)
 
