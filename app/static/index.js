@@ -7,6 +7,7 @@
 
             if(response.status !== 200){
                 console.error('Falhou para obter os dados dos IPs');
+                setInterval(searchByVlan, 5000);
                 return;
             }
             else{
