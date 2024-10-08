@@ -1,139 +1,149 @@
- table {
-            width: 50%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            font-family: Arial, sans-serif;
-        }
+/* Estilo da tabela */
+table {
+    width: 50%; /* Define a largura da tabela como 50% do contêiner pai */
+    margin: 20px auto; /* Centraliza a tabela e aplica uma margem de 20px */
+    border-collapse: collapse; /* Remove os espaços entre as bordas das células */
+    font-family: Arial, sans-serif; /* Define a fonte da tabela */
+}
 
-/* Estilizar células (td) */
+/* Estilo para as células (td) */
 td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-    padding: 10px;
-    text-align: center;
-    font-size: 14px;
+    border: 1px solid #ddd; /* Borda cinza ao redor das células */
+    padding: 10px; /* Espaçamento interno das células */
+    text-align: center; /* Alinhamento centralizado do texto */
+    font-size: 14px; /* Tamanho da fonte */
 }
 
-/* Estilizar cabeçalhos (th) */
+/* Estilo para os cabeçalhos (th) */
 th {
-    background-color: #f2f2f2;
-    color: #333;
-    padding: 12px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 16px;
-    border-bottom: 2px solid #ddd;
-    white-space: nowrap; /* Impede quebra de linha */
+    background-color: #f2f2f2; /* Fundo cinza claro para os cabeçalhos */
+    color: #333; /* Cor do texto */
+    padding: 12px; /* Espaçamento interno dos cabeçalhos */
+    text-align: center; /* Texto centralizado */
+    font-weight: bold; /* Texto em negrito */
+    font-size: 16px; /* Tamanho da fonte */
+    border-bottom: 2px solid #ddd; /* Linha na parte inferior dos cabeçalhos */
+    white-space: nowrap; /* Impede a quebra de linha nos cabeçalhos */
 }
 
-/* Alternar cores entre linhas pares e ímpares */
+/* Alterna a cor de fundo entre linhas pares e ímpares */
 tr:nth-child(even) {
-     background-color: #f9f9f9;
- }
- 
-tr:nth-child(odd) {
-    background-color: #fff;
+    background-color: #f9f9f9; /* Fundo para linhas pares */
 }
 
- 
-        .circle {
-            height: 20px;
-            width: 20px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .green {
-            background-color: green;
-        }
-        .red {
-            background-color: red;
-        }
+tr:nth-child(odd) {
+    background-color: #fff; /* Fundo para linhas ímpares */
+}
 
+/* Estilo base para o círculo */
+.circle {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra suave ao redor */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Cor e gradiente para o dispositivo online (verde) */
+.green {
+    background: linear-gradient(145deg, #4CAF50, #81C784); /* Gradiente suave entre tons de verde */
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.6); /* Brilho verde ao redor */
+}
+
+/* Cor e gradiente para o dispositivo offline (vermelho) */
+.red {
+    background: linear-gradient(145deg, #FF5252, #FF8A80); /* Gradiente suave entre tons de vermelho */
+    box-shadow: 0 0 15px rgba(255, 82, 82, 0.6); /* Brilho vermelho ao redor */
+}
+
+/* Animação ao passar o mouse, destacando o círculo */
+.circle:hover {
+    transform: scale(1.2); /* Aumenta ligeiramente o tamanho ao passar o mouse */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Aumenta a sombra ao passar o mouse */
+}
+
+/* Centraliza um elemento no meio da tela */
 .center {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-align: center;
+    text-align: center; /* Texto centralizado */
 }
 
-/* Button styling */
+/* Estilo para botões */
 .button {
-    padding: 10px 20px;
-    background-color: #4CAF50; /* Green */
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    padding: 10px 20px; /* Espaçamento interno do botão */
+    background-color: #4CAF50; /* Verde como cor de fundo */
+    color: white; /* Texto branco */
+    border: none; /* Remove a borda */
+    border-radius: 8px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de mão ao passar o mouse */
+    font-size: 16px; /* Tamanho da fonte */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Efeito suave ao passar o mouse */
 }
 
+/* Estilo para o botão de retorno */
 #returnButton {
-        margin-left: auto; /* Push the Return button to the right */
-    }
+    margin-left: auto; /* Empurra o botão para a direita */
+}
 
-
-
-/*Botões no canto superior */
+/* Estilo para a barra de navegação */
 nav {
-    display: flex;   
+    display: flex;
     align-items: center;
     padding: 8px;
     background-color: #f8f8f8; /* Cor de fundo da barra de navegação */
     border-bottom: 1px solid #ddd; /* Linha na parte inferior da barra */
 }
 
+/* Estilo para os botões dentro da barra de navegação */
 nav button {
-    padding: 8px 12px; /* Estilo dos botões */
-    cursor: pointer; /* Cursor de mão ao passar o mouse */
+    padding: 8px 12px; /* Espaçamento interno */
+    cursor: pointer; /* Cursor de mão */
     border: none; /* Remove bordas */
     border-radius: 4px; /* Bordas arredondadas */
-    margin-right: 5px; /* Margem à direita para espaçamento */
+    margin-right: 5px; /* Espaçamento à direita */
     font-weight: bold; /* Texto em negrito */
     transition: background-color 0.3s; /* Transição suave para a cor de fundo */
 }
 
-/* Estilo geral para o contêiner do filtro */
+/* Estilo para o contêiner do filtro VLAN */
 #filtroVLAN-container {
     display: flex;
     align-items: center;
     margin: 4px 0;
-    background-color: #f5f5f5;
-    /*padding: 10px;*/
-    border-radius: 5px;
-    background-color: #28a745; /* ou Ciano??  */
-
+    background-color: #28a745; /* Cor verde de fundo */
+    border-radius: 5px; /* Bordas arredondadas */
 }
 
-/* Estilo do label */
+/* Estilo para o label do filtro VLAN */
 #filtroVLAN-container label {
-    padding: 8px 12px; /* Estilo dos botões */
+    padding: 8px 12px; /* Espaçamento interno */
     font-family: Arial, sans-serif;
-    font-size: 14px;
+    font-size: 14px; /* Tamanho da fonte */
     font-weight: bold; /* Texto em negrito */
-    color: white; /* Texto branco para contraste */
-    margin-right: 10px;
+    color: white; /* Cor do texto */
+    margin-right: 10px; /* Espaçamento à direita */
 }
 
-/* Estilo do select */
+/* Estilo para o select do filtro VLAN */
 #filtroVLAN {
-    padding: 6px 10px;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    background-color: #28a745;
+    padding: 6px 10px; /* Espaçamento interno */
+    font-size: 14px; /* Tamanho da fonte */
+    border: none; /* Remove bordas */
+    border-radius: 5px; /* Bordas arredondadas */
+    background-color: #28a745; /* Cor de fundo verde */
     font-weight: bold; /* Texto em negrito */
-    color: white;
-    cursor: pointer;
-    outline: none;
+    color: white; /* Cor do texto */
+    cursor: pointer; /* Cursor de mão */
+    outline: none; /* Remove borda ao focar */
 }
-
 
 /* Efeito hover no select */
 #filtroVLAN:hover {
-    background-color: #81c784; /* Um verde um pouco mais escuro */
+    background-color: #81c784; /* Fundo verde mais escuro ao passar o mouse */
 }
 
 /* Efeito focus no select */
@@ -141,38 +151,41 @@ nav button {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra leve ao focar */
 }
 
-
+/* Estilo para o botão home */
 .btn-home {
     background-color: #007bff; /* Azul */
     color: white; /* Cor do texto */
 }
 
+/* Efeito hover no botão home */
 .btn-home:hover {
     background-color: #0056b3; /* Azul escuro ao passar o mouse */
 }
 
+/* Estilo para o botão toggle */
 .btn-toggle {
     background-color: #28a745; /* Verde */
     color: white; /* Cor do texto */
 }
 
+/* Efeito hover no botão toggle */
 .btn-toggle:hover {
     background-color: #218838; /* Verde escuro ao passar o mouse */
 }
 
-
-/* Copyright e autorias*/
+/* Estilo para o rodapé */
 footer {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0; /* Cor de fundo do rodapé */
-    padding: 20px 0;           /* Espaçamento superior e inferior */
-    text-align: center;        /* Centraliza o texto */
-    position: relative;        /* Para uso com 'absolute' se necessário */
+    padding: 20px 0; /* Espaçamento superior e inferior */
+    text-align: center; /* Centraliza o texto */
+    position: relative; /* Para posicionamento absoluto, se necessário */
 }
 
+/* Estilo do conteúdo do rodapé */
 .footer-content p {
-    color: #999;               /* Cor cinza do texto */
-    font-size: 14px;          /* Tamanho da fonte */
-    margin: 0;                /* Remove margens padrão */
-    opacity: 0.7;             /* Sutileza na cor do texto */
+    color: #999; /* Cor cinza do texto */
+    font-size: 14px; /* Tamanho da fonte */
+    margin: 0; /* Remove margens padrão */
+    opacity: 0.7; /* Texto com transparência leve */
 }
