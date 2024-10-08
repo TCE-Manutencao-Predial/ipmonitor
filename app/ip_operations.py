@@ -41,7 +41,7 @@ def verificar_ips(rede_base: str):
     all_vlan_list = vlan_loader()
     vlan_list = all_vlan_list.get('vlans').get(vlan)
                 
-    ip_status_list = [{"ip": ip, "status": status} for ip, status in ip_checked.items() if status == "off"]
+    ip_status_list = [{"ip": ip, "status": status} for ip, status in ip_checked.items()]
     if vlan_list != None:
         for item in ip_status_list:
             for vlan in vlan_list:
