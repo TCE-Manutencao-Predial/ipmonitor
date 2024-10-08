@@ -50,8 +50,8 @@ def start_background_service():
                 executor.map(background_ip_check, vlan_list)
             time.sleep(10)
 
-    threading.Thread(target=check_loop).start()
-
+    #threading.Thread(target=check_loop).start()
+    
 if __name__ == '__main__':
     app.run(debug=True)
     
