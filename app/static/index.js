@@ -49,10 +49,10 @@
 
 // When the page loads, retrieve and set the selected option from localStorage
 window.onload = function() {
-    const savedOption = localStorage.getItem("selectedOption");
-    if (savedOption) {
-        document.getElementById("vlanSelect").value = savedOption;
-    }
+    //const savedOption = localStorage.getItem("selectedOption");
+    //if (savedOption) {
+    //    document.getElementById("vlanSelect").value = savedOption;
+    //}
 
     // VLAN inicial é sempre a 85
     document.getElementById('vlanSelect').value = '85';
@@ -61,7 +61,7 @@ window.onload = function() {
     searchByVlan();
 
     // Adiciona o event listener no select para disparar a função quando o valor mudar
-    document.getElementById('vlanSelect').addEventListener('change', searchByVlan);
+    //document.getElementById('vlanSelect').addEventListener('change', searchByVlan);
 };
 
 // Eu acho que isso não é mais necessário:
