@@ -31,3 +31,46 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
+.vlan-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Label styling */
+.vlan-label {
+    font-size: 18px;
+    color: #333;
+    letter-spacing: 0.5px;
+}
+
+/* Select box styling */
+#vlanSelect {
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fafafa;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* Button styling */
+.button {
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#returnButton {
+        margin-left: auto; /* Push the Return button to the right */
+    }
+

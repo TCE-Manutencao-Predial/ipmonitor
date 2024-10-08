@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
-    <div>
-        <label for="vlanSelect">Select VLAN:</label>
+    <div class="vlan-container">
+        <label class="vlan-label" for="vlanSelect">Selecione a VLAN:</label>
         <select id="vlanSelect">
             <option value="70">VLAN 70</option>
             <option value="80">VLAN 80</option>
@@ -17,7 +17,8 @@
             <option value="200">VLAN 200</option>
             <option value="204">VLAN 204</option>
         </select>
-        <button onclick="searchByVlan()">Search</button>
+        <button class="button" id="searchButton" onclick="searchByVlan()">Pesquisar</button>
+        <button class="button" id="returnButton" onclick="window.location.href='/'">Página inicial</button>
     </div>
 
     <table>
