@@ -43,9 +43,9 @@
             }
         }
 
-document.getElementById("vlanSelect").addEventListener("change", function() {
-            localStorage.setItem("selectedOption", this.value);
-});
+//document.getElementById("vlanSelect").addEventListener("change", function() {
+            //localStorage.setItem("selectedOption", this.value);
+//});
 
 // When the page loads, retrieve and set the selected option from localStorage
 window.onload = function() {

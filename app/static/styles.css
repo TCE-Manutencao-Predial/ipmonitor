@@ -31,32 +31,6 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
-.vlan-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    font-family: 'Arial', sans-serif;
-}
-
-/* Label styling */
-.vlan-label {
-    font-size: 18px;
-    color: #333;
-    letter-spacing: 0.5px;
-}
-
-/* Select box styling */
-#vlanSelect {
-    padding: 10px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 16px;
-    background-color: #fafafa;
-    color: #333;
-    outline: none;
-    transition: border-color 0.3s ease;
-}
 
 /* Button styling */
 .button {
@@ -74,3 +48,105 @@
         margin-left: auto; /* Push the Return button to the right */
     }
 
+
+
+/*Botões no canto superior */
+nav {
+    display: flex;   
+    align-items: center;
+    padding: 8px;
+    background-color: #f8f8f8; /* Cor de fundo da barra de navegação */
+    border-bottom: 1px solid #ddd; /* Linha na parte inferior da barra */
+}
+
+nav button {
+    padding: 8px 12px; /* Estilo dos botões */
+    cursor: pointer; /* Cursor de mão ao passar o mouse */
+    border: none; /* Remove bordas */
+    border-radius: 4px; /* Bordas arredondadas */
+    margin-right: 5px; /* Margem à direita para espaçamento */
+    font-weight: bold; /* Texto em negrito */
+    transition: background-color 0.3s; /* Transição suave para a cor de fundo */
+}
+
+/* Estilo geral para o contêiner do filtro */
+#filtroVLAN-container {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+    background-color: #f5f5f5;
+    /*padding: 10px;*/
+    border-radius: 5px;
+    background-color: #28a745; /* ou Ciano??  */
+
+}
+
+/* Estilo do label */
+#filtroVLAN-container label {
+    padding: 8px 12px; /* Estilo dos botões */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold; /* Texto em negrito */
+    color: white; /* Texto branco para contraste */
+    margin-right: 10px;
+}
+
+/* Estilo do select */
+#filtroVLAN {
+    padding: 6px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    font-weight: bold; /* Texto em negrito */
+    color: white;
+    cursor: pointer;
+    outline: none;
+}
+
+
+/* Efeito hover no select */
+#filtroVLAN:hover {
+    background-color: #81c784; /* Um verde um pouco mais escuro */
+}
+
+/* Efeito focus no select */
+#filtroVLAN:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra leve ao focar */
+}
+
+
+.btn-home {
+    background-color: #007bff; /* Azul */
+    color: white; /* Cor do texto */
+}
+
+.btn-home:hover {
+    background-color: #0056b3; /* Azul escuro ao passar o mouse */
+}
+
+.btn-toggle {
+    background-color: #28a745; /* Verde */
+    color: white; /* Cor do texto */
+}
+
+.btn-toggle:hover {
+    background-color: #218838; /* Verde escuro ao passar o mouse */
+}
+
+
+/* Copyright e autorias*/
+footer {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Cor de fundo do rodapé */
+    padding: 20px 0;           /* Espaçamento superior e inferior */
+    text-align: center;        /* Centraliza o texto */
+    position: relative;        /* Para uso com 'absolute' se necessário */
+}
+
+.footer-content p {
+    color: #999;               /* Cor cinza do texto */
+    font-size: 14px;          /* Tamanho da fonte */
+    margin: 0;                /* Remove margens padrão */
+    opacity: 0.7;             /* Sutileza na cor do texto */
+}

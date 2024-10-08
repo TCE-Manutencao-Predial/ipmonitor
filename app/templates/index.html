@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +7,15 @@
     <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
-    <div class="vlan-container">
-        <label class="vlan-label" for="vlanSelect">Selecione a VLAN:</label>
-        <select id="vlanSelect">
+
+    <nav>
+    <!-- Botões  -->
+    <button id="botaoInicio" style="margin-right: 10px;" onclick="window.location.href='/'">Página Inicial</button>
+        
+    
+    <div id="filtroVLAN-container">
+        <label for="filtroVLAN">Selecione a VLAN: </label>
+        <select id="filtroVLAN" onchange="searchByVlan()>
             <option value="70">VLAN 70</option>
             <option value="80">VLAN 80</option>
             <option value="85">VLAN 85</option>
@@ -17,30 +23,40 @@
             <option value="200">VLAN 200</option>
             <option value="204">VLAN 204</option>
         </select>
-        <!-- <button class="button" id="searchButton" onclick="searchByVlan()">Pesquisar</button> -->
-        <button class="button" id="returnButton" onclick="window.location.href='/'">Página inicial</button>
     </div>
 
-    <table>
+    </nav>
+
+    <table id='main_table'>
         <thead>
             <tr>
-                <th>Descrição</th>
-                <th>IP</th>
-                <th>Status</th>
-                <th>Descrição</th>
-                <th>IP</th>
-                <th>Status</th>
-                <th>Descrição</th>
-                <th>IP</th>
-                <th>Status</th>
+                <th class="descricao_A">Descrição</th>
+                <th class="IP_A">IP</th>
+                <th class="status_A">Status</th>
+                <th class="descricao_B">Descrição</th>
+                <th class="IP_B">IP</th>
+                <th class="status_B">Status</th>
+                <th class="descricao_C">Descrição</th>
+                <th class="IP_C">IP</th>
+                <th class="status_C">Status</th>
             </tr>
         </thead>
         <tbody id="ipTableBody">
+            <!-- Itens da tabela -->
         </tbody>
     </table>
     
+    <!-- Mensagem Preliminar sem Script -->
     <div id="mensagem_preliminar" class="center" >Aguardando obtenção de dados...</div>
 
+    <!-- Script -->
     <script src ="static/index.js"></script>
+
+    <footer>
+        <div class="footer-content">
+          <p>@Sistema WEB desenvolvido por Wilson do Serv. Infraestrutura Predial.</p>
+        </div>
+  
+      </footer> 
 </body>
 </html>
