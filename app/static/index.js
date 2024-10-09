@@ -10,12 +10,15 @@ async function searchByVlan() {
     // Faz uma requisição para a API usando o valor da VLAN
     const response = await fetch(`api/start-check/${vlan}`);
 
+    // Obtém o elemento pela ID
+    const mensagemPreliminar = document.getElementById('mensagem_preliminar');
+
     // Verifica se a requisição falhou
     if (response.status !== 200) {
         console.error('Falhou para obter os dados dos IPs');
 
-        // Obtém o elemento pela ID
-        const mensagemPreliminar = document.getElementById('mensagem_preliminar');
+        // Exibir texto de debugging:
+        mensagemPreliminar.style.display = 'block';  
 
         // Altera o texto da mensagem
         mensagemPreliminar.innerHTML = 'Falha ao obter dados da API (código: ' + response.status + ').<br>Aguarde mais um pouco, por favor.';  // Substitua pelo texto que deseja exibir
@@ -24,8 +27,8 @@ async function searchByVlan() {
         // setInterval(searchByVlan, 5000);
         return;
     } else {
-        // Limpa qualquer mensagem preliminar que possa estar exibida
-        mensagem_preliminar.textContent = ``;
+        // Esconder texto de debugging:
+        mensagemPreliminar.style.display = 'none';  
         
         // Converte a resposta em JSON
         const data = await response.json();
