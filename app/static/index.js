@@ -30,12 +30,15 @@ async function searchByVlan() {
         // Limpa a tabela antes de inserir novos elementos
         tbody.innerHTML = '';  
 
+        // Obtém o número de colunas da tabela dinamicamente
+        const columnCount = document.querySelectorAll('#ipTable thead tr th').length;
+        
         // Percorre os dados recebidos e cria linhas para a tabela
-        for (let i = 0; i < data.length; i += 3) {
+        for (let i = 0; i < data.length; i += columnCount) {
             const row = document.createElement('tr');
 
-            // Cria células para 3 colunas de dados por linha
-            for (let j = 0; j < 3; j++) {
+            // Cria células para cada coluna de dados por linha
+            for (let j = 0; j < columnCount; j++) {
                 const descriptionCell = document.createElement('td');
                 const ipCell = document.createElement('td');
                 const statusCell = document.createElement('td');
