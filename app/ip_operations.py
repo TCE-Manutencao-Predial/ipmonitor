@@ -11,7 +11,7 @@ def verificar_ips(rede_base: str):
     # Cria uma fila (deque) com limite de 10 elementos para armazenar o histórico do status dos IPs.
     ip_history = deque(maxlen=10)
     
-    print(f"Verificando rede base n° {rede_base}.")
+    print(f"Verificando rede base n° {rede_base}")
     
     # Inicializa o histórico com "off" (sem conectividade) para cada IP.
     for i in range(0, 10):
@@ -32,7 +32,7 @@ def verificar_ips(rede_base: str):
             ip_status_dict[ip].append("off")
 
     # Usa um executor de pool de threads para verificar os IPs simultaneamente (concorrência).
-    with concurrent.futures.ThreadPoolExecutor(max_workers=255) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=65) as executor:
         executor.map(verificar_ip, ip_list)  # Aplica a função verificar_ip para cada IP da lista.
 
     # Após a verificação, atualiza o status final de cada IP.

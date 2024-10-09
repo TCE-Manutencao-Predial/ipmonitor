@@ -18,7 +18,7 @@ def background_ip_check(vlan):
     rede_base = '172.17.' + str(vlan) + '.'  # Define a base do endereço IP para a VLAN específica.
     
     # Para debugging: exibe uma mensagem indicando qual VLAN está sendo verificada.
-    print(f"Verificando em background a VLAN {vlan}")
+    print(f"Verificando em background a VLAN {vlan} e rede_base {rede_base}.")
 
     # Chama a função 'verificar_ips' do módulo 'ip_operations' e armazena o resultado no dicionário 'check_ip'.
     check_ip[vlan] = ip_operations.verificar_ips(rede_base)
@@ -63,7 +63,7 @@ def start_background_service():
         # Loop infinito que verifica as VLANs a cada intervalo de tempo (10 segundos).
         while True:
             # Usa um pool de threads para verificar duas VLANs simultaneamente.
-            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
                 executor.map(background_ip_check, vlan_list)  # Aplica a função de verificação para cada VLAN na lista.
             time.sleep(10)  # Aguarda 10 segundos antes de iniciar a próxima verificação.
 
