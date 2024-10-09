@@ -14,6 +14,11 @@ td {
     font-size: 14px; /* Tamanho da fonte */
 }
 
+/* Estilo específico para as colunas "Status" */
+td.status_A, td.status_B, td.status_C, td.status_D {
+    border-right: 2.5px solid #ccc; /* Borda mais grossa à direita */
+}
+
 /* Estilo para os cabeçalhos (th) */
 th {
     background-color: #f2f2f2; /* Fundo cinza claro para os cabeçalhos */
@@ -24,6 +29,11 @@ th {
     font-size: 16px; /* Tamanho da fonte */
     border-bottom: 2px solid #ddd; /* Linha na parte inferior dos cabeçalhos */
     white-space: nowrap; /* Impede a quebra de linha nos cabeçalhos */
+}
+
+/* Estilo específico para os cabeçalhos das colunas "Status" */
+th.status_A, th.status_B, th.status_C, th.status_D {
+    border-right: 2.5px solid #ccc; /* Borda mais grossa à direita */
 }
 
 /* Alterna a cor de fundo entre linhas pares e ímpares */

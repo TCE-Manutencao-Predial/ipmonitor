@@ -58,6 +58,9 @@ async function searchByVlan() {
 
                 // Adiciona o círculo de status à célula de status
                 statusCell.appendChild(circle);
+
+                // Aplica a classe 'status_A', 'status_B', 'status_C', ou 'status_D' nas células de status
+                statusCell.classList.add(`status_${String.fromCharCode(65 + j)}`);
                 
                 // Adiciona as células à linha
                 row.appendChild(descriptionCell);
