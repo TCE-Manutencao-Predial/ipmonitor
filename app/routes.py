@@ -63,7 +63,7 @@ def start_background_service():
         # Loop infinito que verifica as VLANs a cada intervalo de tempo (10 segundos).
         while True:
             # Usa um pool de threads para verificar duas VLANs simultaneamente.
-            with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
                 executor.map(background_ip_check, vlan_list)  # Aplica a função de verificação para cada VLAN na lista.
             time.sleep(10)  # Aguarda 10 segundos antes de iniciar a próxima verificação.
 

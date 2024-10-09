@@ -32,7 +32,7 @@ def verificar_ips(rede_base: str):
             ip_status_dict[ip].append("off")
 
     # Usa um executor de pool de threads para verificar os IPs simultaneamente (concorrência).
-    with concurrent.futures.ThreadPoolExecutor(max_workers=50) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=255) as executor:
         executor.map(verificar_ip, ip_list)  # Aplica a função verificar_ip para cada IP da lista.
 
     # Após a verificação, atualiza o status final de cada IP.
