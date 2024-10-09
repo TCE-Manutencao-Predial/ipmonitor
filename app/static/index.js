@@ -13,9 +13,15 @@ async function searchByVlan() {
     // Verifica se a requisição falhou
     if (response.status !== 200) {
         console.error('Falhou para obter os dados dos IPs');
+
+        // Obtém o elemento pela ID
+        const mensagemPreliminar = document.getElementById('mensagem_preliminar');
+
+        // Altera o texto da mensagem
+        mensagemPreliminar.innerHTML = 'Falha ao obter dados da API (código: ' + response.status + ').<br>Aguarde mais um pouco, por favor.';  // Substitua pelo texto que deseja exibir
         
         // Tenta buscar novamente a cada 5 segundos, caso tenha falhado
-        setInterval(searchByVlan, 5000);
+        // setInterval(searchByVlan, 5000);
         return;
     } else {
         // Limpa qualquer mensagem preliminar que possa estar exibida

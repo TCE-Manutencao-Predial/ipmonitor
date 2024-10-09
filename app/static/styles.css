@@ -199,3 +199,25 @@ footer {
     margin: 0; /* Remove margens padrão */
     opacity: 0.7; /* Texto com transparência leve */
 }
+
+/* Estilo da mensagem preliminar para advertência */
+#mensagem_preliminar {
+    font-family: Arial, sans-serif; /* Define a fonte */
+    font-size: 16px; /* Tamanho da fonte */
+    color: #333; /* Cor do texto */
+    background-color: #f8d7da; /* Fundo vermelho claro para advertência */
+    padding: 15px 20px; /* Espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+    text-align: center; /* Centraliza o texto */
+    width: 50%; /* Define a largura da mensagem */
+    margin: 20px auto; /* Centraliza o div na página */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adiciona uma leve sombra */
+    border: 2px solid #f5c2c7; /* Borda vermelha suave */
+    animation: fadeIn 0.5s ease-in-out; /* Animação de entrada suave */
+}
+
+/* Animação para a mensagem surgir suavemente */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
