@@ -34,7 +34,7 @@ echo "[Deploy] Instalando o Frontend..."
 sudo rm -r $ROOT_FRONTEND   # Apaga os arquivos antigos
 sudo mkdir -p $ROOT_FRONTEND
 sudo cp "app/templates/index.html" $ROOT_FRONTEND"/index.html"
-sudo cp -r "app/static" $ROOT_FRONTEND"/static"
+sudo cp -r "app/static" $ROOT_FRONTEND
 
 # Se existir, dá um git pull para atualizar os conteudos
 if [ -e $ROOT_BACKEND ]; then
