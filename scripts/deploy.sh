@@ -11,85 +11,111 @@ PROJECT_NAME="ipmonitor"
 SERVICE_NAME="ipmonitor.service"
 
 ROOT_FRONTEND=/var/www/automacao.tce.go.gov.br/$PROJECT_NAME
-
 ROOT_SOFTWARES=/var/softwaresTCE
-ROOT_BACKEND=$ROOT_SOFTWARES"/"$PROJECT_NAME
+ROOT_BACKEND="$ROOT_SOFTWARES/$PROJECT_NAME"
 
 GIT_REPO_NAME="ipmonitor"
 GIT_REPO_LINK="https://github.com/wilsoncf/$GIT_REPO_NAME.git"
 
-
 # Atualizar projeto do git
 # ----------------------------
 
-echo "[Deploy] Verificando atualizações do projeto no repositório git..."
-git pull
-echo "[Deploy] Atualizações do projeto concluídas."
+atualizar_projeto_local() {
+    echo "[Deploy] Verificando atualizações do projeto no repositório git..."
+    git pull
+    echo "[Deploy] Atualizações do projeto concluídas."
+}
 
-
-# Realizar o Deploy
+# Deploy Frontend
 # ----------------------------
 
-# Copiar o frontend para o diretório reconhecido pelo apache.
-echo "[Deploy] Instalando o Frontend..."
+deploy_frontend() {
+    echo "[Deploy] Iniciando instalação do Frontend..."
 
-if [ -e $ROOT_FRONTEND ]; then
-    echo "[Deploy] Diretório do Frontend existente encontrado. Removendo arquivos antigos..."
-    sudo rm -rv $ROOT_FRONTEND
-fi
+    if [ -e $ROOT_FRONTEND ]; then
+        echo "[Deploy] Diretório do Frontend existente encontrado. Removendo arquivos antigos..."
+        sudo rm -rv $ROOT_FRONTEND
+    fi
 
-echo "[Deploy] Criando diretório do Frontend..."
-sudo mkdir -pv $ROOT_FRONTEND
+    echo "[Deploy] Criando diretório do Frontend..."
+    sudo mkdir -pv $ROOT_FRONTEND
 
-echo "[Deploy] Copiando arquivos HTML e estáticos para o diretório do Frontend..."
-sudo cp -v "app/templates/index.html" "$ROOT_FRONTEND/index.html"
-sudo cp -vr "app/static" "$ROOT_FRONTEND"
+    echo "[Deploy] Copiando arquivos HTML e estáticos para o diretório do Frontend..."
+    sudo cp -v "app/templates/index.html" "$ROOT_FRONTEND/index.html"
+    sudo cp -vr "app/static" "$ROOT_FRONTEND"
 
-echo "[Deploy] Instalação do Frontend concluída."
+    echo "[Deploy] Instalação do Frontend concluída."
+}
 
+# Deploy Backend
+# ----------------------------
 
-# Verificar e atualizar o Backend
-if [ -e $ROOT_BACKEND ]; then
-    echo "[Deploy] Projeto antigo do Backend encontrado. Atualizando arquivos..."
+deploy_backend() {
+    echo "[Deploy] Iniciando instalação do Backend..."
+
+    if [ -e $ROOT_BACKEND ]; then
+        echo "[Deploy] Projeto antigo do Backend encontrado. Atualizando arquivos..."
+        dir_atual=$(pwd)
+        cd $ROOT_BACKEND
+        git pull
+        cd $dir_atual
+        echo "[Deploy] Atualização do Backend concluída."
+    else
+        echo "[Deploy] Diretório do Backend não encontrado. Criando novo repositório..."
+        sudo mkdir -pv $ROOT_SOFTWARES
+        git clone $GIT_REPO_LINK
+        sudo mv -v $GIT_REPO_NAME $ROOT_BACKEND
+        echo "[Deploy] Repositório do Backend clonado para: $ROOT_BACKEND"
+    fi
+
+    echo "[Deploy] Ajustando permissões do diretório do Backend..."
+    sudo chown -Rv $(whoami) $ROOT_BACKEND
+    echo "[Deploy] Permissões do Backend ajustadas."
+
+    echo "[Deploy] Configurando projeto do Backend..."
     dir_atual=$(pwd)
     cd $ROOT_BACKEND
-    git pull
+    make setup
     cd $dir_atual
-    echo "[Deploy] Atualização do Backend concluída."
-else
-    echo "[Deploy] Diretório do Backend não encontrado. Criando novo repositório..."
-    sudo mkdir -pv $ROOT_SOFTWARES
-    git clone $GIT_REPO_LINK
-    sudo mv -v $GIT_REPO_NAME $ROOT_BACKEND
-    echo "[Deploy] Repositório do Backend clonado para: $ROOT_BACKEND"
-fi
+    echo "[Deploy] Configuração do Backend concluída."
 
-echo "[Deploy] Ajustando permissões do diretório do Backend..."
-sudo chown -Rv $(whoami) $ROOT_BACKEND
-echo "[Deploy] Permissões do Backend ajustadas."
+    echo "[Deploy] Verificando permissões de execução para scripts do Backend..."
+    [ ! -x "$ROOT_BACKEND/scripts/deploy.sh" ] && sudo chmod -v +x "$ROOT_BACKEND/scripts/deploy.sh"
+    [ ! -x "$ROOT_BACKEND/scripts/run.sh" ] && sudo chmod -v +x "$ROOT_BACKEND/scripts/run.sh"
+    [ ! -x "$ROOT_BACKEND/scripts/config.sh" ] && sudo chmod -v +x "$ROOT_BACKEND/scripts/config.sh"
+    echo "[Deploy] Permissões de execução ajustadas."
+}
 
+# Deploy Serviço
+# ----------------------------
 
-# Configurar e preparar o Backend
-echo "[Deploy] Configurando projeto do Backend..."
-dir_atual=$(pwd)
-cd $ROOT_BACKEND
-make setup
-cd $dir_atual
-echo "[Deploy] Configuração do Backend concluída."
+deploy_servico() {
+    echo "[Deploy] Instalando o serviço..."
 
+    if [ -e "/usr/lib/systemd/system/$SERVICE_NAME" ]; then
+        echo "[Deploy] Serviço existente encontrado. Removendo configuração antiga..."
+        sudo rm -v "/usr/lib/systemd/system/$SERVICE_NAME"
+    fi
 
-# Copiar e ativar o serviço
-echo "[Deploy] Instalando o serviço..."
+    echo "[Deploy] Copiando novo arquivo de serviço..."
+    sudo cp -v scripts/$SERVICE_NAME /usr/lib/systemd/system/$SERVICE_NAME
 
-if [ -e "/usr/lib/systemd/system/$SERVICE_NAME" ]; then
-    echo "[Deploy] Serviço existente encontrado. Removendo configuração antiga..."
-    sudo rm -v "/usr/lib/systemd/system/$SERVICE_NAME"
-fi
+    echo "[Deploy] Reiniciando o serviço..."
+    make service-reload
+    make service-restart
+    echo "[Deploy] Serviço reiniciado com sucesso."
+}
 
-echo "[Deploy] Copiando novo arquivo de serviço..."
-sudo cp -v scripts/$SERVICE_NAME /usr/lib/systemd/system/$SERVICE_NAME
+# Main
+# ----------------------------
 
-echo "[Deploy] Reiniciando o serviço..."
-make service-reload
-make service-restart
-echo "[Deploy] Serviço reiniciado com sucesso."
+main() {
+    echo "[Deploy] Iniciando processo de Deploy..."
+    atualizar_projeto_local
+    deploy_frontend
+    deploy_backend
+    deploy_servico
+    echo "[Deploy] Processo de Deploy concluído com sucesso!"
+}
+
+main
