@@ -4,7 +4,6 @@
 # Este Script deve ser executado na raiz do projeto
 # Ou pela makefile através do "make deploy"
 
-
 # Parâmetros de Deploy
 # ----------------------------
 
@@ -19,11 +18,13 @@ ROOT_BACKEND=$ROOT_SOFTWARES"/"$PROJECT_NAME
 GIT_REPO_NAME="ipmonitor"
 GIT_REPO_LINK="https://github.com/wilsoncf/$GIT_REPO_NAME.git"
 
+
 # Atualizar projeto do git
 # ----------------------------
 
-echo "[Deploy] Verificando atualizações do projeto..."
+echo "[Deploy] Verificando atualizações do projeto no repositório git..."
 git pull
+echo "[Deploy] Atualizações do projeto concluídas."
 
 
 # Realizar o Deploy
@@ -31,48 +32,64 @@ git pull
 
 # Copiar o frontend para o diretório reconhecido pelo apache.
 echo "[Deploy] Instalando o Frontend..."
-sudo rm -r $ROOT_FRONTEND   # Apaga os arquivos antigos
-sudo mkdir -p $ROOT_FRONTEND
-sudo cp "app/templates/index.html" $ROOT_FRONTEND"/index.html"
-sudo cp -r "app/static" $ROOT_FRONTEND
 
-# Se existir, dá um git pull para atualizar os conteudos
+if [ -e $ROOT_FRONTEND ]; then
+    echo "[Deploy] Diretório do Frontend existente encontrado. Removendo arquivos antigos..."
+    sudo rm -rv $ROOT_FRONTEND
+fi
+
+echo "[Deploy] Criando diretório do Frontend..."
+sudo mkdir -pv $ROOT_FRONTEND
+
+echo "[Deploy] Copiando arquivos HTML e estáticos para o diretório do Frontend..."
+sudo cp -v "app/templates/index.html" "$ROOT_FRONTEND/index.html"
+sudo cp -vr "app/static" "$ROOT_FRONTEND"
+
+echo "[Deploy] Instalação do Frontend concluída."
+
+
+# Verificar e atualizar o Backend
 if [ -e $ROOT_BACKEND ]; then
-    echo "[Deploy] Projeto antigo do backend encontrado, atualizando arquivos..."
-
+    echo "[Deploy] Projeto antigo do Backend encontrado. Atualizando arquivos..."
     dir_atual=$(pwd)
     cd $ROOT_BACKEND
     git pull
     cd $dir_atual
-    
-else # Se não houver a pasta do Backend, a cria e clona o repositório para ela
-    echo "[Deploy] Projeto do backend não encontrado, criando os arquivos..."
-
-    # Cria a pasta dos softwares, caso não exista
-    sudo mkdir -p $ROOT_SOFTWARES
-
-    # Clona o repositório para o diretório dos softwares
+    echo "[Deploy] Atualização do Backend concluída."
+else
+    echo "[Deploy] Diretório do Backend não encontrado. Criando novo repositório..."
+    sudo mkdir -pv $ROOT_SOFTWARES
     git clone $GIT_REPO_LINK
-    sudo mv $GIT_REPO_NAME $ROOT_BACKEND
+    sudo mv -v $GIT_REPO_NAME $ROOT_BACKEND
+    echo "[Deploy] Repositório do Backend clonado para: $ROOT_BACKEND"
 fi
 
-# Antes de realizar o setup, altera as permissões de escrita dos arquivos do Backend para o usuário atual
-sudo chown -R $(whoami) $ROOT_BACKEND
+echo "[Deploy] Ajustando permissões do diretório do Backend..."
+sudo chown -Rv $(whoami) $ROOT_BACKEND
+echo "[Deploy] Permissões do Backend ajustadas."
 
-# Realiza o setup do projeto
+
+# Configurar e preparar o Backend
+echo "[Deploy] Configurando projeto do Backend..."
 dir_atual=$(pwd)
 cd $ROOT_BACKEND
 make setup
 cd $dir_atual
+echo "[Deploy] Configuração do Backend concluída."
 
-# Copia o scadaweb.service para sua pasta
-echo "Instalando o serviço..."
-if [ -e "/usr/lib/systemd/system/$SERVICE_NAME" ]; then   # Antes de copiar, remove o arquivo anterior
-    sudo rm "/usr/lib/systemd/system/$SERVICE_NAME"   
+
+# Copiar e ativar o serviço
+echo "[Deploy] Instalando o serviço..."
+
+if [ -e "/usr/lib/systemd/system/$SERVICE_NAME" ]; then
+    echo "[Deploy] Serviço existente encontrado. Removendo configuração antiga..."
+    sudo rm -v "/usr/lib/systemd/system/$SERVICE_NAME"
 fi
-sudo cp scripts/$SERVICE_NAME /usr/lib/systemd/system/$SERVICE_NAME
 
-# Ativa o serviço
-echo "Ativando o serviço..."
+echo "[Deploy] Copiando novo arquivo de serviço..."
+sudo cp -v scripts/$SERVICE_NAME /usr/lib/systemd/system/$SERVICE_NAME
+
+echo "[Deploy] Reiniciando o serviço..."
 make service-reload
 make service-restart
+echo "[Deploy] Serviço reiniciado com sucesso."
