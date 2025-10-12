@@ -134,18 +134,18 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="device-descricao">Descrição:</label>
-                    <input type="text" id="device-descricao" required maxlength="200" placeholder="Descrição do dispositivo">
+                    <label for="device-description">Descrição:</label>
+                    <input type="text" id="device-description" required maxlength="200" placeholder="Descrição do dispositivo">
                 </div>
                 
                 <div class="form-group">
-                    <label for="device-tipo">Tipo do Dispositivo:</label>
+                    <label for="tipo-select">Tipo do Dispositivo:</label>
                     <div class="tipo-container">
-                        <select id="device-tipo-select">
+                        <select id="tipo-select">
                             <option value="">-- Selecionar tipo existente --</option>
+                            <option value="__custom__">Novo tipo...</option>
                         </select>
-                        <span class="tipo-separator">ou</span>
-                        <input type="text" id="device-tipo-input" placeholder="Novo tipo de dispositivo" maxlength="50">
+                        <input type="text" id="tipo-custom" placeholder="Digite o novo tipo" maxlength="50" style="display: none;">
                     </div>
                     <small>Selecione um tipo existente ou digite um novo</small>
                 </div>
