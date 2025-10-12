@@ -13,9 +13,9 @@
     <nav>
         <!-- Controles principais -->
         <div id="nav-controls">
-            <button id="botaoInicio" data-url="{{ url_for('index') }}" onclick="window.location.href=this.getAttribute('data-url')">🏠 Página Inicial</button>
-            <button id="botaoConfiguracoes" data-url="{{ url_for('configuracoes') }}" onclick="window.location.href=this.getAttribute('data-url')">⚙️ Configurações</button>
-            <button id="botaoDispositivos" class="active" data-url="{{ url_for('dispositivos') }}" onclick="window.location.href=this.getAttribute('data-url')">📱 Dispositivos</button>
+            <button id="botaoInicio">🏠 Página Inicial</button>
+            <button id="botaoConfiguracoes">⚙️ Configurações</button>
+            <button id="botaoDispositivos" class="active">📱 Dispositivos</button>
         </div>
 
         <!-- Informações de Rede -->
@@ -163,6 +163,25 @@
             </div>
         </div>
     </div>
+
+    <!-- Script para navegação -->
+    <script>
+        // Função para detectar ambiente e gerar URLs corretas
+        function getBaseUrl() {
+            const hostname = window.location.hostname;
+            const isProduction = hostname.includes('automacao.tce.go.gov.br');
+            return isProduction ? '/ipmonitor' : '';
+        }
+        
+        // Configurar navegação nos botões
+        document.addEventListener('DOMContentLoaded', function() {
+            const baseUrl = getBaseUrl();
+            
+            document.getElementById('botaoInicio').onclick = () => window.location.href = baseUrl + '/';
+            document.getElementById('botaoDispositivos').onclick = () => window.location.href = baseUrl + '/dispositivos';
+            document.getElementById('botaoConfiguracoes').onclick = () => window.location.href = baseUrl + '/configuracoes';
+        });
+    </script>
 
     <!-- Script -->
     <script src="{{ url_for('static', filename='devices.js') }}"></script>
