@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações - IP Monitor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='config.css') }}">
+</head>
+<body>
+
+    <nav>
+        <!-- Controles principais -->
+        <div id="nav-controls">
+            <button id="botaoInicio" onclick="window.location.href='/'">🏠 Página Inicial</button>
+            <button id="botaoConfiguracoes" class="active" onclick="window.location.href='/configuracoes'">⚙️ Configurações</button>
+        </div>
+
+        <!-- Informações de Rede -->
+        <div id="network-info">
+            <span class="network-info-item">
+                <strong>Versão:</strong> <span id="system-version">{{ config.system_info.version }}</span>
+            </span>
+        </div>
+    </nav>
+
+    <!-- Container Principal -->
+    <div id="config-container">
+        <h1>⚙️ Configurações do Sistema</h1>
+        
+        <!-- Mensagem de Status -->
+        <div id="status-message" class="hidden"></div>
+        
+        <!-- Formulário de Configurações -->
+        <form id="config-form">
+            
+            <!-- Seção: Intervalos de Ping -->
+            <section class="config-section">
+                <h2>📡 Intervalos de Ping por VLAN</h2>
+                <p class="section-description">Configure o intervalo (em segundos) entre verificações de ping para cada VLAN.</p>
+                
+                <div class="config-grid">
+                    {% for vlan in config.vlans.active_vlans %}
+                    <div class="config-item">
+                        <label for="ping_vlan_{{ vlan }}">{{ config.vlans.vlan_descriptions[vlan|string] }}:</label>
+                        <input type="number" 
+                               id="ping_vlan_{{ vlan }}" 
+                               name="ping_intervals.vlan_{{ vlan }}" 
+                               value="{{ config.ping_intervals['vlan_' + vlan|string] }}" 
+                               min="5" 
+                               max="300" 
+                               step="1">
+                        <span class="input-unit">segundos</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Seção: Configurações de Rede -->
+            <section class="config-section">
+                <h2>🌐 Configurações de Rede</h2>
+                <p class="section-description">Parâmetros técnicos para verificação de conectividade.</p>
+                
+                <div class="config-grid">
+                    <div class="config-item">
+                        <label for="ping_timeout">Timeout do Ping:</label>
+                        <input type="number" 
+                               id="ping_timeout" 
+                               name="network_settings.ping_timeout" 
+                               value="{{ config.network_settings.ping_timeout }}" 
+                               min="1" 
+                               max="10" 
+                               step="0.5">
+                        <span class="input-unit">segundos</span>
+                    </div>
+                    
+                    <div class="config-item">
+                        <label for="max_concurrent_pings">Pings Simultâneos:</label>
+                        <input type="number" 
+                               id="max_concurrent_pings" 
+                               name="network_settings.max_concurrent_pings" 
+                               value="{{ config.network_settings.max_concurrent_pings }}" 
+                               min="1" 
+                               max="10" 
+                               step="1">
+                        <span class="input-unit">threads</span>
+                    </div>
+                    
+                    <div class="config-item">
+                        <label for="retry_attempts">Tentativas de Retry:</label>
+                        <input type="number" 
+                               id="retry_attempts" 
+                               name="network_settings.retry_attempts" 
+                               value="{{ config.network_settings.retry_attempts }}" 
+                               min="0" 
+                               max="5" 
+                               step="1">
+                        <span class="input-unit">tentativas</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção: Interface do Usuário -->
+            <section class="config-section">
+                <h2>🖥️ Interface do Usuário</h2>
+                <p class="section-description">Personalize a experiência da interface web.</p>
+                
+                <div class="config-grid">
+                    <div class="config-item checkbox-item">
+                        <label for="auto_refresh">
+                            <input type="checkbox" 
+                                   id="auto_refresh" 
+                                   name="ui_settings.auto_refresh" 
+                                   {{ 'checked' if config.ui_settings.auto_refresh else '' }}>
+                            Atualização Automática
+                        </label>
+                    </div>
+                    
+                    <div class="config-item">
+                        <label for="refresh_rate">Taxa de Atualização:</label>
+                        <input type="number" 
+                               id="refresh_rate" 
+                               name="ui_settings.refresh_rate" 
+                               value="{{ config.ui_settings.refresh_rate }}" 
+                               min="1" 
+                               max="60" 
+                               step="1"
+                               {{ 'disabled' if not config.ui_settings.auto_refresh else '' }}>
+                        <span class="input-unit">segundos</span>
+                    </div>
+                    
+                    <div class="config-item checkbox-item">
+                        <label for="show_offline_devices">
+                            <input type="checkbox" 
+                                   id="show_offline_devices" 
+                                   name="ui_settings.show_offline_devices" 
+                                   {{ 'checked' if config.ui_settings.show_offline_devices else '' }}>
+                            Mostrar Dispositivos Offline
+                        </label>
+                    </div>
+                    
+                    <div class="config-item">
+                        <label for="theme">Tema da Interface:</label>
+                        <select id="theme" name="ui_settings.theme">
+                            <option value="default" {{ 'selected' if config.ui_settings.theme == 'default' else '' }}>Padrão</option>
+                            <option value="dark" {{ 'selected' if config.ui_settings.theme == 'dark' else '' }}>Escuro</option>
+                            <option value="high-contrast" {{ 'selected' if config.ui_settings.theme == 'high-contrast' else '' }}>Alto Contraste</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção: Monitoramento -->
+            <section class="config-section">
+                <h2>📊 Monitoramento e Logs</h2>
+                <p class="section-description">Configurações de logging e alertas do sistema.</p>
+                
+                <div class="config-grid">
+                    <div class="config-item checkbox-item">
+                        <label for="enable_logging">
+                            <input type="checkbox" 
+                                   id="enable_logging" 
+                                   name="monitoring.enable_logging" 
+                                   {{ 'checked' if config.monitoring.enable_logging else '' }}>
+                            Habilitar Logging
+                        </label>
+                    </div>
+                    
+                    <div class="config-item">
+                        <label for="log_level">Nível de Log:</label>
+                        <select id="log_level" name="monitoring.log_level">
+                            <option value="DEBUG" {{ 'selected' if config.monitoring.log_level == 'DEBUG' else '' }}>Debug</option>
+                            <option value="INFO" {{ 'selected' if config.monitoring.log_level == 'INFO' else '' }}>Info</option>
+                            <option value="WARNING" {{ 'selected' if config.monitoring.log_level == 'WARNING' else '' }}>Warning</option>
+                            <option value="ERROR" {{ 'selected' if config.monitoring.log_level == 'ERROR' else '' }}>Error</option>
+                        </select>
+                    </div>
+                    
+                    <div class="config-item">
+                        <label for="max_log_entries">Máximo de Logs:</label>
+                        <input type="number" 
+                               id="max_log_entries" 
+                               name="monitoring.max_log_entries" 
+                               value="{{ config.monitoring.max_log_entries }}" 
+                               min="100" 
+                               max="10000" 
+                               step="100">
+                        <span class="input-unit">entradas</span>
+                    </div>
+                    
+                    <div class="config-item checkbox-item">
+                        <label for="alert_on_device_down">
+                            <input type="checkbox" 
+                                   id="alert_on_device_down" 
+                                   name="monitoring.alert_on_device_down" 
+                                   {{ 'checked' if config.monitoring.alert_on_device_down else '' }}>
+                            Alertar Dispositivo Offline
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção: Informações do Sistema -->
+            <section class="config-section">
+                <h2>ℹ️ Informações do Sistema</h2>
+                <p class="section-description">Dados gerais e contato administrativo.</p>
+                
+                <div class="config-grid">
+                    <div class="config-item">
+                        <label for="admin_contact">Contato do Administrador:</label>
+                        <input type="email" 
+                               id="admin_contact" 
+                               name="system_info.admin_contact" 
+                               value="{{ config.system_info.admin_contact }}" 
+                               placeholder="admin@exemplo.com">
+                    </div>
+                    
+                    <div class="config-item">
+                        <label>Última Atualização:</label>
+                        <span class="readonly-value">{{ config.system_info.last_updated or 'Nunca' }}</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Botões de Ação -->
+            <div class="action-buttons">
+                <button type="submit" id="save-btn" class="btn-primary">💾 Salvar Configurações</button>
+                <button type="button" id="reset-btn" class="btn-secondary">🔄 Restaurar Padrões</button>
+                <button type="button" id="test-btn" class="btn-info">🧪 Testar Configurações</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Script -->
+    <script src="{{ url_for('static', filename='config.js') }}"></script>
+
+    <footer>
+        <div class="footer-content">
+            <p>@Sistema WEB desenvolvido por Wilson do Serv. Infraestrutura Predial.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

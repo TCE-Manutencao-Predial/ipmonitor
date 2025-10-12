@@ -4,12 +4,17 @@ import time  # Módulo para manipulação de tempo (usado para pausas e delays).
 import threading  # Módulo para rodar threads em paralelo (execução simultânea).
 from app import app  # Importa a instância 'app' da aplicação Flask.
 import concurrent.futures  # Para execução concorrente de múltiplas tarefas.
+from app.config_manager import config_manager  # Importa o gerenciador de configurações.
 
 # Dicionário global que armazenará o status dos IPs verificados, por VLAN.
 check_ip = {}
 
 # Constante que define o caminho raiz para os endpoints da API.
 RAIZ = '/ipmonitor'
+
+# Variável global para controlar o loop de verificação
+background_thread = None
+should_stop = False
 
 # Função que verifica os IPs em uma determinada VLAN em segundo plano.
 # Esta função é chamada pelas threads para rodar verificações assíncronas.
@@ -33,6 +38,15 @@ def index():
     # Renderiza o arquivo HTML 'index.html' como resposta.
     return render_template('index.html')
 
+# Define o endpoint principal para a página de configurações.
+@app.route('/configuracoes')  # Rota para rodar localmente.
+@app.route(RAIZ + '/configuracoes')  # Rota que inclui o prefixo 'RAIZ' para ambiente de produção.
+def configuracoes():
+    # Obtém as configurações atuais
+    config = config_manager.get_config()
+    # Renderiza o arquivo HTML 'configuracoes.html' com as configurações
+    return render_template('configuracoes.html', config=config)
+
 # Define o endpoint para retornar o status dos IPs verificados em formato JSON.
 @app.route('/api/ip-status')  # Rota para rodar localmente.
 @app.route(RAIZ + '/api/ip-status')  # Rota com prefixo 'RAIZ' para produção.
@@ -52,23 +66,167 @@ def check(vlan):
         print(f"VLAN {vlan} não encontrada em check_ip por enquanto.")
         return '', 204  # Resposta vazia com status 204.
 
+# Endpoint para salvar configurações
+@app.route('/api/config/save', methods=['POST'])
+@app.route(RAIZ + '/api/config/save', methods=['POST'])
+def save_config():
+    try:
+        data = request.get_json()
+        
+        # Validar dados antes de salvar
+        if not validate_config_data(data):
+            return jsonify({'error': 'Dados de configuração inválidos'}), 400
+        
+        # Atualizar configurações por seção
+        for section, values in data.items():
+            if not config_manager.update_section(section, values):
+                return jsonify({'error': f'Erro ao atualizar seção {section}'}), 500
+        
+        # Reiniciar serviço de background com novas configurações
+        restart_background_service()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Configurações salvas com sucesso'
+        })
+    
+    except Exception as e:
+        print(f"Erro ao salvar configurações: {e}")
+        return jsonify({'error': str(e)}), 500
+
+# Endpoint para resetar configurações
+@app.route('/api/config/reset', methods=['POST'])
+@app.route(RAIZ + '/api/config/reset', methods=['POST'])
+def reset_config():
+    try:
+        if config_manager.reset_to_defaults():
+            restart_background_service()
+            return jsonify({
+                'success': True,
+                'message': 'Configurações restauradas para os valores padrão'
+            })
+        else:
+            return jsonify({'error': 'Erro ao resetar configurações'}), 500
+    
+    except Exception as e:
+        print(f"Erro ao resetar configurações: {e}")
+        return jsonify({'error': str(e)}), 500
+
+# Endpoint para testar configurações
+@app.route('/api/config/test', methods=['POST'])
+@app.route(RAIZ + '/api/config/test', methods=['POST'])
+def test_config():
+    try:
+        data = request.get_json()
+        
+        # Simular teste das configurações
+        test_results = {
+            'ping_tests': 0,
+            'network_connectivity': True,
+            'config_validity': True
+        }
+        
+        # Testar algumas configurações básicas
+        if 'network_settings' in data:
+            timeout = data['network_settings'].get('ping_timeout', 2)
+            if timeout < 1 or timeout > 10:
+                test_results['config_validity'] = False
+        
+        if 'ping_intervals' in data:
+            for vlan, interval in data['ping_intervals'].items():
+                if interval < 5 or interval > 300:
+                    test_results['config_validity'] = False
+                test_results['ping_tests'] += 1
+        
+        message = f"Teste concluído. {test_results['ping_tests']} intervalos testados."
+        if not test_results['config_validity']:
+            message += " Alguns valores estão fora dos limites recomendados."
+        
+        return jsonify({
+            'success': True,
+            'message': message,
+            'details': test_results
+        })
+    
+    except Exception as e:
+        print(f"Erro ao testar configurações: {e}")
+        return jsonify({'error': str(e)}), 500
+
+# Função para validar dados de configuração
+def validate_config_data(data):
+    """Valida se os dados de configuração estão corretos"""
+    try:
+        # Validar intervalos de ping
+        if 'ping_intervals' in data:
+            for vlan, interval in data['ping_intervals'].items():
+                if not isinstance(interval, (int, float)) or interval < 5 or interval > 300:
+                    return False
+        
+        # Validar configurações de rede
+        if 'network_settings' in data:
+            network = data['network_settings']
+            if 'ping_timeout' in network:
+                if not isinstance(network['ping_timeout'], (int, float)) or network['ping_timeout'] < 1 or network['ping_timeout'] > 10:
+                    return False
+            if 'max_concurrent_pings' in network:
+                if not isinstance(network['max_concurrent_pings'], int) or network['max_concurrent_pings'] < 1 or network['max_concurrent_pings'] > 10:
+                    return False
+            if 'retry_attempts' in network:
+                if not isinstance(network['retry_attempts'], int) or network['retry_attempts'] < 0 or network['retry_attempts'] > 5:
+                    return False
+        
+        return True
+    except Exception as e:
+        print(f"Erro na validação: {e}")
+        return False
+
+# Função para reiniciar o serviço de background
+def restart_background_service():
+    """Reinicia o serviço de background com as novas configurações"""
+    global should_stop, background_thread
+    
+    # Sinalizar para parar o thread atual
+    should_stop = True
+    
+    # Aguardar um pouco para o thread atual parar
+    time.sleep(2)
+    
+    # Resetar flag e iniciar novo serviço
+    should_stop = False
+    start_background_service()
+
 # Função que inicia o serviço de verificação de IPs em segundo plano.
 def start_background_service():
+    global background_thread, should_stop
+    
     print("Iniciando serviço de verificação em background.")
     
     # Função interna que define um loop de verificação das VLANs.
     def check_loop():
-        vlan_list = [70, 80, 85, 86, 200, 204]  # Lista de VLANs a serem verificadas.
-        
-        # Loop infinito que verifica as VLANs a cada intervalo de tempo (10 segundos).
-        while True:
-            # Usa um pool de threads para verificar duas VLANs simultaneamente.
-            with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
-                executor.map(background_ip_check, vlan_list)  # Aplica a função de verificação para cada VLAN na lista.
-            time.sleep(10)  # Aguarda 10 segundos antes de iniciar a próxima verificação.
+        while not should_stop:
+            # Obter VLANs ativas das configurações
+            vlan_list = config_manager.get_active_vlans()
+            
+            # Usar configurações de concurrent pings
+            max_workers = config_manager.get_config('network_settings').get('max_concurrent_pings', 3)
+            
+            # Usar um pool de threads para verificar VLANs simultaneamente
+            with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+                executor.map(background_ip_check, vlan_list)
+            
+            # Aguardar intervalo configurado (usar o menor intervalo como base)
+            ping_intervals = config_manager.get_config('ping_intervals')
+            min_interval = min(ping_intervals.values()) if ping_intervals else 10
+            
+            # Verificar se deve parar durante o sleep
+            for _ in range(int(min_interval)):
+                if should_stop:
+                    break
+                time.sleep(1)
 
     # Inicia a execução do loop de verificação em uma nova thread.
-    threading.Thread(target=check_loop).start()
+    background_thread = threading.Thread(target=check_loop, daemon=True)
+    background_thread.start()
     
 # Ponto de entrada da aplicação. Executa o Flask quando o script é rodado diretamente.
 if __name__ == '__main__':

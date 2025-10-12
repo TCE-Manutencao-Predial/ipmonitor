@@ -119,7 +119,29 @@ nav button {
     border-radius: 4px; /* Bordas arredondadas */
     margin-right: 5px; /* Espaçamento à direita */
     font-weight: bold; /* Texto em negrito */
-    transition: background-color 0.3s; /* Transição suave para a cor de fundo */
+    transition: all 0.3s ease; /* Transição suave */
+    background-color: #f8f9fa;
+    color: #495057;
+    font-size: 14px;
+}
+
+nav button:hover {
+    background-color: #e9ecef;
+    transform: translateY(-1px);
+}
+
+nav button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+#botaoConfiguracoes {
+    background-color: #6c757d;
+    color: white;
+}
+
+#botaoConfiguracoes:hover {
+    background-color: #5a6268;
 }
 
 /* Estilo para o contêiner do filtro VLAN */
