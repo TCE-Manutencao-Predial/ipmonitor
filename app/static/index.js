@@ -7,6 +7,12 @@ async function searchByVlan() {
     // Obtém o valor selecionado no select e codifica-o para uso na URL
     const vlan = encodeURIComponent(vlanSelect.value);  
     
+    // Atualiza o gateway dinamicamente
+    updateGateway(vlan);
+    
+    // Atualiza as informações da VLAN
+    updateVlanInfo(vlan);
+    
     // Faz uma requisição para a API usando o valor da VLAN
     const response = await fetch(`api/start-check/${vlan}`);
 
@@ -83,11 +89,40 @@ async function searchByVlan() {
     }
 }
 
+// Função para atualizar o gateway baseado na VLAN selecionada
+function updateGateway(vlan) {
+    const gatewayElement = document.getElementById('gateway-value');
+    if (gatewayElement) {
+        gatewayElement.textContent = `172.17.${vlan}.254`;
+    }
+}
+
+// Função para mostrar informações da VLAN selecionada
+function updateVlanInfo(vlan) {
+    // Oculta todas as informações de VLAN
+    const allVlanInfos = document.querySelectorAll('.vlan-info-card');
+    allVlanInfos.forEach(card => {
+        card.style.display = 'none';
+    });
+    
+    // Mostra apenas a informação da VLAN selecionada (se existir)
+    const selectedVlanInfo = document.getElementById(`vlan-${vlan}-info`);
+    if (selectedVlanInfo) {
+        selectedVlanInfo.style.display = 'block';
+    }
+}
+
 // Quando a página carrega, define a VLAN inicial e inicia a busca
 window.onload = function() {
 
     // Define o valor inicial do select 'filtroVLAN' para 85
     document.getElementById('filtroVLAN').value = '85';
+
+    // Atualiza o gateway inicial
+    updateGateway('85');
+    
+    // Atualiza as informações da VLAN inicial
+    updateVlanInfo('85');
 
     // Inicia o processo de busca pela VLAN
     searchByVlan();

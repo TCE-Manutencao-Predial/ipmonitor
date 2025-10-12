@@ -9,23 +9,64 @@
 <body>
 
     <nav>
-    <!-- Botões  -->
-    <button id="botaoInicio" style="margin-right: 10px;" onclick="window.location.href='/'">Página Inicial</button>
+    <!-- Controles principais -->
+    <div id="nav-controls">
+        <button id="botaoInicio" style="margin-right: 10px;" onclick="window.location.href='/'">Página Inicial</button>
         
-    
-    <div id="filtroVLAN-container">
-        <label for="filtroVLAN">Selecione a VLAN: </label>
-        <select id="filtroVLAN" onchange="searchByVlan()">
-            <option value="70">VLAN 70</option>
-            <option value="80">VLAN 80</option>
-            <option value="85">VLAN 85</option>
-            <option value="86">VLAN 86</option>
-            <option value="200">VLAN 200</option>
-            <option value="204">VLAN 204</option>
-        </select>
+        <div id="filtroVLAN-container">
+            <label for="filtroVLAN">Selecione a VLAN: </label>
+            <select id="filtroVLAN" onchange="searchByVlan()">
+                <!-- VLANs Principais do Sistema -->
+                <option value="80">VLAN 80 - Alarme</option>
+                <option value="85">VLAN 85 - Automação Ethernet</option>
+                <option value="86">VLAN 86 - Automação WiFi</option>
+                <!-- Outras VLANs -->
+                <option value="70">VLAN 70</option>
+                <option value="200">VLAN 200</option>
+                <option value="204">VLAN 204</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Informações de Rede -->
+    <div id="network-info">
+        <span class="network-info-item" title="Máscara de sub-rede padrão para todas as VLANs">
+            <strong>Máscara:</strong> 255.255.255.0
+        </span>
+        <span class="network-info-item gateway-info" title="Gateway calculado automaticamente baseado na VLAN selecionada (172.17.[VLAN].254)">
+            <strong>Gateway:</strong> <span id="gateway-value">172.17.85.254</span>
+        </span>
     </div>
 
     </nav>
+
+    <!-- Informações sobre VLANs -->
+    <div id="vlan-info-section">
+        <div class="vlan-info-card" id="vlan-80-info" style="display: none;">
+            <h4>🚨 VLAN 80 - Sistema de Alarme</h4>
+            <p>Rede dedicada aos dispositivos do sistema de alarme e segurança do edifício.</p>
+            <div class="vlan-details">
+                <span class="vlan-detail">Máscara: 255.255.255.0</span>
+                <span class="vlan-detail">Gateway: 172.17.80.254</span>
+            </div>
+        </div>
+        <div class="vlan-info-card" id="vlan-85-info" style="display: block;">
+            <h4>🔌 VLAN 85 - Automação Ethernet</h4>
+            <p>Rede para dispositivos de automação predial conectados via cabo Ethernet.</p>
+            <div class="vlan-details">
+                <span class="vlan-detail">Máscara: 255.255.255.0</span>
+                <span class="vlan-detail">Gateway: 172.17.85.254</span>
+            </div>
+        </div>
+        <div class="vlan-info-card" id="vlan-86-info" style="display: none;">
+            <h4>📶 VLAN 86 - Automação WiFi</h4>
+            <p>Rede para dispositivos de automação e sensores conectados via WiFi.</p>
+            <div class="vlan-details">
+                <span class="vlan-detail">Máscara: 255.255.255.0</span>
+                <span class="vlan-detail">Gateway: 172.17.86.254</span>
+            </div>
+        </div>
+    </div>
 
     <table id='main_table'>
         <thead>
