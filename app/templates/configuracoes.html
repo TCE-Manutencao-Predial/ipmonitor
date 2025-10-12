@@ -233,7 +233,7 @@
         </form>
     </div>
 
-    <!-- Script para navegação -->
+    <!-- Script para navegação e recursos -->
     <script>
         // Função para detectar ambiente e gerar URLs corretas
         function getBaseUrl() {
@@ -242,10 +242,20 @@
             return isProduction ? '/ipmonitor' : '';
         }
         
-        // Configurar navegação nos botões
+        // Corrigir caminhos CSS se necessário
         document.addEventListener('DOMContentLoaded', function() {
             const baseUrl = getBaseUrl();
             
+            // Verificar se CSS está carregado, se não, recarregar com caminho correto
+            const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+            stylesheets.forEach(link => {
+                if (link.href.includes('static/') && !link.href.includes(baseUrl)) {
+                    const filename = link.href.split('static/')[1];
+                    link.href = baseUrl + '/static/' + filename;
+                }
+            });
+            
+            // Configurar navegação nos botões
             document.getElementById('botaoInicio').onclick = () => window.location.href = baseUrl + '/';
             document.getElementById('botaoDispositivos').onclick = () => window.location.href = baseUrl + '/dispositivos';
             document.getElementById('botaoConfiguracoes').onclick = () => window.location.href = baseUrl + '/configuracoes';
