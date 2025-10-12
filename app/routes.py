@@ -5,6 +5,7 @@ import threading  # Módulo para rodar threads em paralelo (execução simultân
 from app import app  # Importa a instância 'app' da aplicação Flask.
 import concurrent.futures  # Para execução concorrente de múltiplas tarefas.
 from app.config_manager import config_manager  # Importa o gerenciador de configurações.
+from app.device_manager import device_manager  # Importa o gerenciador de dispositivos.
 
 # Dicionário global que armazenará o status dos IPs verificados, por VLAN.
 check_ip = {}
@@ -46,6 +47,15 @@ def configuracoes():
     config = config_manager.get_config()
     # Renderiza o arquivo HTML 'configuracoes.html' com as configurações
     return render_template('configuracoes.html', config=config)
+
+# Define o endpoint principal para a página de gerenciamento de dispositivos.
+@app.route('/dispositivos')  # Rota para rodar localmente.
+@app.route(RAIZ + '/dispositivos')  # Rota que inclui o prefixo 'RAIZ' para ambiente de produção.
+def dispositivos():
+    # Obtém as configurações para as VLANs disponíveis
+    config = config_manager.get_config()
+    # Renderiza o arquivo HTML 'dispositivos.html' com as configurações
+    return render_template('dispositivos.html', config=config)
 
 # Define o endpoint para retornar o status dos IPs verificados em formato JSON.
 @app.route('/api/ip-status')  # Rota para rodar localmente.
@@ -150,6 +160,134 @@ def test_config():
     
     except Exception as e:
         print(f"Erro ao testar configurações: {e}")
+        return jsonify({'error': str(e)}), 500
+
+# Endpoints para gerenciar dispositivos
+@app.route('/api/devices/<int:vlan>', methods=['GET'])
+@app.route(RAIZ + '/api/devices/<int:vlan>', methods=['GET'])
+def get_devices(vlan):
+    try:
+        devices = device_manager.get_devices_by_vlan(vlan)
+        return jsonify({'success': True, 'devices': devices})
+    except Exception as e:
+        print(f"Erro ao obter dispositivos: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/devices/<int:vlan>', methods=['POST'])
+@app.route(RAIZ + '/api/devices/<int:vlan>', methods=['POST'])
+def add_device(vlan):
+    try:
+        data = request.get_json()
+        ip = data.get('ip')
+        descricao = data.get('descricao')
+        tipo = data.get('tipo', '')
+        
+        if not ip or not descricao:
+            return jsonify({'error': 'IP e descrição são obrigatórios'}), 400
+        
+        success, message = device_manager.add_device(vlan, ip, descricao, tipo)
+        
+        if success:
+            return jsonify({'success': True, 'message': message})
+        else:
+            return jsonify({'error': message}), 400
+    
+    except Exception as e:
+        print(f"Erro ao adicionar dispositivo: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/devices/<int:vlan>/<string:ip>', methods=['PUT'])
+@app.route(RAIZ + '/api/devices/<int:vlan>/<string:ip>', methods=['PUT'])
+def update_device(vlan, ip):
+    try:
+        data = request.get_json()
+        descricao = data.get('descricao')
+        tipo = data.get('tipo')
+        
+        success, message = device_manager.update_device(vlan, ip, descricao, tipo)
+        
+        if success:
+            return jsonify({'success': True, 'message': message})
+        else:
+            return jsonify({'error': message}), 400
+    
+    except Exception as e:
+        print(f"Erro ao atualizar dispositivo: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/devices/<int:vlan>/<string:ip>', methods=['DELETE'])
+@app.route(RAIZ + '/api/devices/<int:vlan>/<string:ip>', methods=['DELETE'])
+def delete_device(vlan, ip):
+    try:
+        success, message = device_manager.delete_device(vlan, ip)
+        
+        if success:
+            return jsonify({'success': True, 'message': message})
+        else:
+            return jsonify({'error': message}), 400
+    
+    except Exception as e:
+        print(f"Erro ao remover dispositivo: {e}")
+        return jsonify({'error': str(e)}), 500
+
+# Endpoints para gerenciar tipos de dispositivos
+@app.route('/api/device-types/<int:vlan>', methods=['GET'])
+@app.route(RAIZ + '/api/device-types/<int:vlan>', methods=['GET'])
+def get_device_types(vlan):
+    try:
+        # Tipos configurados no sistema
+        configured_types = config_manager.get_device_types(vlan)
+        # Tipos únicos já usados na VLAN
+        used_types = device_manager.get_device_types_by_vlan(vlan)
+        
+        # Combinar e remover duplicatas
+        all_types = list(set(configured_types + used_types))
+        all_types.sort()
+        
+        return jsonify({
+            'success': True, 
+            'types': all_types,
+            'configured_types': configured_types,
+            'used_types': used_types
+        })
+    except Exception as e:
+        print(f"Erro ao obter tipos de dispositivos: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/device-types/<int:vlan>', methods=['POST'])
+@app.route(RAIZ + '/api/device-types/<int:vlan>', methods=['POST'])
+def add_device_type(vlan):
+    try:
+        data = request.get_json()
+        device_type = data.get('type')
+        
+        if not device_type:
+            return jsonify({'error': 'Tipo de dispositivo é obrigatório'}), 400
+        
+        success = config_manager.add_device_type(vlan, device_type)
+        
+        if success:
+            return jsonify({'success': True, 'message': 'Tipo adicionado com sucesso'})
+        else:
+            return jsonify({'error': 'Erro ao adicionar tipo'}), 500
+    
+    except Exception as e:
+        print(f"Erro ao adicionar tipo de dispositivo: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/device-types/<int:vlan>/<string:device_type>', methods=['DELETE'])
+@app.route(RAIZ + '/api/device-types/<int:vlan>/<string:device_type>', methods=['DELETE'])
+def delete_device_type(vlan, device_type):
+    try:
+        success = config_manager.remove_device_type(vlan, device_type)
+        
+        if success:
+            return jsonify({'success': True, 'message': 'Tipo removido com sucesso'})
+        else:
+            return jsonify({'error': 'Erro ao remover tipo'}), 500
+    
+    except Exception as e:
+        print(f"Erro ao remover tipo de dispositivo: {e}")
         return jsonify({'error': str(e)}), 500
 
 # Função para validar dados de configuração

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Dispositivos - IP Monitor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='devices.css') }}">
+</head>
+<body>
+
+    <nav>
+        <!-- Controles principais -->
+        <div id="nav-controls">
+            <button id="botaoInicio" onclick="window.location.href='{{ url_for('index') }}'">🏠 Página Inicial</button>
+            <button id="botaoConfiguracoes" onclick="window.location.href='{{ url_for('configuracoes') }}'">⚙️ Configurações</button>
+            <button id="botaoDispositivos" class="active" onclick="window.location.href='{{ url_for('dispositivos') }}'">📱 Dispositivos</button>
+        </div>
+
+        <!-- Informações de Rede -->
+        <div id="network-info">
+            <span class="network-info-item">
+                <strong>Modo:</strong> Gerenciamento
+            </span>
+        </div>
+    </nav>
+
+    <!-- Container Principal -->
+    <div id="devices-container">
+        <h1>📱 Gerenciamento de Dispositivos IP</h1>
+        
+        <!-- Mensagem de Status -->
+        <div id="status-message" class="hidden"></div>
+        
+        <!-- Seletor de VLAN -->
+        <div class="vlan-selector">
+            <label for="vlan-select">Selecionar VLAN:</label>
+            <select id="vlan-select">
+                <option value="">-- Selecione uma VLAN --</option>
+                {% for vlan in vlans.active_vlans %}
+                <option value="{{ vlan }}">{{ vlans.vlan_descriptions[vlan|string] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Seção de Dispositivos -->
+        <div id="devices-section" class="hidden">
+            <!-- Controles de Ação -->
+            <div class="action-controls">
+                <div class="controls-left">
+                    <button id="add-device-btn" class="btn-primary">➕ Adicionar Dispositivo</button>
+                    <button id="manage-types-btn" class="btn-secondary">🏷️ Gerenciar Tipos</button>
+                </div>
+                <div class="controls-right">
+                    <input type="text" id="search-input" placeholder="Buscar dispositivos..." />
+                    <button id="search-btn" class="btn-info">🔍 Buscar</button>
+                </div>
+            </div>
+
+            <!-- Tabela de Dispositivos -->
+            <div class="table-container">
+                <table id="devices-table">
+                    <thead>
+                        <tr>
+                            <th>IP</th>
+                            <th>Descrição</th>
+                            <th>Tipo</th>
+                            <th>Atualizado</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="devices-tbody">
+                        <!-- Dispositivos serão carregados aqui -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Loading -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <span>Carregando dispositivos...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Adicionar/Editar Dispositivo -->
+    <div id="device-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Adicionar Dispositivo</h3>
+                <span class="close" id="close-modal">&times;</span>
+            </div>
+            <form id="device-form">
+                <div class="form-group">
+                    <label for="device-ip">IP do Dispositivo:</label>
+                    <input type="text" id="device-ip" required pattern="^(\d{1,3}\.){3}\d{1,3}$" placeholder="172.17.80.100">
+                    <small>Formato: 172.17.X.Y</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="device-descricao">Descrição:</label>
+                    <input type="text" id="device-descricao" required maxlength="200" placeholder="Descrição do dispositivo">
+                </div>
+                
+                <div class="form-group">
+                    <label for="device-tipo">Tipo do Dispositivo:</label>
+                    <div class="tipo-container">
+                        <select id="device-tipo-select">
+                            <option value="">-- Selecionar tipo existente --</option>
+                        </select>
+                        <span class="tipo-separator">ou</span>
+                        <input type="text" id="device-tipo-input" placeholder="Novo tipo de dispositivo" maxlength="50">
+                    </div>
+                    <small>Selecione um tipo existente ou digite um novo</small>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">💾 Salvar</button>
+                    <button type="button" id="cancel-btn" class="btn-secondary">❌ Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Gerenciar Tipos -->
+    <div id="types-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🏷️ Gerenciar Tipos de Dispositivos</h3>
+                <span class="close" id="close-types-modal">&times;</span>
+            </div>
+            
+            <div class="types-section">
+                <h4>Adicionar Novo Tipo</h4>
+                <div class="add-type-form">
+                    <input type="text" id="new-type-input" placeholder="Nome do novo tipo" maxlength="50">
+                    <button id="add-type-btn" class="btn-primary">➕ Adicionar</button>
+                </div>
+            </div>
+            
+            <div class="types-section">
+                <h4>Tipos Existentes</h4>
+                <div id="types-list" class="types-list">
+                    <!-- Lista de tipos será carregada aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div id="confirm-modal" class="modal hidden">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3>❓ Confirmação</h3>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-message">Tem certeza que deseja realizar esta ação?</p>
+            </div>
+            <div class="form-actions">
+                <button id="confirm-yes" class="btn-primary">✅ Sim</button>
+                <button id="confirm-no" class="btn-secondary">❌ Não</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="{{ url_for('static', filename='devices.js') }}"></script>
+
+    <footer>
+        <div class="footer-content">
+            <p>@Sistema WEB desenvolvido por Wilson do Serv. Infraestrutura Predial.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

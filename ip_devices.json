@@ -1,0 +1,1692 @@
+{
+    "vlans": {
+        "80": [
+            {
+                "ip": "172.17.80.100",
+                "descricao": "Alarme - Guarita Privativa",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480378",
+                "updated_at": "2025-10-12T17:05:22.480413"
+            },
+            {
+                "ip": "172.17.80.101",
+                "descricao": "Alarme - Guarita Servidores",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480417",
+                "updated_at": "2025-10-12T17:05:22.480418"
+            },
+            {
+                "ip": "172.17.80.102",
+                "descricao": "Alarme - Creche",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480420",
+                "updated_at": "2025-10-12T17:05:22.480421"
+            },
+            {
+                "ip": "172.17.80.103",
+                "descricao": "Alarme - Centro de Convivência",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480422",
+                "updated_at": "2025-10-12T17:05:22.480423"
+            },
+            {
+                "ip": "172.17.80.104",
+                "descricao": "Alarme - Auditório",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480424",
+                "updated_at": "2025-10-12T17:05:22.480425"
+            },
+            {
+                "ip": "172.17.80.105",
+                "descricao": "Alarme - Bloco A",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480426",
+                "updated_at": "2025-10-12T17:05:22.480427"
+            },
+            {
+                "ip": "172.17.80.106",
+                "descricao": "Alarme - Bloco B",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480443",
+                "updated_at": "2025-10-12T17:05:22.480444"
+            },
+            {
+                "ip": "172.17.80.107",
+                "descricao": "Alarme - Bloco C",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480445",
+                "updated_at": "2025-10-12T17:05:22.480446"
+            },
+            {
+                "ip": "172.17.80.110",
+                "descricao": "JFL SMART CLOUD 18 - Reservatório",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480447",
+                "updated_at": "2025-10-12T17:05:22.480448"
+            },
+            {
+                "ip": "172.17.80.111",
+                "descricao": "JFL SMART CLOUD 18 - CV",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480449",
+                "updated_at": "2025-10-12T17:05:22.480450"
+            },
+            {
+                "ip": "172.17.80.120",
+                "descricao": "Central Incêndio Skyfire",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480451",
+                "updated_at": "2025-10-12T17:05:22.480452"
+            }
+        ],
+        "85": [
+            {
+                "ip": "172.17.85.100",
+                "descricao": "Guarita Privativa - Poço Bombeamento",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480453",
+                "updated_at": "2025-10-12T17:05:22.480454"
+            },
+            {
+                "ip": "172.17.85.101",
+                "descricao": "Guarita Privativa",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480455",
+                "updated_at": "2025-10-12T17:05:22.480456"
+            },
+            {
+                "ip": "172.17.85.102",
+                "descricao": "Guarita Servidores",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480457",
+                "updated_at": "2025-10-12T17:05:22.480458"
+            },
+            {
+                "ip": "172.17.85.103",
+                "descricao": "Térreo - Bloco A",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480459",
+                "updated_at": "2025-10-12T17:05:22.480460"
+            },
+            {
+                "ip": "172.17.85.104",
+                "descricao": "Térreo - Bloco B1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480461",
+                "updated_at": "2025-10-12T17:05:22.480462"
+            },
+            {
+                "ip": "172.17.85.105",
+                "descricao": "Térreo - Bloco B2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480463",
+                "updated_at": "2025-10-12T17:05:22.480463"
+            },
+            {
+                "ip": "172.17.85.106",
+                "descricao": "Térreo - Bloco C",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480464",
+                "updated_at": "2025-10-12T17:05:22.480465"
+            },
+            {
+                "ip": "172.17.85.107",
+                "descricao": "Subsolo 01 - Bloco AC",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480466",
+                "updated_at": "2025-10-12T17:05:22.480467"
+            },
+            {
+                "ip": "172.17.85.108",
+                "descricao": "Subsolo 01 - Bloco B1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480468",
+                "updated_at": "2025-10-12T17:05:22.480469"
+            },
+            {
+                "ip": "172.17.85.109",
+                "descricao": "Subsolo 01 - Bloco B2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480470",
+                "updated_at": "2025-10-12T17:05:22.480471"
+            },
+            {
+                "ip": "172.17.85.110",
+                "descricao": "Refrigeração - Plenário",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480472",
+                "updated_at": "2025-10-12T17:05:22.480473"
+            },
+            {
+                "ip": "172.17.85.111",
+                "descricao": "Pátio de Serviços - Ilum. Externa",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480474",
+                "updated_at": "2025-10-12T17:05:22.480474"
+            },
+            {
+                "ip": "172.17.85.112",
+                "descricao": "Auditório - Passarela",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480476",
+                "updated_at": "2025-10-12T17:05:22.480476"
+            },
+            {
+                "ip": "172.17.85.113",
+                "descricao": "Adução",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480477",
+                "updated_at": "2025-10-12T17:05:22.480478"
+            },
+            {
+                "ip": "172.17.85.114",
+                "descricao": "Irrigação",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480479",
+                "updated_at": "2025-10-12T17:05:22.480480"
+            },
+            {
+                "ip": "172.17.85.115",
+                "descricao": "Centro de Convivência",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480481",
+                "updated_at": "2025-10-12T17:05:22.480482"
+            },
+            {
+                "ip": "172.17.85.116",
+                "descricao": "Creche",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480483",
+                "updated_at": "2025-10-12T17:05:22.480484"
+            },
+            {
+                "ip": "172.17.85.117",
+                "descricao": "Reservatório",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480485",
+                "updated_at": "2025-10-12T17:05:22.480486"
+            },
+            {
+                "ip": "172.17.85.118",
+                "descricao": "Espelhos D'Água",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480487",
+                "updated_at": "2025-10-12T17:05:22.480488"
+            },
+            {
+                "ip": "172.17.85.119",
+                "descricao": "C.A.G. - CompactLogix",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480489",
+                "updated_at": "2025-10-12T17:05:22.480490"
+            },
+            {
+                "ip": "172.17.85.120",
+                "descricao": "C.A.G.",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480491",
+                "updated_at": "2025-10-12T17:05:22.480491"
+            },
+            {
+                "ip": "172.17.85.121",
+                "descricao": "Climatização átrio - Bloco A",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480492",
+                "updated_at": "2025-10-12T17:05:22.480493"
+            },
+            {
+                "ip": "172.17.85.122",
+                "descricao": "Climatização átrio - Bloco C",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480494",
+                "updated_at": "2025-10-12T17:05:22.480495"
+            },
+            {
+                "ip": "172.17.85.123",
+                "descricao": "Climatização Auditório",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480503",
+                "updated_at": "2025-10-12T17:05:22.480504"
+            },
+            {
+                "ip": "172.17.85.124",
+                "descricao": "Elevador Externo",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480505",
+                "updated_at": "2025-10-12T17:05:22.480506"
+            },
+            {
+                "ip": "172.17.85.125",
+                "descricao": "Cubículo Blindado",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480507",
+                "updated_at": "2025-10-12T17:05:22.480508"
+            },
+            {
+                "ip": "172.17.85.126",
+                "descricao": "Kinetix 300",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480509",
+                "updated_at": "2025-10-12T17:05:22.480510"
+            },
+            {
+                "ip": "172.17.85.127",
+                "descricao": "Point I/O - S2-B2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480511",
+                "updated_at": "2025-10-12T17:05:22.480512"
+            },
+            {
+                "ip": "172.17.85.128",
+                "descricao": "Point I/O -",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480513",
+                "updated_at": "2025-10-12T17:05:22.480514"
+            },
+            {
+                "ip": "172.17.85.129",
+                "descricao": "Point I/O -",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480515",
+                "updated_at": "2025-10-12T17:05:22.480515"
+            },
+            {
+                "ip": "172.17.85.130",
+                "descricao": "Adução - Inversor 01",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480516",
+                "updated_at": "2025-10-12T17:05:22.480517"
+            },
+            {
+                "ip": "172.17.85.131",
+                "descricao": "Adução - Inversor 02",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480518",
+                "updated_at": "2025-10-12T17:05:22.480519"
+            },
+            {
+                "ip": "172.17.85.132",
+                "descricao": "Irrigação - Inversor 01",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480520",
+                "updated_at": "2025-10-12T17:05:22.480521"
+            },
+            {
+                "ip": "172.17.85.133",
+                "descricao": "Irrigação - Inversor 02",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480522",
+                "updated_at": "2025-10-12T17:05:22.480523"
+            },
+            {
+                "ip": "172.17.85.134",
+                "descricao": "Tanque Pressão - Inversor 01",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480524",
+                "updated_at": "2025-10-12T17:05:22.480525"
+            },
+            {
+                "ip": "172.17.85.135",
+                "descricao": "Tanque Pressão - Inversor 02",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480526",
+                "updated_at": "2025-10-12T17:05:22.480527"
+            },
+            {
+                "ip": "172.17.85.136",
+                "descricao": "Auditório - Inversor Fancoil 1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480528",
+                "updated_at": "2025-10-12T17:05:22.480529"
+            },
+            {
+                "ip": "172.17.85.137",
+                "descricao": "Auditório - Inversor Fancoil 2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480530",
+                "updated_at": "2025-10-12T17:05:22.480530"
+            },
+            {
+                "ip": "172.17.85.138",
+                "descricao": "Foyer - Inversor Fancoil 01",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480531",
+                "updated_at": "2025-10-12T17:05:22.480532"
+            },
+            {
+                "ip": "172.17.85.139",
+                "descricao": "Reservatório - Inversor 1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480533",
+                "updated_at": "2025-10-12T17:05:22.480534"
+            },
+            {
+                "ip": "172.17.85.140",
+                "descricao": "Reservatório - Inversor 2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480535",
+                "updated_at": "2025-10-12T17:05:22.480536"
+            },
+            {
+                "ip": "172.17.85.141",
+                "descricao": "Espelho - Inversor Filtro A",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480537",
+                "updated_at": "2025-10-12T17:05:22.480538"
+            },
+            {
+                "ip": "172.17.85.142",
+                "descricao": "Espelho - Inversor Filtro C",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480539",
+                "updated_at": "2025-10-12T17:05:22.480539"
+            },
+            {
+                "ip": "172.17.85.143",
+                "descricao": "Espelho - Inversor Geiser A",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480540",
+                "updated_at": "2025-10-12T17:05:22.480541"
+            },
+            {
+                "ip": "172.17.85.144",
+                "descricao": "Espelho - Inversor Geiser C",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480542",
+                "updated_at": "2025-10-12T17:05:22.480543"
+            },
+            {
+                "ip": "172.17.85.145",
+                "descricao": "IHM - CAG",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480544",
+                "updated_at": "2025-10-12T17:05:22.480545"
+            },
+            {
+                "ip": "172.17.85.146",
+                "descricao": "IHM - Térreo B1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480546",
+                "updated_at": "2025-10-12T17:05:22.480547"
+            },
+            {
+                "ip": "172.17.85.147",
+                "descricao": "IHM - Espelhos d'água",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480548",
+                "updated_at": "2025-10-12T17:05:22.480549"
+            },
+            {
+                "ip": "172.17.85.148",
+                "descricao": "IHM - 2° subsolo",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480550",
+                "updated_at": "2025-10-12T17:05:22.480551"
+            },
+            {
+                "ip": "172.17.85.149",
+                "descricao": "IHM - Auditório",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480552",
+                "updated_at": "2025-10-12T17:05:22.480553"
+            },
+            {
+                "ip": "172.17.85.150",
+                "descricao": "CompactLogix - 2° subsolo",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480572",
+                "updated_at": "2025-10-12T17:05:22.480573"
+            },
+            {
+                "ip": "172.17.85.151",
+                "descricao": "Kinetix 1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480574",
+                "updated_at": "2025-10-12T17:05:22.480574"
+            },
+            {
+                "ip": "172.17.85.152",
+                "descricao": "Kinetix 2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480575",
+                "updated_at": "2025-10-12T17:05:22.480576"
+            },
+            {
+                "ip": "172.17.85.153",
+                "descricao": "Kinetix 3",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480577",
+                "updated_at": "2025-10-12T17:05:22.480578"
+            },
+            {
+                "ip": "172.17.85.154",
+                "descricao": "Kinetix 4",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480579",
+                "updated_at": "2025-10-12T17:05:22.480580"
+            },
+            {
+                "ip": "172.17.85.155",
+                "descricao": "Kinetix 5",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480581",
+                "updated_at": "2025-10-12T17:05:22.480582"
+            },
+            {
+                "ip": "172.17.85.156",
+                "descricao": "IHM - Reservatório",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480583",
+                "updated_at": "2025-10-12T17:05:22.480583"
+            },
+            {
+                "ip": "172.17.85.157",
+                "descricao": "CLP Micrologix S2-B2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480584",
+                "updated_at": "2025-10-12T17:05:22.480585"
+            },
+            {
+                "ip": "172.17.85.158",
+                "descricao": "Controladora ViaOnda RFID M-ID40",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480586",
+                "updated_at": "2025-10-12T17:05:22.480587"
+            },
+            {
+                "ip": "172.17.85.159",
+                "descricao": "Controladora ViaOnda RFID M-ID40",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480588",
+                "updated_at": "2025-10-12T17:05:22.480589"
+            },
+            {
+                "ip": "172.17.85.160",
+                "descricao": "Controladora Portão Conselheiros - 2° subsolo",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480590",
+                "updated_at": "2025-10-12T17:05:22.480591"
+            },
+            {
+                "ip": "172.17.85.161",
+                "descricao": "Controladora Portão Guarita Privativa",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480592",
+                "updated_at": "2025-10-12T17:05:22.480593"
+            },
+            {
+                "ip": "172.17.85.162",
+                "descricao": "IHM - Mesa 2° subsolo PH",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480594",
+                "updated_at": "2025-10-12T17:05:22.480594"
+            },
+            {
+                "ip": "172.17.85.163",
+                "descricao": "Controladora Portão Auditores - 1° subsolo",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480595",
+                "updated_at": "2025-10-12T17:05:22.480596"
+            },
+            {
+                "ip": "172.17.85.164",
+                "descricao": "IHM - Mesa 1° subsolo Flex",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480597",
+                "updated_at": "2025-10-12T17:05:22.480598"
+            },
+            {
+                "ip": "172.17.85.200",
+                "descricao": "QTA GMGs",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480599",
+                "updated_at": "2025-10-12T17:05:22.480600"
+            },
+            {
+                "ip": "172.17.85.201",
+                "descricao": "GMG 1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480601",
+                "updated_at": "2025-10-12T17:05:22.480602"
+            },
+            {
+                "ip": "172.17.85.202",
+                "descricao": "GMG 2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480603",
+                "updated_at": "2025-10-12T17:05:22.480604"
+            },
+            {
+                "ip": "172.17.85.203",
+                "descricao": "UPS Bloco B",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480605",
+                "updated_at": "2025-10-12T17:05:22.480606"
+            },
+            {
+                "ip": "172.17.85.204",
+                "descricao": "UPS Bloco AC 1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480607",
+                "updated_at": "2025-10-12T17:05:22.480607"
+            },
+            {
+                "ip": "172.17.85.205",
+                "descricao": "UPS Bloco AC 2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480608",
+                "updated_at": "2025-10-12T17:05:22.480609"
+            },
+            {
+                "ip": "172.17.85.206",
+                "descricao": "Conversor LANTRONIX GMG",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480610",
+                "updated_at": "2025-10-12T17:05:22.480611"
+            },
+            {
+                "ip": "172.17.85.207",
+                "descricao": "Conversor IOT 1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480612",
+                "updated_at": "2025-10-12T17:05:22.480613"
+            },
+            {
+                "ip": "172.17.85.208",
+                "descricao": "Conversor IOT 2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480614",
+                "updated_at": "2025-10-12T17:05:22.480620"
+            },
+            {
+                "ip": "172.17.85.209",
+                "descricao": "Conversor IOT 3",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480621",
+                "updated_at": "2025-10-12T17:05:22.480622"
+            },
+            {
+                "ip": "172.17.85.210",
+                "descricao": "Conversor IOT 4",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480623",
+                "updated_at": "2025-10-12T17:05:22.480624"
+            },
+            {
+                "ip": "172.17.85.211",
+                "descricao": "Conversor IOT - Inversores estacionamento",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480625",
+                "updated_at": "2025-10-12T17:05:22.480625"
+            },
+            {
+                "ip": "172.17.85.212",
+                "descricao": "Conversor IOT - Medidor vazão CAG",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480627",
+                "updated_at": "2025-10-12T17:05:22.480628"
+            },
+            {
+                "ip": "172.17.85.213",
+                "descricao": "Conversor IOT - Medidor vazão 1° subsolo",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480629",
+                "updated_at": "2025-10-12T17:05:22.480629"
+            },
+            {
+                "ip": "172.17.85.215",
+                "descricao": "Meio Ambiente - Átrio A",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480630",
+                "updated_at": "2025-10-12T17:05:22.480631"
+            },
+            {
+                "ip": "172.17.85.216",
+                "descricao": "Meio Ambiente - Átrio B",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480632",
+                "updated_at": "2025-10-12T17:05:22.480633"
+            },
+            {
+                "ip": "172.17.85.217",
+                "descricao": "Meio Ambiente - Átrio C",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480634",
+                "updated_at": "2025-10-12T17:05:22.480635"
+            },
+            {
+                "ip": "172.17.85.218",
+                "descricao": "Guarita Privativa",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480636",
+                "updated_at": "2025-10-12T17:05:22.480637"
+            },
+            {
+                "ip": "172.17.85.219",
+                "descricao": "Meio Ambiente - Reservatório",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480638",
+                "updated_at": "2025-10-12T17:05:22.480638"
+            },
+            {
+                "ip": "172.17.85.220",
+                "descricao": "Estação Meteorológica",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480639",
+                "updated_at": "2025-10-12T17:05:22.480640"
+            },
+            {
+                "ip": "172.17.85.225",
+                "descricao": "RGB e UV - C.V.",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480641",
+                "updated_at": "2025-10-12T17:05:22.480642"
+            },
+            {
+                "ip": "172.17.85.226",
+                "descricao": "Qualidade Ar - Térreo A",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480643",
+                "updated_at": "2025-10-12T17:05:22.480644"
+            },
+            {
+                "ip": "172.17.85.228",
+                "descricao": "Qualidade Ar - C.V",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480645",
+                "updated_at": "2025-10-12T17:05:22.480646"
+            }
+        ],
+        "90": [
+            {
+                "ip": "172.17.90.162",
+                "descricao": "Controladora Cancelas - 1° subsolo",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480647",
+                "updated_at": "2025-10-12T17:05:22.480648"
+            },
+            {
+                "ip": "172.17.90.164",
+                "descricao": "Controladora Cancelas - Guarita Servidores - Saída",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480649",
+                "updated_at": "2025-10-12T17:05:22.480649"
+            },
+            {
+                "ip": "172.17.90.165",
+                "descricao": "Controladora Cancelas - Guarita Servidores - Entrada",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480652",
+                "updated_at": "2025-10-12T17:05:22.480652"
+            }
+        ],
+        "86": [
+            {
+                "ip": "172.17.86.3",
+                "descricao": "Módulo DTU-W100 Hoymiles  - Estacionamento inferior",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480654",
+                "updated_at": "2025-10-12T17:05:22.480655"
+            },
+            {
+                "ip": "172.17.86.4",
+                "descricao": "Módulo DTU-W100 Hoymiles  - Estacionamento superior",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480656",
+                "updated_at": "2025-10-12T17:05:22.480656"
+            },
+            {
+                "ip": "172.17.86.5",
+                "descricao": "Via Onda MID10W 1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480657",
+                "updated_at": "2025-10-12T17:05:22.480658"
+            },
+            {
+                "ip": "172.17.86.6",
+                "descricao": "Via Onda MID10W 2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480659",
+                "updated_at": "2025-10-12T17:05:22.480660"
+            },
+            {
+                "ip": "172.17.86.8",
+                "descricao": "Sensor Plenário - Duto Saída",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480661",
+                "updated_at": "2025-10-12T17:05:22.480662"
+            },
+            {
+                "ip": "172.17.86.9",
+                "descricao": "Sensor Plenário - Duto Split",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480663",
+                "updated_at": "2025-10-12T17:05:22.480664"
+            },
+            {
+                "ip": "172.17.86.10",
+                "descricao": "Sensor Plenário - Qualidade Ar",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480665",
+                "updated_at": "2025-10-12T17:05:22.480666"
+            },
+            {
+                "ip": "172.17.86.11",
+                "descricao": "Sensor MPL3115A2 - Elevador Social B1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480666",
+                "updated_at": "2025-10-12T17:05:22.480667"
+            },
+            {
+                "ip": "172.17.86.12",
+                "descricao": "Sala técnica S1-B1 - Umidade",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480669",
+                "updated_at": "2025-10-12T17:05:22.480670"
+            },
+            {
+                "ip": "172.17.86.13",
+                "descricao": "Sala técnica DG Telefonia - Umidade",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480671",
+                "updated_at": "2025-10-12T17:05:22.480672"
+            },
+            {
+                "ip": "172.17.86.14",
+                "descricao": "Sensor 2P-C - Luminosidade",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480676",
+                "updated_at": "2025-10-12T17:05:22.480677"
+            },
+            {
+                "ip": "172.17.86.15",
+                "descricao": "Sensor movimento microondas",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480678",
+                "updated_at": "2025-10-12T17:05:22.480679"
+            },
+            {
+                "ip": "172.17.86.16",
+                "descricao": "Sensor cor",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480680",
+                "updated_at": "2025-10-12T17:05:22.480681"
+            },
+            {
+                "ip": "172.17.86.17",
+                "descricao": "Sensor temperatura IR",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480682",
+                "updated_at": "2025-10-12T17:05:22.480683"
+            },
+            {
+                "ip": "172.17.86.18",
+                "descricao": "Sensor Auditório - Qualidade Ar",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480684",
+                "updated_at": "2025-10-12T17:05:22.480685"
+            },
+            {
+                "ip": "172.17.86.19",
+                "descricao": "Sensor 2P-C - Qualidade ar",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480686",
+                "updated_at": "2025-10-12T17:05:22.480687"
+            },
+            {
+                "ip": "172.17.86.20",
+                "descricao": "Sala técnica S01-AC - Qualidade Ar",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480688",
+                "updated_at": "2025-10-12T17:05:22.480688"
+            },
+            {
+                "ip": "172.17.86.21",
+                "descricao": "Sala técnica S01-B1 - Qualidade Ar",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480689",
+                "updated_at": "2025-10-12T17:05:22.480690"
+            },
+            {
+                "ip": "172.17.86.22",
+                "descricao": "Sala técnica DG Telefonia - Qualidade Ar",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480691",
+                "updated_at": "2025-10-12T17:05:22.480692"
+            },
+            {
+                "ip": "172.17.86.23",
+                "descricao": "Sensor gás MQ-2 - Galeria Técnica",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480693",
+                "updated_at": "2025-10-12T17:05:22.480694"
+            },
+            {
+                "ip": "172.17.86.24",
+                "descricao": "Sensor gás MQ-3 - Depósito Materiais",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480695",
+                "updated_at": "2025-10-12T17:05:22.480696"
+            },
+            {
+                "ip": "172.17.86.25",
+                "descricao": "Sensor gás MQ-4 - S01-B1 (acima forro)",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480697",
+                "updated_at": "2025-10-12T17:05:22.480698"
+            },
+            {
+                "ip": "172.17.86.26",
+                "descricao": "Sensor gás MQ-5 - Copa Térreo",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480699",
+                "updated_at": "2025-10-12T17:05:22.480700"
+            },
+            {
+                "ip": "172.17.86.27",
+                "descricao": "Sensor gás MQ-5 - Copa 2° pav.",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480701",
+                "updated_at": "2025-10-12T17:05:22.480702"
+            },
+            {
+                "ip": "172.17.86.28",
+                "descricao": "Sensor gás MQ-6 - Copa 1° pav.",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480703",
+                "updated_at": "2025-10-12T17:05:22.480704"
+            },
+            {
+                "ip": "172.17.86.29",
+                "descricao": "Sensor gás MQ-6 - Refeitório",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480705",
+                "updated_at": "2025-10-12T17:05:22.480705"
+            },
+            {
+                "ip": "172.17.86.30",
+                "descricao": "Sensor gás MQ-7 - Reservatório GMG",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480707",
+                "updated_at": "2025-10-12T17:05:22.480707"
+            },
+            {
+                "ip": "172.17.86.31",
+                "descricao": "Sensor gás MQ-8 - CAG",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480708",
+                "updated_at": "2025-10-12T17:05:22.480709"
+            },
+            {
+                "ip": "172.17.86.32",
+                "descricao": "Sensor gás MQ-9 - GMGs Edifício-sede",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480710",
+                "updated_at": "2025-10-12T17:05:22.480711"
+            },
+            {
+                "ip": "172.17.86.33",
+                "descricao": "Sensor gás MQ-135 - Laboratório Solos",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480712",
+                "updated_at": "2025-10-12T17:05:22.480713"
+            },
+            {
+                "ip": "172.17.86.34",
+                "descricao": "Sensor umidade e temperatura - Sala técnica S1-AC",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480715",
+                "updated_at": "2025-10-12T17:05:22.480716"
+            },
+            {
+                "ip": "172.17.86.35",
+                "descricao": "Sensor gás MQ-6 - Lanchonete",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480717",
+                "updated_at": "2025-10-12T17:05:22.480718"
+            },
+            {
+                "ip": "172.17.86.36",
+                "descricao": "Sensor gás MQ-6 - Garagem Conselheiros",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480719",
+                "updated_at": "2025-10-12T17:05:22.480720"
+            },
+            {
+                "ip": "172.17.86.37",
+                "descricao": "Sensor gás MQ-6 - Galeria Técnica",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480721",
+                "updated_at": "2025-10-12T17:05:22.480721"
+            },
+            {
+                "ip": "172.17.86.38",
+                "descricao": "Sensor cor - Frontal A",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480723",
+                "updated_at": "2025-10-12T17:05:22.480724"
+            },
+            {
+                "ip": "172.17.86.39",
+                "descricao": "Sensor de temperatura MLX",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480725",
+                "updated_at": "2025-10-12T17:05:22.480726"
+            },
+            {
+                "ip": "172.17.86.40",
+                "descricao": "Sensores temperatura - Chiller 1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480727",
+                "updated_at": "2025-10-12T17:05:22.480728"
+            },
+            {
+                "ip": "172.17.86.41",
+                "descricao": "Sensores temperatura - Chiller 2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480729",
+                "updated_at": "2025-10-12T17:05:22.480730"
+            },
+            {
+                "ip": "172.17.86.42",
+                "descricao": "Sensores temperatura - Chiller 3",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480731",
+                "updated_at": "2025-10-12T17:05:22.480732"
+            },
+            {
+                "ip": "172.17.86.43",
+                "descricao": "Sensor Temp. Pressão - Sala de Conferências",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480733",
+                "updated_at": "2025-10-12T17:05:22.480734"
+            },
+            {
+                "ip": "172.17.86.44",
+                "descricao": "Sensor luminosidade - C.V.",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480735",
+                "updated_at": "2025-10-12T17:05:22.480736"
+            },
+            {
+                "ip": "172.17.86.45",
+                "descricao": "Sensor umidade temperatura - C.V.",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480737",
+                "updated_at": "2025-10-12T17:05:22.480738"
+            },
+            {
+                "ip": "172.17.86.46",
+                "descricao": "Sensor cor - Creche",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480739",
+                "updated_at": "2025-10-12T17:05:22.480739"
+            },
+            {
+                "ip": "172.17.86.47",
+                "descricao": "Sensor temperatura - Fundos Plenário",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480741",
+                "updated_at": "2025-10-12T17:05:22.480741"
+            },
+            {
+                "ip": "172.17.86.49",
+                "descricao": "Sensor cor - Reservatório",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480743",
+                "updated_at": "2025-10-12T17:05:22.480743"
+            },
+            {
+                "ip": "172.17.86.50",
+                "descricao": "Sensor Temperatura e PIR - Laboratório",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480745",
+                "updated_at": "2025-10-12T17:05:22.480745"
+            },
+            {
+                "ip": "172.17.86.51",
+                "descricao": "Sensor umidade e temperatura - Laboratório",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480747",
+                "updated_at": "2025-10-12T17:05:22.480747"
+            },
+            {
+                "ip": "172.17.86.52",
+                "descricao": "Subestação - Qualidade Ar",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480748",
+                "updated_at": "2025-10-12T17:05:22.480749"
+            },
+            {
+                "ip": "172.17.86.53",
+                "descricao": "Sensor Geiser Counter",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480750",
+                "updated_at": "2025-10-12T17:05:22.480751"
+            },
+            {
+                "ip": "172.17.86.54",
+                "descricao": "Sensor Raios",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480752",
+                "updated_at": "2025-10-12T17:05:22.480753"
+            },
+            {
+                "ip": "172.17.86.55",
+                "descricao": "Tubulação refrigeração - 1° subsolo Retorno",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480754",
+                "updated_at": "2025-10-12T17:05:22.480755"
+            },
+            {
+                "ip": "172.17.86.56",
+                "descricao": "Sensor temperatura - Auditório Palco",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480756",
+                "updated_at": "2025-10-12T17:05:22.480757"
+            },
+            {
+                "ip": "172.17.86.57",
+                "descricao": "Sensor temperatura - Plenário",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480758",
+                "updated_at": "2025-10-12T17:05:22.480759"
+            },
+            {
+                "ip": "172.17.86.58",
+                "descricao": "Sensor Plenário - Duto Fancoil",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480760",
+                "updated_at": "2025-10-12T17:05:22.480761"
+            },
+            {
+                "ip": "172.17.86.59",
+                "descricao": "Sensores Elevador Social A",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480762",
+                "updated_at": "2025-10-12T17:05:22.480763"
+            },
+            {
+                "ip": "172.17.86.60",
+                "descricao": "Sensores Elevador Social B1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480764",
+                "updated_at": "2025-10-12T17:05:22.480765"
+            },
+            {
+                "ip": "172.17.86.61",
+                "descricao": "Sensores Elevador Social B2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480766",
+                "updated_at": "2025-10-12T17:05:22.480767"
+            },
+            {
+                "ip": "172.17.86.62",
+                "descricao": "Sensores Elevador Social C",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480768",
+                "updated_at": "2025-10-12T17:05:22.480769"
+            },
+            {
+                "ip": "172.17.86.63",
+                "descricao": "Sensores Elevador Social Privativo",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480770",
+                "updated_at": "2025-10-12T17:05:22.480770"
+            },
+            {
+                "ip": "172.17.86.64",
+                "descricao": "Sensores Elevador Externo",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480774",
+                "updated_at": "2025-10-12T17:05:22.480775"
+            },
+            {
+                "ip": "172.17.86.65",
+                "descricao": "Sensor umidade solo (resistivo inox)",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480776",
+                "updated_at": "2025-10-12T17:05:22.480777"
+            },
+            {
+                "ip": "172.17.86.66",
+                "descricao": "Decodificador Sistema Irrigação Hunter",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480778",
+                "updated_at": "2025-10-12T17:05:22.480779"
+            },
+            {
+                "ip": "172.17.86.67",
+                "descricao": "Sensor MS5837 - Pressão água",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480783",
+                "updated_at": "2025-10-12T17:05:22.480784"
+            },
+            {
+                "ip": "172.17.86.68",
+                "descricao": "Sensor MPXV7002DP - Pressão água",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480785",
+                "updated_at": "2025-10-12T17:05:22.480786"
+            },
+            {
+                "ip": "172.17.86.69",
+                "descricao": "Sensor MPS20N0040D - Pressão gases",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480787",
+                "updated_at": "2025-10-12T17:05:22.480787"
+            },
+            {
+                "ip": "172.17.86.70",
+                "descricao": "Sensor XGZP6847 - Pressão gases",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480789",
+                "updated_at": "2025-10-12T17:05:22.480789"
+            },
+            {
+                "ip": "172.17.86.71",
+                "descricao": "Sensor Vazão de Água - Reúso 1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480790",
+                "updated_at": "2025-10-12T17:05:22.480791"
+            },
+            {
+                "ip": "172.17.86.72",
+                "descricao": "Sensor Vazão de Água - Reúso 2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480792",
+                "updated_at": "2025-10-12T17:05:22.480793"
+            },
+            {
+                "ip": "172.17.86.73",
+                "descricao": "Sensor Vazão de Água - CAG - Cx. Compensação 3P",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480794",
+                "updated_at": "2025-10-12T17:05:22.480795"
+            },
+            {
+                "ip": "172.17.86.74",
+                "descricao": "Sensor Vazão de Água - CAG - Válvula Ventosa 3P",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480796",
+                "updated_at": "2025-10-12T17:05:22.480797"
+            },
+            {
+                "ip": "172.17.86.75",
+                "descricao": "Estação Meteorológica",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480798",
+                "updated_at": "2025-10-12T17:05:22.480799"
+            },
+            {
+                "ip": "172.17.86.76",
+                "descricao": "Sensor umidade solo 2 (capacitivo)",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480800",
+                "updated_at": "2025-10-12T17:05:22.480801"
+            },
+            {
+                "ip": "172.17.86.77",
+                "descricao": "Tubulação refrigeração - 1° subsolo",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480802",
+                "updated_at": "2025-10-12T17:05:22.480802"
+            },
+            {
+                "ip": "172.17.86.78",
+                "descricao": "Cancelas - 1 Subsolo - Saída",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480803",
+                "updated_at": "2025-10-12T17:05:22.480804"
+            },
+            {
+                "ip": "172.17.86.79",
+                "descricao": "Cancelas - 1 Subsolo - Entrada",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480805",
+                "updated_at": "2025-10-12T17:05:22.480806"
+            },
+            {
+                "ip": "172.17.86.80",
+                "descricao": "Cancelas - Guarita - Entrada",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480807",
+                "updated_at": "2025-10-12T17:05:22.480808"
+            },
+            {
+                "ip": "172.17.86.81",
+                "descricao": "Tubulação refrigeração - 2° subsolo B2",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480809",
+                "updated_at": "2025-10-12T17:05:22.480810"
+            },
+            {
+                "ip": "172.17.86.82",
+                "descricao": "Garra de Corrente 1 - Fieldpiece 1mV/A",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480811",
+                "updated_at": "2025-10-12T17:05:22.480812"
+            },
+            {
+                "ip": "172.17.86.83",
+                "descricao": "Garra de Corrente 2 - AEMC MN313  1mV/A",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480813",
+                "updated_at": "2025-10-12T17:05:22.480814"
+            },
+            {
+                "ip": "172.17.86.84",
+                "descricao": "Garra de Corrente 3",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480815",
+                "updated_at": "2025-10-12T17:05:22.480816"
+            },
+            {
+                "ip": "172.17.86.85",
+                "descricao": "Garra de Corrente 4",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480817",
+                "updated_at": "2025-10-12T17:05:22.480818"
+            },
+            {
+                "ip": "172.17.86.86",
+                "descricao": "Pressão Rede Hidráulica CAG - 2° subsolo",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480819",
+                "updated_at": "2025-10-12T17:05:22.480819"
+            },
+            {
+                "ip": "172.17.86.87",
+                "descricao": "Sanitário público",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480821",
+                "updated_at": "2025-10-12T17:05:22.480821"
+            },
+            {
+                "ip": "172.17.86.88",
+                "descricao": "Sanitário público",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480822",
+                "updated_at": "2025-10-12T17:05:22.480823"
+            },
+            {
+                "ip": "172.17.86.89",
+                "descricao": "Sanitário público",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480824",
+                "updated_at": "2025-10-12T17:05:22.480826"
+            },
+            {
+                "ip": "172.17.86.90",
+                "descricao": "Sanitário público",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480827",
+                "updated_at": "2025-10-12T17:05:22.480828"
+            },
+            {
+                "ip": "172.17.86.91",
+                "descricao": "Sanitário público - TE-B1",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480829",
+                "updated_at": "2025-10-12T17:05:22.480830"
+            },
+            {
+                "ip": "172.17.86.92",
+                "descricao": "Sanitário público",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480831",
+                "updated_at": "2025-10-12T17:05:22.480832"
+            },
+            {
+                "ip": "172.17.86.93",
+                "descricao": "Sensor luminosidade - C.V.",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480833",
+                "updated_at": "2025-10-12T17:05:22.480833"
+            },
+            {
+                "ip": "172.17.86.94",
+                "descricao": "Sensor luminosidade - C.V.",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480834",
+                "updated_at": "2025-10-12T17:05:22.480835"
+            },
+            {
+                "ip": "172.17.86.95",
+                "descricao": "Sensor som INMP441 - FFT",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480836",
+                "updated_at": "2025-10-12T17:05:22.480837"
+            },
+            {
+                "ip": "172.17.86.97",
+                "descricao": "Cancelas - Guarita - Saída Visitantes",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480838",
+                "updated_at": "2025-10-12T17:05:22.480839"
+            },
+            {
+                "ip": "172.17.86.98",
+                "descricao": "Cancelas - Guarita - Saída Servidores",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480840",
+                "updated_at": "2025-10-12T17:05:22.480841"
+            },
+            {
+                "ip": "172.17.86.99",
+                "descricao": "Cancelas - Guarita - Entrada Visitantes",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480842",
+                "updated_at": "2025-10-12T17:05:22.480843"
+            },
+            {
+                "ip": "172.17.86.100",
+                "descricao": "Sensor movimento - C.V.",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480846",
+                "updated_at": "2025-10-12T17:05:22.480847"
+            },
+            {
+                "ip": "172.17.86.101",
+                "descricao": "Sensor movimento - Serv. Bem-Estar",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480848",
+                "updated_at": "2025-10-12T17:05:22.480849"
+            },
+            {
+                "ip": "172.17.86.102",
+                "descricao": "Sensor movimento - Corredor Camarins",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480850",
+                "updated_at": "2025-10-12T17:05:22.480851"
+            },
+            {
+                "ip": "172.17.86.103",
+                "descricao": "Sensor PIR + BH1750 + Relé",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480852",
+                "updated_at": "2025-10-12T17:05:22.480853"
+            },
+            {
+                "ip": "172.17.86.104",
+                "descricao": "Sensor PIR + BH1750 + Relé",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480854",
+                "updated_at": "2025-10-12T17:05:22.480855"
+            },
+            {
+                "ip": "172.17.86.105",
+                "descricao": "Sensor PIR + BH1750 + Relé",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480856",
+                "updated_at": "2025-10-12T17:05:22.480856"
+            },
+            {
+                "ip": "172.17.86.106",
+                "descricao": "Sensor PIR + BH1750 + Relé",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480857",
+                "updated_at": "2025-10-12T17:05:22.480858"
+            },
+            {
+                "ip": "172.17.86.107",
+                "descricao": "Sensor PIR + BH1750 + Relé",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480859",
+                "updated_at": "2025-10-12T17:05:22.480860"
+            },
+            {
+                "ip": "172.17.86.108",
+                "descricao": "Sensor PIR + BH1750 + Relé",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480861",
+                "updated_at": "2025-10-12T17:05:22.480862"
+            },
+            {
+                "ip": "172.17.86.109",
+                "descricao": "Sensor PIR + BH1750 + Relé",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480863",
+                "updated_at": "2025-10-12T17:05:22.480864"
+            },
+            {
+                "ip": "172.17.86.110",
+                "descricao": "Sensor PIR + BH1750 + Relé",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480865",
+                "updated_at": "2025-10-12T17:05:22.480866"
+            },
+            {
+                "ip": "172.17.86.111",
+                "descricao": "Sensor PIR + BH1750 + Relé",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480867",
+                "updated_at": "2025-10-12T17:05:22.480868"
+            },
+            {
+                "ip": "172.17.86.112",
+                "descricao": "Sensor PIR + BH1750 + Relé",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480869",
+                "updated_at": "2025-10-12T17:05:22.480870"
+            },
+            {
+                "ip": "172.17.86.113",
+                "descricao": "Sensor PIR + BH1750 + Relé",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480871",
+                "updated_at": "2025-10-12T17:05:22.480872"
+            },
+            {
+                "ip": "172.17.86.114",
+                "descricao": "Auditório - Sanitário Feminino",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480873",
+                "updated_at": "2025-10-12T17:05:22.480874"
+            },
+            {
+                "ip": "172.17.86.140",
+                "descricao": "Catraca",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480875",
+                "updated_at": "2025-10-12T17:05:22.480876"
+            },
+            {
+                "ip": "172.17.86.141",
+                "descricao": "Catraca",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480879",
+                "updated_at": "2025-10-12T17:05:22.480880"
+            },
+            {
+                "ip": "172.17.86.142",
+                "descricao": "Catraca",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480881",
+                "updated_at": "2025-10-12T17:05:22.480882"
+            },
+            {
+                "ip": "172.17.86.143",
+                "descricao": "Catraca",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480883",
+                "updated_at": "2025-10-12T17:05:22.480884"
+            },
+            {
+                "ip": "172.17.86.144",
+                "descricao": "Catraca",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480885",
+                "updated_at": "2025-10-12T17:05:22.480886"
+            },
+            {
+                "ip": "172.17.86.145",
+                "descricao": "Catraca",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480887",
+                "updated_at": "2025-10-12T17:05:22.480888"
+            },
+            {
+                "ip": "172.17.86.146",
+                "descricao": "Catraca",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480889",
+                "updated_at": "2025-10-12T17:05:22.480890"
+            },
+            {
+                "ip": "172.17.86.147",
+                "descricao": "Catraca",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480891",
+                "updated_at": "2025-10-12T17:05:22.480891"
+            },
+            {
+                "ip": "172.17.86.151",
+                "descricao": "Sensores fancoletes - Programação Horária",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480892",
+                "updated_at": "2025-10-12T17:05:22.480893"
+            },
+            {
+                "ip": "172.17.86.152",
+                "descricao": "Sensores fancoletes - Programação Horária",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480894",
+                "updated_at": "2025-10-12T17:05:22.480895"
+            },
+            {
+                "ip": "172.17.86.153",
+                "descricao": "Sensores fancoletes - Programação Horária",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480896",
+                "updated_at": "2025-10-12T17:05:22.480897"
+            },
+            {
+                "ip": "172.17.86.154",
+                "descricao": "Sensores fancoletes - Programação Horária",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480898",
+                "updated_at": "2025-10-12T17:05:22.480899"
+            },
+            {
+                "ip": "172.17.86.155",
+                "descricao": "Sensores fancoletes - Programação Horária",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480900",
+                "updated_at": "2025-10-12T17:05:22.480901"
+            },
+            {
+                "ip": "172.17.86.156",
+                "descricao": "Sensores fancoletes - Programação Horária",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480902",
+                "updated_at": "2025-10-12T17:05:22.480903"
+            },
+            {
+                "ip": "172.17.86.157",
+                "descricao": "Sensores fancoletes - Programação Horária",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480904",
+                "updated_at": "2025-10-12T17:05:22.480905"
+            },
+            {
+                "ip": "172.17.86.158",
+                "descricao": "Sensores fancoletes - Sensor Movimento",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480906",
+                "updated_at": "2025-10-12T17:05:22.480907"
+            },
+            {
+                "ip": "172.17.86.159",
+                "descricao": "Sensores fancoletes - Sensor Movimento",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480908",
+                "updated_at": "2025-10-12T17:05:22.480909"
+            },
+            {
+                "ip": "172.17.86.160",
+                "descricao": "Sensores fancoletes - Sensor Movimento",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480911",
+                "updated_at": "2025-10-12T17:05:22.480911"
+            },
+            {
+                "ip": "172.17.86.161",
+                "descricao": "Sensores fancoletes - Sensor Movimento",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480912",
+                "updated_at": "2025-10-12T17:05:22.480913"
+            },
+            {
+                "ip": "172.17.86.162",
+                "descricao": "Sensores fancoletes",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480914",
+                "updated_at": "2025-10-12T17:05:22.480915"
+            },
+            {
+                "ip": "172.17.86.163",
+                "descricao": "Sensores fancoletes",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480917",
+                "updated_at": "2025-10-12T17:05:22.480917"
+            },
+            {
+                "ip": "172.17.86.164",
+                "descricao": "Sensores fancoletes - Programação Horária",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480918",
+                "updated_at": "2025-10-12T17:05:22.480919"
+            },
+            {
+                "ip": "172.17.86.165",
+                "descricao": "Sensores fancoletes - Programação Horária",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480920",
+                "updated_at": "2025-10-12T17:05:22.480921"
+            },
+            {
+                "ip": "172.17.86.166",
+                "descricao": "Sensores fancoletes - Programação Horária",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480922",
+                "updated_at": "2025-10-12T17:05:22.480923"
+            },
+            {
+                "ip": "172.17.86.167",
+                "descricao": "Sensores fancoletes - Programação Horária",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480924",
+                "updated_at": "2025-10-12T17:05:22.480925"
+            },
+            {
+                "ip": "172.17.86.168",
+                "descricao": "Sensores fancoletes - Programação Horária",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480926",
+                "updated_at": "2025-10-12T17:05:22.480927"
+            },
+            {
+                "ip": "172.17.86.169",
+                "descricao": "Sensores fancoletes - Programação Horária",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480928",
+                "updated_at": "2025-10-12T17:05:22.480929"
+            },
+            {
+                "ip": "172.17.86.170",
+                "descricao": "Sensores fancoletes - Programação Horária",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480932",
+                "updated_at": "2025-10-12T17:05:22.480933"
+            },
+            {
+                "ip": "172.17.86.250",
+                "descricao": "Conversor MODBUS WiFi - Inversor solar",
+                "tipo": "",
+                "created_at": "2025-10-12T17:05:22.480934",
+                "updated_at": "2025-10-12T17:05:22.480935"
+            }
+        ]
+    }
+}

@@ -48,6 +48,14 @@ class ConfigManager:
                     "86": "VLAN 86 - Automação WiFi",
                     "200": "VLAN 200 - Telefonia IP Fixa",
                     "204": "VLAN 204 - Telefonia IP Móvel"
+                },
+                "device_types": {
+                    "70": ["Câmera IP", "DVR", "NVR", "Switch PoE"],
+                    "80": ["Central de Alarme", "Sensor", "Sirene", "Teclado"],
+                    "85": ["CLP", "IHM", "Inversor", "Controladora", "Sensor", "UPS", "GMG"],
+                    "86": ["Sensor IoT", "Gateway", "Access Point", "Controladora WiFi"],
+                    "200": ["Telefone IP", "Gateway SIP", "PBX", "Conversor"],
+                    "204": ["Softphone", "Gateway Mobile", "Adaptador ATA", "Roteador"]
                 }
             },
             "system_info": {
@@ -140,6 +148,44 @@ class ConfigManager:
     def get_vlan_description(self, vlan):
         """Obtém descrição de uma VLAN"""
         return self.config['vlans']['vlan_descriptions'].get(str(vlan), f'VLAN {vlan}')
+    
+    def get_device_types(self, vlan):
+        """Obtém tipos de dispositivos para uma VLAN específica"""
+        return self.config['vlans']['device_types'].get(str(vlan), [])
+    
+    def add_device_type(self, vlan, device_type):
+        """Adiciona um novo tipo de dispositivo para uma VLAN"""
+        try:
+            with self.config_lock:
+                vlan_str = str(vlan)
+                if 'device_types' not in self.config['vlans']:
+                    self.config['vlans']['device_types'] = {}
+                
+                if vlan_str not in self.config['vlans']['device_types']:
+                    self.config['vlans']['device_types'][vlan_str] = []
+                
+                if device_type not in self.config['vlans']['device_types'][vlan_str]:
+                    self.config['vlans']['device_types'][vlan_str].append(device_type)
+                    return self.save_config()
+                
+                return True  # Tipo já existe
+        except Exception as e:
+            print(f"Erro ao adicionar tipo de dispositivo: {e}")
+            return False
+    
+    def remove_device_type(self, vlan, device_type):
+        """Remove um tipo de dispositivo de uma VLAN"""
+        try:
+            with self.config_lock:
+                vlan_str = str(vlan)
+                if (vlan_str in self.config['vlans']['device_types'] and 
+                    device_type in self.config['vlans']['device_types'][vlan_str]):
+                    self.config['vlans']['device_types'][vlan_str].remove(device_type)
+                    return self.save_config()
+                return True
+        except Exception as e:
+            print(f"Erro ao remover tipo de dispositivo: {e}")
+            return False
     
     def reset_to_defaults(self):
         """Reseta configurações para os valores padrão"""

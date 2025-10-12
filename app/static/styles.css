@@ -135,6 +135,15 @@ nav button.active {
     color: white;
 }
 
+#botaoDispositivos {
+    background-color: #17a2b8;
+    color: white;
+}
+
+#botaoDispositivos:hover {
+    background-color: #138496;
+}
+
 #botaoConfiguracoes {
     background-color: #6c757d;
     color: white;
