@@ -177,13 +177,13 @@ def add_device(vlan):
     try:
         data = request.get_json()
         ip = data.get('ip')
-        descricao = data.get('descricao')
+        description = data.get('description')  # Mudança aqui
         tipo = data.get('tipo', '')
         
-        if not ip or not descricao:
+        if not ip or not description:
             return jsonify({'error': 'IP e descrição são obrigatórios'}), 400
         
-        success, message = device_manager.add_device(vlan, ip, descricao, tipo)
+        success, message = device_manager.add_device(vlan, ip, description, tipo)
         
         if success:
             return jsonify({'success': True, 'message': message})
