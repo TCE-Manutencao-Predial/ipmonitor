@@ -32,12 +32,6 @@ def background_ip_check(vlan):
 
 '''API ENDPOINTS'''        
 
-# Rota de teste para verificar o Jinja2
-@app.route('/teste')
-@app.route(RAIZ + '/teste')
-def teste():
-    return render_template('index.html', teste_var="Jinja2 funcionando!")
-
 # Define o endpoint principal para a página inicial.
 @app.route('/')  # Rota para rodar localmente.
 @app.route(RAIZ + '/')  # Rota que inclui o prefixo 'RAIZ' para ambiente de produção.
