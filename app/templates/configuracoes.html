@@ -5,8 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurações - IP Monitor</title>
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="static/styles.css">
-    <link rel="stylesheet" href="static/config.css">
+    <script>
+        // Função para detectar o caminho base dos estáticos
+        function getStaticPath() {
+            const path = window.location.pathname;
+            return path.includes('/ipmonitor/') ? '/ipmonitor/static/' : '/static/';
+        }
+        
+        // Carregar CSS dinamicamente
+        function loadCSS(filename) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = getStaticPath() + filename;
+            document.head.appendChild(link);
+        }
+        
+        // Carregar CSS
+        loadCSS('styles.css');
+        loadCSS('config.css');
+    </script>
     <script>
         function getBasePath() {
             const path = window.location.pathname;
@@ -277,7 +294,13 @@
     </script>
 
     <!-- Script -->
-    <script src="static/config.js"></script>
+    <script>
+        // Carregar JavaScript dinamicamente
+        const scriptSrc = getStaticPath() + 'config.js';
+        const script = document.createElement('script');
+        script.src = scriptSrc;
+        document.head.appendChild(script);
+    </script>
 
     <footer>
         <div class="footer-content">

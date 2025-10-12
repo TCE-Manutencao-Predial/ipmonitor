@@ -5,7 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IP Status</title>
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="static/styles.css">
+    <script>
+        // Função para detectar o caminho base dos estáticos
+        function getStaticPath() {
+            const path = window.location.pathname;
+            return path.includes('/ipmonitor/') ? '/ipmonitor/static/' : '/static/';
+        }
+        
+        // Carregar CSS dinamicamente
+        function loadCSS(filename) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = getStaticPath() + filename;
+            document.head.appendChild(link);
+        }
+        
+        // Carregar CSS principal
+        loadCSS('styles.css');
+    </script>
     <script>
         function getBasePath() {
             const path = window.location.pathname;
@@ -133,7 +150,13 @@
     <div id="mensagem_preliminar" >Aguardando obtenção de dados...</div>
 
     <!-- Script -->
-    <script src ="static/index.js"></script>
+    <script>
+        // Carregar JavaScript dinamicamente
+        const scriptSrc = getStaticPath() + 'index.js';
+        const script = document.createElement('script');
+        script.src = scriptSrc;
+        document.head.appendChild(script);
+    </script>
 
     <footer>
         <div class="footer-content">
