@@ -355,6 +355,30 @@ footer {
     color: #007bff;
 }
 
+#vlan-70-info {
+    border-left: 4px solid #6f42c1;
+}
+
+#vlan-70-info h4 {
+    color: #6f42c1;
+}
+
+#vlan-200-info {
+    border-left: 4px solid #fd7e14;
+}
+
+#vlan-200-info h4 {
+    color: #fd7e14;
+}
+
+#vlan-204-info {
+    border-left: 4px solid #e83e8c;
+}
+
+#vlan-204-info h4 {
+    color: #e83e8c;
+}
+
 .vlan-details {
     display: flex;
     gap: 15px;

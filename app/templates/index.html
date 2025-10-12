@@ -22,9 +22,9 @@
                     <option value="85">VLAN 85 - Automação Ethernet</option>
                     <option value="86">VLAN 86 - Automação WiFi</option>
                     <!-- Outras VLANs -->
-                    <option value="70">VLAN 70</option>
-                    <option value="200">VLAN 200</option>
-                    <option value="204">VLAN 204</option>
+                    <option value="70">VLAN 70 - Câmeras</option>
+                    <option value="200">VLAN 200 - Telefonia IP Fixa</option>
+                    <option value="204">VLAN 204 - Telefonia IP Móvel</option>
                 </select>
             </div>
         </div>    <!-- Informações de Rede -->
@@ -63,6 +63,30 @@
             <div class="vlan-details">
                 <span class="vlan-detail">Máscara: 255.255.255.0</span>
                 <span class="vlan-detail">Gateway: 172.17.86.254</span>
+            </div>
+        </div>
+        <div class="vlan-info-card" id="vlan-70-info" style="display: none;">
+            <h4>📹 VLAN 70 - Sistema de Câmeras</h4>
+            <p>Rede dedicada ao sistema de monitoramento por câmeras de segurança.</p>
+            <div class="vlan-details">
+                <span class="vlan-detail">Máscara: 255.255.255.0</span>
+                <span class="vlan-detail">Gateway: 172.17.70.254</span>
+            </div>
+        </div>
+        <div class="vlan-info-card" id="vlan-200-info" style="display: none;">
+            <h4>☎️ VLAN 200 - Telefonia IP Fixa</h4>
+            <p>Rede para sistema de telefonia IP com aparelhos fixos.</p>
+            <div class="vlan-details">
+                <span class="vlan-detail">Máscara: 255.255.255.0</span>
+                <span class="vlan-detail">Gateway: 172.17.200.254</span>
+            </div>
+        </div>
+        <div class="vlan-info-card" id="vlan-204-info" style="display: none;">
+            <h4>📱 VLAN 204 - Telefonia IP Móvel</h4>
+            <p>Rede para sistema de telefonia IP com dispositivos móveis e softphones.</p>
+            <div class="vlan-details">
+                <span class="vlan-detail">Máscara: 255.255.255.0</span>
+                <span class="vlan-detail">Gateway: 172.17.204.254</span>
             </div>
         </div>
     </div>

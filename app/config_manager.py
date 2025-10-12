@@ -15,12 +15,12 @@ class ConfigManager:
         """Carrega configurações padrão do sistema"""
         return {
             "ping_intervals": {
-                "vlan_70": 15,
-                "vlan_80": 10,
-                "vlan_85": 8,
-                "vlan_86": 12,
-                "vlan_200": 15,
-                "vlan_204": 15
+                "vlan_70": 12,   # Câmeras - moderada prioridade
+                "vlan_80": 10,   # Alarme - alta prioridade
+                "vlan_85": 8,    # Automação Ethernet - máxima prioridade
+                "vlan_86": 12,   # Automação WiFi - moderada prioridade
+                "vlan_200": 15,  # Telefonia IP Fixa - baixa prioridade
+                "vlan_204": 15   # Telefonia IP Móvel - baixa prioridade
             },
             "network_settings": {
                 "ping_timeout": 2,
@@ -42,12 +42,12 @@ class ConfigManager:
             "vlans": {
                 "active_vlans": [70, 80, 85, 86, 200, 204],
                 "vlan_descriptions": {
-                    "70": "VLAN 70",
+                    "70": "VLAN 70 - Câmeras",
                     "80": "VLAN 80 - Alarme",
                     "85": "VLAN 85 - Automação Ethernet", 
                     "86": "VLAN 86 - Automação WiFi",
-                    "200": "VLAN 200",
-                    "204": "VLAN 204"
+                    "200": "VLAN 200 - Telefonia IP Fixa",
+                    "204": "VLAN 204 - Telefonia IP Móvel"
                 }
             },
             "system_info": {
