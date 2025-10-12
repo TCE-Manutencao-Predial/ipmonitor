@@ -52,10 +52,8 @@ def configuracoes():
 @app.route('/dispositivos')  # Rota para rodar localmente.
 @app.route(RAIZ + '/dispositivos')  # Rota que inclui o prefixo 'RAIZ' para ambiente de produção.
 def dispositivos():
-    # Obtém as configurações para as VLANs disponíveis
-    config = config_manager.get_config()
-    # Renderiza o arquivo HTML 'dispositivos.html' com as configurações
-    return render_template('dispositivos.html', config=config)
+    # Renderiza o arquivo HTML 'dispositivos.html' sem dependências Jinja2
+    return render_template('dispositivos.html')
 
 # Define o endpoint para retornar o status dos IPs verificados em formato JSON.
 @app.route('/api/ip-status')  # Rota para rodar localmente.

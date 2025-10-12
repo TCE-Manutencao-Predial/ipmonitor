@@ -69,9 +69,13 @@
             <label for="vlan-select">Selecionar VLAN:</label>
             <select id="vlan-select">
                 <option value="">-- Selecione uma VLAN --</option>
-                {% for vlan in vlans.active_vlans %}
-                <option value="{{ vlan }}">{{ vlans.vlan_descriptions[vlan|string] }}</option>
-                {% endfor %}
+                <option value="70">VLAN 70 - Câmeras</option>
+                <option value="80">VLAN 80 - Alarme</option>
+                <option value="85">VLAN 85 - Automação Ethernet</option>
+                <option value="86">VLAN 86 - Automação WiFi</option>
+                <option value="90">VLAN 90 - Controle de Acesso</option>
+                <option value="200">VLAN 200 - Telefonia IP Fixa</option>
+                <option value="204">VLAN 204 - Telefonia IP Móvel</option>
             </select>
         </div>
 
