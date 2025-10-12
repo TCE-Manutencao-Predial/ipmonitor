@@ -21,8 +21,27 @@ GIT_REPO_LINK="https://github.com/wilsoncf/$GIT_REPO_NAME.git"
 # ----------------------------
 
 atualizar_projeto_local() {
-    echo "[Deploy] Verificando atualizações do projeto..."
-    git pull
+    echo "[Deploy] Verificando atualizações do projeto no repositório git..."
+    echo "[Deploy] Descartando alterações locais para evitar conflitos..."
+    
+    # Verificar e mudar para a branch main se necessário
+    current_branch=$(git branch --show-current)
+    if [ "$current_branch" != "main" ]; then
+        echo "[Deploy] Mudando para a branch main..."
+        git checkout main
+    fi
+    
+    # Descartar todas as alterações locais não commitadas
+    git reset --hard HEAD
+    
+    # Limpar arquivos não rastreados
+    git clean -fd
+    
+    # Atualizar com a versão remota
+    echo "[Deploy] Fazendo pull da versão remota..."
+    git pull origin main
+    
+    echo "[Deploy] Projeto atualizado com sucesso!"
 }
 
 # Deploy Frontend
@@ -52,7 +71,20 @@ deploy_backend() {
         echo "[Deploy] Atualizando projeto existente..."
         dir_atual=$(pwd)
         cd $ROOT_BACKEND
-        git pull
+        
+        # Verificar e mudar para a branch main se necessário
+        backend_branch=$(git branch --show-current)
+        if [ "$backend_branch" != "main" ]; then
+            echo "[Deploy] Mudando backend para a branch main..."
+            git checkout main
+        fi
+        
+        # Descartar alterações locais no backend também
+        echo "[Deploy] Descartando alterações locais no backend..."
+        git reset --hard HEAD
+        git clean -fd
+        git pull origin main
+        
         cd $dir_atual
     else
         echo "[Deploy] Clonando novo repositório..."
