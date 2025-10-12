@@ -199,10 +199,10 @@ def add_device(vlan):
 def update_device(vlan, ip):
     try:
         data = request.get_json()
-        descricao = data.get('descricao')
+        description = data.get('description')  # Mudança aqui
         tipo = data.get('tipo')
         
-        success, message = device_manager.update_device(vlan, ip, descricao, tipo)
+        success, message = device_manager.update_device(vlan, ip, description, tipo)
         
         if success:
             return jsonify({'success': True, 'message': message})
@@ -213,10 +213,16 @@ def update_device(vlan, ip):
         print(f"Erro ao atualizar dispositivo: {e}")
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/devices/<int:vlan>/<string:ip>', methods=['DELETE'])
-@app.route(RAIZ + '/api/devices/<int:vlan>/<string:ip>', methods=['DELETE'])
-def delete_device(vlan, ip):
+@app.route('/api/devices/<int:vlan>', methods=['DELETE'])
+@app.route(RAIZ + '/api/devices/<int:vlan>', methods=['DELETE'])
+def delete_device(vlan):
     try:
+        data = request.get_json()
+        ip = data.get('ip')
+        
+        if not ip:
+            return jsonify({'error': 'IP é obrigatório'}), 400
+        
         success, message = device_manager.delete_device(vlan, ip)
         
         if success:
@@ -273,10 +279,16 @@ def add_device_type(vlan):
         print(f"Erro ao adicionar tipo de dispositivo: {e}")
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/device-types/<int:vlan>/<string:device_type>', methods=['DELETE'])
-@app.route(RAIZ + '/api/device-types/<int:vlan>/<string:device_type>', methods=['DELETE'])
-def delete_device_type(vlan, device_type):
+@app.route('/api/device-types/<int:vlan>', methods=['DELETE'])
+@app.route(RAIZ + '/api/device-types/<int:vlan>', methods=['DELETE'])
+def delete_device_type(vlan):
     try:
+        data = request.get_json()
+        device_type = data.get('type')
+        
+        if not device_type:
+            return jsonify({'error': 'Tipo é obrigatório'}), 400
+        
         success = config_manager.remove_device_type(vlan, device_type)
         
         if success:
