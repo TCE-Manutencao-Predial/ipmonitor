@@ -6,8 +6,14 @@ class DeviceManager {
         this.deviceTypes = {};
         this.filteredDevices = [];
         this.editingDevice = null;
+        this.apiBasePath = this.getApiBasePath();
         
         this.init();
+    }
+    
+    getApiBasePath() {
+        const path = window.location.pathname;
+        return path.includes('/ipmonitor/') ? '/ipmonitor/api' : '/api';
     }
     
     init() {
@@ -100,7 +106,7 @@ class DeviceManager {
         
         try {
             // Carregar dispositivos da VLAN
-            const devicesResponse = await fetch(`/api/devices/${vlan}`);
+            const devicesResponse = await fetch(`${this.apiBasePath}/devices/${vlan}`);
             if (!devicesResponse.ok) {
                 throw new Error(`Erro ao carregar dispositivos: ${devicesResponse.status}`);
             }
@@ -108,7 +114,7 @@ class DeviceManager {
             this.devices = devicesData.devices || [];
             
             // Carregar tipos de dispositivos da VLAN
-            const typesResponse = await fetch(`/api/device-types/${vlan}`);
+            const typesResponse = await fetch(`${this.apiBasePath}/device-types/${vlan}`);
             if (!typesResponse.ok) {
                 throw new Error(`Erro ao carregar tipos: ${typesResponse.status}`);
             }
@@ -309,7 +315,7 @@ class DeviceManager {
         
         try {
             const method = this.editingDevice ? 'PUT' : 'POST';
-            const response = await fetch(`/api/devices/${this.currentVlan}`, {
+            const response = await fetch(`${this.apiBasePath}/devices/${this.currentVlan}`, {
                 method: method,
                 headers: {
                     'Content-Type': 'application/json'
@@ -347,7 +353,7 @@ class DeviceManager {
         }
         
         try {
-            const response = await fetch(`/api/devices/${this.currentVlan}`, {
+            const response = await fetch(`${this.apiBasePath}/devices/${this.currentVlan}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -420,7 +426,7 @@ class DeviceManager {
         }
         
         try {
-            const response = await fetch(`/api/device-types/${this.currentVlan}`, {
+            const response = await fetch(`${this.apiBasePath}/device-types/${this.currentVlan}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -459,7 +465,7 @@ class DeviceManager {
         }
         
         try {
-            const response = await fetch(`/api/device-types/${this.currentVlan}`, {
+            const response = await fetch(`${this.apiBasePath}/device-types/${this.currentVlan}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
