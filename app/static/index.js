@@ -1,3 +1,13 @@
+// Função para obter a base URL da API dependendo do ambiente
+function getApiBaseUrl() {
+    // Verifica se estamos em produção (domínio tce.go.gov.br) ou desenvolvimento
+    if (window.location.hostname.includes('tce.go.gov.br')) {
+        return '/ipmonitor';
+    } else {
+        return '';
+    }
+}
+
 // Função assíncrona para buscar dados com base na VLAN selecionada
 async function searchByVlan() {
 
@@ -14,7 +24,8 @@ async function searchByVlan() {
     updateVlanInfo(vlan);
     
     // Faz uma requisição para a API usando o valor da VLAN
-    const response = await fetch(`api/start-check/${vlan}`);
+    const baseUrl = getApiBaseUrl();
+    const response = await fetch(`${baseUrl}/api/start-check/${vlan}`);
 
     // Obtém o elemento pela ID
     const mensagemPreliminar = document.getElementById('mensagem_preliminar');

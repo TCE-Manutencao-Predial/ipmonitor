@@ -56,6 +56,7 @@ deploy_frontend() {
 
     sudo mkdir -p $ROOT_FRONTEND
     sudo cp "app/templates/index.html" "$ROOT_FRONTEND/index.html"
+    sudo cp "app/templates/configuracoes.html" "$ROOT_FRONTEND/configuracoes.html"
     sudo cp -r "app/static" "$ROOT_FRONTEND"
 
     echo "[Deploy] Instalação do Frontend concluída."

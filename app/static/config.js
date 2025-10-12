@@ -1,3 +1,13 @@
+// Função para obter a base URL da API dependendo do ambiente
+function getApiBaseUrl() {
+    // Verifica se estamos em produção (domínio tce.go.gov.br) ou desenvolvimento
+    if (window.location.hostname.includes('tce.go.gov.br')) {
+        return '/ipmonitor';
+    } else {
+        return '';
+    }
+}
+
 // Configurações JavaScript para página de configurações
 class ConfigManager {
     constructor() {
@@ -6,6 +16,7 @@ class ConfigManager {
         this.saveBtn = document.getElementById('save-btn');
         this.resetBtn = document.getElementById('reset-btn');
         this.testBtn = document.getElementById('test-btn');
+        this.apiBaseUrl = getApiBaseUrl();
         
         this.initializeEventListeners();
         this.setupDependentFields();
@@ -83,7 +94,7 @@ class ConfigManager {
         try {
             const formData = this.getFormData();
             
-            const response = await fetch('/api/config/save', {
+            const response = await fetch(`${this.apiBaseUrl}/api/config/save`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -117,7 +128,7 @@ class ConfigManager {
         this.setButtonLoading(this.resetBtn, true);
         
         try {
-            const response = await fetch('/api/config/reset', {
+            const response = await fetch(`${this.apiBaseUrl}/api/config/reset`, {
                 method: 'POST'
             });
             
@@ -145,7 +156,7 @@ class ConfigManager {
         try {
             const formData = this.getFormData();
             
-            const response = await fetch('/api/config/test', {
+            const response = await fetch(`${this.apiBaseUrl}/api/config/test`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
