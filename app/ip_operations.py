@@ -3,6 +3,7 @@ from ping3 import ping  # Importa a função ping do módulo ping3 para verifica
 from collections import deque  # Importa deque, uma estrutura de dados de fila, que será usada para o histórico de status dos IPs.
 import json  # Importa o módulo JSON para manipulação de arquivos JSON.
 from app.config_manager import config_manager  # Importa o gerenciador de configurações.
+from app.device_manager import device_manager  # Importa o gerenciador de dispositivos.
 
 # Função principal que verifica os IPs em uma determinada rede base.
 def verificar_ips(rede_base: str):
@@ -61,35 +62,39 @@ def verificar_ips(rede_base: str):
     # Extrai o número da VLAN da rede base (assumindo que está no terceiro octeto do IP).
     vlan = rede_base.split('.')[2]
     
-    # Carrega a lista de todas as VLANs de um arquivo JSON.
-    all_vlan_list = vlan_loader()
-    
-    # Obtém a lista específica da VLAN atual.
-    vlan_list = all_vlan_list.get('vlans').get(vlan)
+    # Obtém a lista de dispositivos da VLAN usando o device_manager
+    vlan_devices = device_manager.get_devices_by_vlan(int(vlan))
                 
     # Cria uma lista de dicionários com o status de cada IP (IP e se está "on" ou "off").
     ip_status_list = [{"ip": ip, "status": status} for ip, status in ip_checked.items()]
     
-    # Se existir uma lista de VLANs correspondente à VLAN atual, adiciona descrições aos IPs.
-    if vlan_list != None:
+    # Se existir uma lista de dispositivos correspondente à VLAN atual, adiciona descrições e tipos aos IPs.
+    if vlan_devices:
         for item in ip_status_list:
-            for vlan in vlan_list:
-                if item['ip'] == vlan['ip']:  # Se o IP da VLAN corresponder ao IP verificado.
-                    item['descricao'] = vlan['descricao']  # Adiciona a descrição associada ao IP.
+            for device in vlan_devices:
+                if item['ip'] == device['ip']:  # Se o IP do dispositivo corresponder ao IP verificado.
+                    item['descricao'] = device['descricao']  # Adiciona a descrição associada ao IP.
+                    item['tipo'] = device.get('tipo', '')  # Adiciona o tipo do dispositivo.
                     break
             else:
                 item['descricao'] = '-'  # Se não houver correspondência, adiciona "-" como descrição.
+                item['tipo'] = ''  # Se não houver correspondência, tipo vazio.
     else:
-        # Se não houver uma lista de VLANs para a rede, adiciona "-" para todos os IPs.
+        # Se não houver uma lista de dispositivos para a VLAN, adiciona "-" para todos os IPs.
         for item in ip_status_list:
             item['descricao'] = '-'
+            item['tipo'] = ''
 
     return ip_status_list  # Retorna a lista de status de todos os IPs.
 
-# Função que carrega as VLANs de um arquivo JSON.
+# Função que carrega as VLANs de um arquivo JSON (mantida para compatibilidade, mas não é mais usada).
 def vlan_loader():
     file_path = 'ips_list.json'  # Define o caminho do arquivo JSON.
     # Abre o arquivo JSON e carrega os dados.
-    with open(file_path, 'r', encoding='utf-8') as file:
-        data = json.load(file)
-    return data  # Retorna os dados carregados.
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+        return data  # Retorna os dados carregados.
+    except FileNotFoundError:
+        # Se o arquivo não existir, retorna estrutura vazia
+        return {"vlans": {}}

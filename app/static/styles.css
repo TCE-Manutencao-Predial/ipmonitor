@@ -133,6 +133,21 @@ nav button:hover {
 nav button.active {
     background-color: #007bff;
     color: white;
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+#botaoInicio {
+    background-color: #007bff;
+    color: white;
+}
+
+#botaoInicio:hover {
+    background-color: #0056b3;
+}
+
+#botaoInicio.active {
+    background-color: #0056b3;
+    box-shadow: 0 2px 4px rgba(0, 86, 179, 0.3);
 }
 
 #botaoDispositivos {
@@ -144,6 +159,11 @@ nav button.active {
     background-color: #138496;
 }
 
+#botaoDispositivos.active {
+    background-color: #138496;
+    box-shadow: 0 2px 4px rgba(19, 132, 150, 0.3);
+}
+
 #botaoConfiguracoes {
     background-color: #6c757d;
     color: white;
@@ -151,6 +171,11 @@ nav button.active {
 
 #botaoConfiguracoes:hover {
     background-color: #5a6268;
+}
+
+#botaoConfiguracoes.active {
+    background-color: #5a6268;
+    box-shadow: 0 2px 4px rgba(90, 98, 104, 0.3);
 }
 
 /* Estilo para o contêiner do filtro VLAN */

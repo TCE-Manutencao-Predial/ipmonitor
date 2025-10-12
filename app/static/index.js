@@ -71,7 +71,13 @@ async function searchByVlan() {
 
                 // Verifica se há dados para a célula atual
                 if (data[i + j]) {
-                    descriptionCell.textContent = data[i + j].descricao;
+                    // Monta a descrição com tipo se disponível
+                    let descricaoCompleta = data[i + j].descricao;
+                    if (data[i + j].tipo && data[i + j].tipo.trim() !== '') {
+                        descricaoCompleta += ` (${data[i + j].tipo})`;
+                    }
+                    
+                    descriptionCell.textContent = descricaoCompleta;
                     ipCell.textContent = data[i + j].ip;
 
                     // Verifica o status do dispositivo e aplica a classe correta
