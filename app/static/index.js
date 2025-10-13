@@ -50,6 +50,14 @@ async function searchByVlan() {
         // Converte a resposta em JSON
         const data = await response.json();
 
+        // Log para diagnóstico
+        console.log('[INDEX.JS] Dados recebidos da API:', data.length, 'itens');
+        const itemsComTipo = data.filter(item => item.tipo && item.tipo.trim() !== '');
+        console.log('[INDEX.JS] Items com tipo:', itemsComTipo.length);
+        if (itemsComTipo.length > 0) {
+            console.log('[INDEX.JS] Exemplo com tipo:', itemsComTipo[0]);
+        }
+
         // Obtém o corpo da tabela com os IPs
         const tbody = document.getElementById('ipTableBody');
         

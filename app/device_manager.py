@@ -1,8 +1,12 @@
 import json
 import os
+import logging
 from threading import Lock
 from datetime import datetime
 from app.config_manager import config_manager
+
+# Configurar logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class IPDeviceManager:
     """Gerenciador de dispositivos IP com tipos"""
@@ -15,14 +19,22 @@ class IPDeviceManager:
     def _load_devices(self):
         """Carrega dispositivos do arquivo JSON"""
         try:
+            full_path = os.path.abspath(self.devices_file)
+            logging.info(f"[DEVICE_MANAGER] Tentando carregar arquivo: {full_path}")
+            
             if os.path.exists(self.devices_file):
+                logging.info(f"[DEVICE_MANAGER] Arquivo encontrado, carregando dados...")
                 with open(self.devices_file, 'r', encoding='utf-8') as f:
-                    return json.load(f)
+                    data = json.load(f)
+                    total_vlans = len(data.get('vlans', {}))
+                    logging.info(f"[DEVICE_MANAGER] Carregados dados de {total_vlans} VLANs")
+                    return data
             else:
+                logging.warning(f"[DEVICE_MANAGER] Arquivo não encontrado: {full_path}")
                 # Se não existe, criar estrutura baseada no ips_list.json existente
                 return self._migrate_from_ips_list()
         except Exception as e:
-            print(f"Erro ao carregar dispositivos: {e}")
+            logging.error(f"[DEVICE_MANAGER] Erro ao carregar dispositivos: {e}")
             return {"vlans": {}}
     
     def _migrate_from_ips_list(self):
@@ -70,7 +82,14 @@ class IPDeviceManager:
     def get_devices_by_vlan(self, vlan):
         """Obtém dispositivos de uma VLAN específica"""
         with self.devices_lock:
-            return self.devices.get('vlans', {}).get(str(vlan), [])
+            devices = self.devices.get('vlans', {}).get(str(vlan), [])
+            logging.info(f"[DEVICE_MANAGER] get_devices_by_vlan({vlan}) - Encontrados {len(devices)} dispositivos")
+            dispositivos_com_tipo = [d for d in devices if d.get('tipo') and d['tipo'].strip()]
+            logging.info(f"[DEVICE_MANAGER] VLAN {vlan} - {len(dispositivos_com_tipo)} dispositivos com tipo")
+            if dispositivos_com_tipo:
+                exemplo = dispositivos_com_tipo[0]
+                logging.info(f"[DEVICE_MANAGER] Exemplo: IP={exemplo.get('ip')}, Desc={exemplo.get('descricao')}, Tipo='{exemplo.get('tipo')}'")
+            return devices
     
     def add_device(self, vlan, ip, descricao, tipo=""):
         """Adiciona um novo dispositivo"""

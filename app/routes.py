@@ -4,8 +4,12 @@ import time  # Módulo para manipulação de tempo (usado para pausas e delays).
 import threading  # Módulo para rodar threads em paralelo (execução simultânea).
 from app import app  # Importa a instância 'app' da aplicação Flask.
 import concurrent.futures  # Para execução concorrente de múltiplas tarefas.
+import logging  # Adicionar logging
 from app.config_manager import config_manager  # Importa o gerenciador de configurações.
 from app.device_manager import device_manager  # Importa o gerenciador de dispositivos.
+
+# Configurar logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Dicionário global que armazenará o status dos IPs verificados, por VLAN.
 check_ip = {}
@@ -23,11 +27,16 @@ def background_ip_check(vlan):
     global check_ip
     rede_base = '172.17.' + str(vlan) + '.'  # Define a base do endereço IP para a VLAN específica.
     
-    # Para debugging: exibe uma mensagem indicando qual VLAN está sendo verificada.
-    print(f"Verificando em background a VLAN {vlan} e rede_base {rede_base}.")
+    logging.info(f"[BACKGROUND] Verificando em background a VLAN {vlan} e rede_base {rede_base}")
 
     # Chama a função 'verificar_ips' do módulo 'ip_operations' e armazena o resultado no dicionário 'check_ip'.
-    check_ip[vlan] = ip_operations.verificar_ips(rede_base)
+    result = ip_operations.verificar_ips(rede_base)
+    
+    # Log dos resultados antes de armazenar
+    items_com_tipo = [item for item in result if item.get('tipo') and item['tipo'].strip()]
+    logging.info(f"[BACKGROUND] VLAN {vlan} - Resultado: {len(result)} itens, {len(items_com_tipo)} com tipo")
+    
+    check_ip[vlan] = result
 
 
 '''API ENDPOINTS'''        
@@ -68,10 +77,19 @@ def ip_status():
 def check(vlan):
     try:
         # Tenta retornar o status da VLAN solicitada em formato JSON.
-        return jsonify(check_ip[int(vlan)])
+        result = check_ip[int(vlan)]
+        
+        # Log para diagnóstico
+        logging.info(f"[ROUTES] API /api/start-check/{vlan} - Retornando {len(result)} itens")
+        items_com_tipo = [item for item in result if item.get('tipo') and item['tipo'].strip()]
+        logging.info(f"[ROUTES] Items com tipo na resposta: {len(items_com_tipo)}")
+        if items_com_tipo:
+            logging.info(f"[ROUTES] Exemplo com tipo: {items_com_tipo[0]}")
+        
+        return jsonify(result)
     except KeyError:
         # Caso a VLAN ainda não tenha sido verificada, retorna status 204 (No Content).
-        print(f"VLAN {vlan} não encontrada em check_ip por enquanto.")
+        logging.warning(f"[ROUTES] VLAN {vlan} não encontrada em check_ip por enquanto.")
         return '', 204  # Resposta vazia com status 204.
 
 # Endpoint para salvar configurações
@@ -118,6 +136,21 @@ def reset_config():
     
     except Exception as e:
         print(f"Erro ao resetar configurações: {e}")
+        return jsonify({'error': str(e)}), 500
+
+# Endpoint de teste para diagnóstico de tipos
+@app.route('/api/debug/devices/<int:vlan>')
+@app.route(RAIZ + '/api/debug/devices/<int:vlan>')
+def debug_devices(vlan):
+    try:
+        devices = device_manager.get_devices_by_vlan(vlan)
+        return jsonify({
+            'vlan': vlan,
+            'total_devices': len(devices),
+            'devices_with_type': [d for d in devices if d.get('tipo')],
+            'all_devices': devices
+        })
+    except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 # Endpoint para testar configurações

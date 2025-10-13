@@ -2,8 +2,12 @@ import concurrent.futures  # Importa o módulo para execução paralela de taref
 from ping3 import ping  # Importa a função ping do módulo ping3 para verificar conectividade com IPs.
 from collections import deque  # Importa deque, uma estrutura de dados de fila, que será usada para o histórico de status dos IPs.
 import json  # Importa o módulo JSON para manipulação de arquivos JSON.
+import logging  # Importa logging para diagnóstico
 from app.config_manager import config_manager  # Importa o gerenciador de configurações.
 from app.device_manager import device_manager  # Importa o gerenciador de dispositivos.
+
+# Configurar logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Função principal que verifica os IPs em uma determinada rede base.
 def verificar_ips(rede_base: str):
@@ -62,28 +66,47 @@ def verificar_ips(rede_base: str):
     # Extrai o número da VLAN da rede base (assumindo que está no terceiro octeto do IP).
     vlan = rede_base.split('.')[2]
     
+    logging.info(f"[IP_OPERATIONS] Processando VLAN {vlan}")
+    
     # Obtém a lista de dispositivos da VLAN usando o device_manager
     vlan_devices = device_manager.get_devices_by_vlan(int(vlan))
+    
+    logging.info(f"[IP_OPERATIONS] Dispositivos encontrados na VLAN {vlan}: {len(vlan_devices)}")
+    if vlan_devices:
+        for device in vlan_devices[:3]:  # Log apenas os primeiros 3 para não poluir
+            logging.info(f"[IP_OPERATIONS] Dispositivo: IP={device.get('ip')}, Desc={device.get('descricao')}, Tipo={device.get('tipo', 'VAZIO')}")
                 
     # Cria uma lista de dicionários com o status de cada IP (IP e se está "on" ou "off").
     ip_status_list = [{"ip": ip, "status": status} for ip, status in ip_checked.items()]
     
     # Se existir uma lista de dispositivos correspondente à VLAN atual, adiciona descrições e tipos aos IPs.
     if vlan_devices:
+        dispositivos_com_tipo = 0
         for item in ip_status_list:
             for device in vlan_devices:
                 if item['ip'] == device['ip']:  # Se o IP do dispositivo corresponder ao IP verificado.
                     item['descricao'] = device['descricao']  # Adiciona a descrição associada ao IP.
                     item['tipo'] = device.get('tipo', '')  # Adiciona o tipo do dispositivo.
+                    if item['tipo']:
+                        dispositivos_com_tipo += 1
                     break
             else:
                 item['descricao'] = '-'  # Se não houver correspondência, adiciona "-" como descrição.
                 item['tipo'] = ''  # Se não houver correspondência, tipo vazio.
+        
+        logging.info(f"[IP_OPERATIONS] Dispositivos com tipo definido: {dispositivos_com_tipo}")
     else:
         # Se não houver uma lista de dispositivos para a VLAN, adiciona "-" para todos os IPs.
         for item in ip_status_list:
             item['descricao'] = '-'
             item['tipo'] = ''
+        logging.info(f"[IP_OPERATIONS] Nenhum dispositivo encontrado para VLAN {vlan}")
+
+    # Log de algumas amostras do resultado final
+    amostras_com_tipo = [item for item in ip_status_list if item.get('tipo') and item['descricao'] != '-']
+    logging.info(f"[IP_OPERATIONS] Amostras com tipo no resultado final: {len(amostras_com_tipo)}")
+    for amostra in amostras_com_tipo[:2]:
+        logging.info(f"[IP_OPERATIONS] Resultado final: IP={amostra['ip']}, Desc={amostra['descricao']}, Tipo={amostra['tipo']}")
 
     return ip_status_list  # Retorna a lista de status de todos os IPs.
 

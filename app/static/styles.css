@@ -174,8 +174,8 @@ nav button.active {
 }
 
 #botaoConfiguracoes.active {
-    background-color: #5a6268;
-    box-shadow: 0 2px 4px rgba(90, 98, 104, 0.3);
+    background-color: #6c757d !important;
+    box-shadow: 0 2px 4px rgba(108, 117, 125, 0.3);
 }
 
 /* Estilo para o contêiner do filtro VLAN */
