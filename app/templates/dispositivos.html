@@ -215,10 +215,21 @@
 
     <!-- Script -->
     <script>
-        // Carregar JavaScript dinamicamente
+        // Carregar JavaScript dinamicamente com tratamento de erro
         const scriptSrc = getStaticPath() + 'devices.js';
+        console.log('[DISPOSITIVOS] Carregando script:', scriptSrc);
+        
         const script = document.createElement('script');
         script.src = scriptSrc;
+        
+        script.onload = function() {
+            console.log('[DISPOSITIVOS] Script devices.js carregado com sucesso');
+        };
+        
+        script.onerror = function() {
+            console.error('[DISPOSITIVOS] Erro ao carregar script:', scriptSrc);
+        };
+        
         document.head.appendChild(script);
     </script>
 

@@ -1,6 +1,7 @@
 // JavaScript para a página de dispositivos
 class DeviceManager {
     constructor() {
+        console.log('[DeviceManager] Construtor iniciado');
         this.currentVlan = '';
         this.devices = [];
         this.deviceTypes = {};
@@ -8,7 +9,9 @@ class DeviceManager {
         this.editingDevice = null;
         this.apiBasePath = this.getApiBasePath();
         
+        console.log('[DeviceManager] API Base Path:', this.apiBasePath);
         this.init();
+        console.log('[DeviceManager] Construtor concluído');
     }
     
     getApiBasePath() {
@@ -17,29 +20,43 @@ class DeviceManager {
     }
     
     init() {
+        console.log('[DeviceManager] Iniciando setup...');
         this.setupEventListeners();
         this.loadInitialData();
     }
     
     setupEventListeners() {
+        console.log('[DeviceManager] Configurando event listeners...');
+        
         // Seletor de VLAN
         const vlanSelect = document.getElementById('vlan-select');
+        console.log('[DeviceManager] VLAN Select encontrado:', !!vlanSelect);
         if (vlanSelect) {
             vlanSelect.addEventListener('change', (e) => {
+                console.log('[DeviceManager] VLAN selecionada:', e.target.value);
                 this.loadVlanData(e.target.value);
             });
         }
         
         // Botões de ação
-        document.getElementById('add-device-btn')?.addEventListener('click', () => {
+        const addBtn = document.getElementById('add-device-btn');
+        const manageBtn = document.getElementById('manage-types-btn');
+        const refreshBtn = document.getElementById('refresh-btn');
+        
+        console.log('[DeviceManager] Botões encontrados - Add:', !!addBtn, 'Manage:', !!manageBtn, 'Refresh:', !!refreshBtn);
+        
+        addBtn?.addEventListener('click', () => {
+            console.log('[DeviceManager] Botão Adicionar clicado');
             this.openAddDeviceModal();
         });
         
-        document.getElementById('manage-types-btn')?.addEventListener('click', () => {
+        manageBtn?.addEventListener('click', () => {
+            console.log('[DeviceManager] Botão Gerenciar Tipos clicado');
             this.openManageTypesModal();
         });
         
-        document.getElementById('refresh-btn')?.addEventListener('click', () => {
+        refreshBtn?.addEventListener('click', () => {
+            console.log('[DeviceManager] Botão Refresh clicado');
             this.refreshCurrentVlan();
         });
         
@@ -163,15 +180,30 @@ class DeviceManager {
                 <td class="tipo-cell">${device.tipo || '-'}</td>
                 <td class="updated-cell">${this.formatDate(device.updated_at)}</td>
                 <td class="actions-cell">
-                    <button class="btn-edit" onclick="deviceManager.editDevice('${device.ip}')">
+                    <button class="btn-edit" data-ip="${device.ip}" data-action="edit">
                         ✏️ Editar
                     </button>
-                    <button class="btn-danger" onclick="deviceManager.deleteDevice('${device.ip}')">
+                    <button class="btn-danger" data-ip="${device.ip}" data-action="delete">
                         🗑️ Excluir
                     </button>
                 </td>
             </tr>
         `).join('');
+        
+        // Adicionar event listeners para os botões criados dinamicamente
+        tbody.querySelectorAll('button[data-action="edit"]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const ip = e.target.getAttribute('data-ip');
+                this.editDevice(ip);
+            });
+        });
+        
+        tbody.querySelectorAll('button[data-action="delete"]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const ip = e.target.getAttribute('data-ip');
+                this.deleteDevice(ip);
+            });
+        });
     }
     
     filterDevices(searchTerm) {
@@ -405,10 +437,18 @@ class DeviceManager {
             return `
                 <div class="${tagClass}" title="${title}">
                     ${tipo}
-                    <span class="type-remove" onclick="deviceManager.removeType('${tipo}')" title="Remover tipo">×</span>
+                    <span class="type-remove" data-type="${tipo}" title="Remover tipo">×</span>
                 </div>
             `;
         }).join('');
+        
+        // Adicionar event listeners para os botões de remover tipo
+        typesList.querySelectorAll('.type-remove').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const tipo = e.target.getAttribute('data-type');
+                this.removeType(tipo);
+            });
+        });
     }
     
     async addNewType() {
@@ -575,9 +615,26 @@ class DeviceManager {
 // Inicializar o gerenciador quando a página carregar
 let deviceManager;
 
-document.addEventListener('DOMContentLoaded', function() {
-    deviceManager = new DeviceManager();
-});
+function initializeDeviceManager() {
+    if (!deviceManager) {
+        console.log('[DEVICES.JS] Inicializando DeviceManager...');
+        deviceManager = new DeviceManager();
+        console.log('[DEVICES.JS] DeviceManager inicializado:', deviceManager);
+        
+        // Disponibilizar globalmente para debug
+        window.deviceManager = deviceManager;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initializeDeviceManager);
+
+// Fallback caso o DOMContentLoaded já tenha disparado
+if (document.readyState === 'loading') {
+    console.log('[DEVICES.JS] Documento ainda carregando, aguardando DOMContentLoaded');
+} else {
+    console.log('[DEVICES.JS] Documento já carregado, inicializando imediatamente');
+    initializeDeviceManager();
+}
 
 // Prevenir fechamento acidental dos modais ao clicar nos inputs
 document.addEventListener('click', function(e) {
