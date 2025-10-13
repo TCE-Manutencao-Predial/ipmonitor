@@ -73,19 +73,15 @@ async function searchByVlan() {
             // Cria células para colunas de dados por linha
             for (let j = 0; j < QTD_COLUNAS; j++) {
                 const descriptionCell = document.createElement('td');
+                const tipoCell = document.createElement('td');
                 const ipCell = document.createElement('td');
                 const statusCell = document.createElement('td');
                 const circle = document.createElement('span');
 
                 // Verifica se há dados para a célula atual
                 if (data[i + j]) {
-                    // Monta a descrição com tipo se disponível
-                    let descricaoCompleta = data[i + j].descricao;
-                    if (data[i + j].tipo && data[i + j].tipo.trim() !== '') {
-                        descricaoCompleta += ` (${data[i + j].tipo})`;
-                    }
-                    
-                    descriptionCell.textContent = descricaoCompleta;
+                    descriptionCell.textContent = data[i + j].descricao;
+                    tipoCell.textContent = data[i + j].tipo || '-';
                     ipCell.textContent = data[i + j].ip;
 
                     // Verifica o status do dispositivo e aplica a classe correta
@@ -94,16 +90,21 @@ async function searchByVlan() {
                     } else if (data[i + j].status === "off") {
                         circle.classList.add('circle', 'red'); // Aplica a classe 'red' para dispositivos offline
                     }
+                } else {
+                    // Células vazias para manter estrutura da tabela
+                    tipoCell.textContent = '';
                 }
+
+                // Aplica as classes corretas para cada coluna
+                tipoCell.classList.add(`tipo_${String.fromCharCode(65 + j)}`);
+                statusCell.classList.add(`status_${String.fromCharCode(65 + j)}`);
 
                 // Adiciona o círculo de status à célula de status
                 statusCell.appendChild(circle);
-
-                // Aplica a classe 'status_A', 'status_B', 'status_C', ou 'status_D' nas células de status
-                statusCell.classList.add(`status_${String.fromCharCode(65 + j)}`);
                 
                 // Adiciona as células à linha
                 row.appendChild(descriptionCell);
+                row.appendChild(tipoCell);
                 row.appendChild(ipCell);
                 row.appendChild(statusCell);
             }

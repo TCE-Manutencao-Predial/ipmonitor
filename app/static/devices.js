@@ -159,15 +159,15 @@ class DeviceManager {
         tbody.innerHTML = this.filteredDevices.map(device => `
             <tr>
                 <td class="ip-cell">${device.ip}</td>
-                <td>${device.description || '-'}</td>
+                <td>${device.descricao || '-'}</td>
                 <td class="tipo-cell">${device.tipo || '-'}</td>
                 <td class="updated-cell">${this.formatDate(device.updated_at)}</td>
                 <td class="actions-cell">
                     <button class="btn-edit" onclick="deviceManager.editDevice('${device.ip}')">
-                        Editar
+                        ✏️ Editar
                     </button>
                     <button class="btn-danger" onclick="deviceManager.deleteDevice('${device.ip}')">
-                        Excluir
+                        🗑️ Excluir
                     </button>
                 </td>
             </tr>
@@ -181,7 +181,7 @@ class DeviceManager {
             const term = searchTerm.toLowerCase();
             this.filteredDevices = this.devices.filter(device => 
                 device.ip.toLowerCase().includes(term) ||
-                (device.description || '').toLowerCase().includes(term) ||
+                (device.descricao || '').toLowerCase().includes(term) ||
                 (device.tipo || '').toLowerCase().includes(term)
             );
         }
@@ -217,7 +217,7 @@ class DeviceManager {
         if (device) {
             title.textContent = 'Editar Dispositivo';
             document.getElementById('device-ip').value = device.ip;
-            document.getElementById('device-description').value = device.description || '';
+            document.getElementById('device-description').value = device.descricao || '';
             
             // Configurar seleção de tipo
             this.populateTipoSelect();
@@ -309,7 +309,7 @@ class DeviceManager {
         
         const deviceData = {
             ip: ip,
-            description: description,
+            descricao: description,
             tipo: finalTipo
         };
         
