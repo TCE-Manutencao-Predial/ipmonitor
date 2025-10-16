@@ -44,30 +44,25 @@
         <!-- Controles principais -->
         <div id="nav-controls">
             <button id="botaoInicio" class="active" onclick="navigateTo('home')">
-                <span class="btn-icon">◉</span> Página Inicial
+                Página Inicial
             </button>
             <button id="botaoDispositivos" onclick="navigateTo('dispositivos')">
-                <span class="btn-icon">▦</span> Dispositivos
+                Dispositivos
             </button>
             <button id="botaoConfiguracoes" onclick="navigateTo('configuracoes')">
-                <span class="btn-icon">⚙</span> Configurações
+                Configurações
             </button>
             
-            <div id="filtroVLAN-container">
-                <label for="filtroVLAN">
-                    <span class="btn-icon">◈</span> VLAN:
-                </label>
-                <select id="filtroVLAN" onchange="searchByVlan()">
-                    <!-- VLANs Principais do Sistema -->
-                    <option value="80">VLAN 80 - Alarme</option>
-                    <option value="85">VLAN 85 - Automação Ethernet</option>
-                    <option value="86">VLAN 86 - Automação WiFi</option>
-                    <!-- Outras VLANs -->
-                    <option value="70">VLAN 70 - Câmeras</option>
-                    <option value="200">VLAN 200 - Telefonia IP Fixa</option>
-                    <option value="204">VLAN 204 - Telefonia IP Móvel</option>
-                </select>
-            </div>
+            <select id="filtroVLAN" onchange="searchByVlan()">
+                <!-- VLANs Principais do Sistema -->
+                <option value="80">VLAN 80 - Alarme</option>
+                <option value="85">VLAN 85 - Automação Ethernet</option>
+                <option value="86">VLAN 86 - Automação WiFi</option>
+                <!-- Outras VLANs -->
+                <option value="70">VLAN 70 - Câmeras</option>
+                <option value="200">VLAN 200 - Telefonia IP Fixa</option>
+                <option value="204">VLAN 204 - Telefonia IP Móvel</option>
+            </select>
         </div>    <!-- Informações de Rede -->
     <div id="network-info">
         <span class="network-info-item" title="Máscara de sub-rede padrão para todas as VLANs">
