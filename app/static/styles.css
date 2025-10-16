@@ -162,6 +162,18 @@ nav button {
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 38px;
+}
+
+/* Ícones elegantes nos botões */
+.btn-icon {
+    font-size: 16px;
+    opacity: 0.9;
+    display: inline-block;
+    line-height: 1;
 }
 
 /* Hover nos botões com micro-animação */
@@ -181,16 +193,18 @@ nav button.active {
 
 /* Container do filtro VLAN com glassmorphism */
 #filtroVLAN-container {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    padding: 10px 18px;
+    padding: 0;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    gap: 10px;
+    gap: 8px;
+    height: 38px;
+    padding: 0 12px;
 }
 
 #filtroVLAN-container:hover {
@@ -209,23 +223,27 @@ nav button.active {
     white-space: nowrap;
     margin: 0;
     padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 /* Select do filtro VLAN compacto */
 #filtroVLAN {
-    padding: 6px 10px;
-    font-size: 14px;
+    padding: 4px 8px;
+    font-size: 13px;
     font-family: Arial, sans-serif;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     font-weight: 500;
     color: white;
     cursor: pointer;
     outline: none;
     transition: all 0.3s ease;
-    min-width: 200px;
+    min-width: 180px;
+    height: 26px;
 }
 
 /* Hover no select */
@@ -323,7 +341,7 @@ footer {
 }
 
 .network-info-item {
-    padding: 10px 18px;
+    padding: 0 18px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     font-family: Arial, sans-serif;
@@ -336,6 +354,9 @@ footer {
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    height: 38px;
 }
 
 .network-info-item:hover {

@@ -43,12 +43,20 @@
     <nav>
         <!-- Controles principais -->
         <div id="nav-controls">
-            <button id="botaoInicio" class="active" onclick="navigateTo('home')">🏠 Página Inicial</button>
-            <button id="botaoDispositivos" onclick="navigateTo('dispositivos')">💻 Dispositivos</button>
-            <button id="botaoConfiguracoes" onclick="navigateTo('configuracoes')">⚙️ Configurações</button>
+            <button id="botaoInicio" class="active" onclick="navigateTo('home')">
+                <span class="btn-icon">◉</span> Página Inicial
+            </button>
+            <button id="botaoDispositivos" onclick="navigateTo('dispositivos')">
+                <span class="btn-icon">▦</span> Dispositivos
+            </button>
+            <button id="botaoConfiguracoes" onclick="navigateTo('configuracoes')">
+                <span class="btn-icon">⚙</span> Configurações
+            </button>
             
             <div id="filtroVLAN-container">
-                <label for="filtroVLAN">Selecione a VLAN: </label>
+                <label for="filtroVLAN">
+                    <span class="btn-icon">◈</span> VLAN:
+                </label>
                 <select id="filtroVLAN" onchange="searchByVlan()">
                     <!-- VLANs Principais do Sistema -->
                     <option value="80">VLAN 80 - Alarme</option>
