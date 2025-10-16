@@ -124,7 +124,16 @@
         </div>
     </div>
 
-    <table id='main_table'>
+    <!-- Container de visualização em Grid/Cards -->
+    <div id="devices-container" class="devices-grid">
+        <!-- Cards serão inseridos aqui dinamicamente -->
+    </div>
+    
+    <!-- Mensagem Preliminar sem Script -->
+    <div id="mensagem_preliminar" >Aguardando obtenção de dados...</div>
+
+    <!-- Tabela antiga (mantida oculta como fallback) -->
+    <table id='main_table' style="display: none;">
         <thead>
             <tr>
                 <th class="descricao_A">Descrição</th>

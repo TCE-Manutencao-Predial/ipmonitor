@@ -64,6 +64,25 @@ async function searchByVlan() {
         // Limpa a tabela antes de inserir novos elementos
         tbody.innerHTML = '';  
 
+        // Obtém o container de cards
+        const cardsContainer = document.getElementById('devices-container');
+        
+        // Limpa o container antes de inserir novos cards
+        cardsContainer.innerHTML = '';
+
+        // Verifica se há dados para exibir
+        if (data.length === 0) {
+            cardsContainer.innerHTML = '<div class="no-devices">📭 Nenhum dispositivo encontrado nesta VLAN</div>';
+            return;
+        }
+
+        // Cria cards para cada dispositivo
+        data.forEach(device => {
+            const card = createDeviceCard(device, vlan);
+            cardsContainer.appendChild(card);
+        });
+
+        // Mantém a lógica antiga da tabela (oculta) como fallback
         var QTD_COLUNAS = 4;
 
         // Percorre os dados recebidos e cria linhas para a tabela
@@ -145,6 +164,83 @@ function updateGateway(vlan) {
     if (gatewayElement) {
         gatewayElement.textContent = `172.17.${vlan}.254`;
     }
+}
+
+// Função para criar um card de dispositivo
+function createDeviceCard(device, vlan) {
+    // Criar elementos do card
+    const card = document.createElement('div');
+    card.className = `device-card ${device.status === 'on' ? 'online' : 'offline'}`;
+    
+    // Header do card
+    const header = document.createElement('div');
+    header.className = 'device-card-header';
+    
+    // Badge de status
+    const statusBadge = document.createElement('div');
+    statusBadge.className = `status-badge ${device.status === 'on' ? 'online' : 'offline'}`;
+    statusBadge.innerHTML = `
+        <span class="status-indicator"></span>
+        <span>${device.status === 'on' ? 'Online' : 'Offline'}</span>
+    `;
+    
+    // IP do dispositivo
+    const ipElement = document.createElement('div');
+    ipElement.className = 'device-ip';
+    ipElement.textContent = device.ip;
+    
+    header.appendChild(statusBadge);
+    header.appendChild(ipElement);
+    
+    // Corpo do card
+    const body = document.createElement('div');
+    body.className = 'device-card-body';
+    
+    // Descrição
+    const description = document.createElement('div');
+    description.className = 'device-description';
+    description.textContent = device.descricao || 'Sem descrição';
+    description.title = device.descricao; // Tooltip com texto completo
+    
+    // Tipo do dispositivo
+    const typeElement = document.createElement('div');
+    typeElement.className = 'device-type';
+    typeElement.innerHTML = `
+        <span class="device-type-icon">🏷️</span>
+        <span>${device.tipo || 'Não definido'}</span>
+    `;
+    
+    body.appendChild(description);
+    body.appendChild(typeElement);
+    
+    // Footer do card
+    const footer = document.createElement('div');
+    footer.className = 'device-card-footer';
+    
+    // Botão de edição
+    const editBtn = document.createElement('button');
+    editBtn.className = 'card-edit-btn';
+    editBtn.innerHTML = '✏️ Editar';
+    editBtn.onclick = function(e) {
+        e.stopPropagation(); // Evita propagação do clique
+        openEditModal(device.ip, device.descricao, device.tipo, vlan);
+    };
+    
+    footer.appendChild(editBtn);
+    
+    // Montar o card
+    card.appendChild(header);
+    card.appendChild(body);
+    card.appendChild(footer);
+    
+    // Fazer o card inteiro clicável (exceto o botão)
+    card.onclick = function(e) {
+        if (e.target !== editBtn && !editBtn.contains(e.target)) {
+            openEditModal(device.ip, device.descricao, device.tipo, vlan);
+        }
+    };
+    
+    return card;
 }
 
 // Função para mostrar informações da VLAN selecionada
