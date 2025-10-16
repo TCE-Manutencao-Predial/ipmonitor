@@ -534,6 +534,7 @@ footer {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     animation: slideDown 0.4s ease;
     overflow: hidden;
+    font-family: Arial, sans-serif; /* Mesma fonte do sistema */
 }
 
 @keyframes slideDown {
@@ -601,6 +602,7 @@ footer {
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-size: 15px;
+    font-family: Arial, sans-serif; /* Mesma fonte do sistema */
     transition: all 0.3s ease;
     box-sizing: border-box;
 }
@@ -677,6 +679,30 @@ footer {
     opacity: 1;
     transform: scale(1.2);
     color: #764ba2;
+}
+
+/* Célula de IP clicável */
+.ip-cell {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    position: relative;
+    font-family: Arial, sans-serif;
+}
+
+.ip-cell:hover {
+    background-color: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+    font-weight: 600;
+}
+
+.ip-cell:active {
+    background-color: rgba(102, 126, 234, 0.2);
+    transform: scale(0.98);
+}
+
+.ip-cell .ip-text {
+    display: inline-block;
 }
 
 /* Responsividade para o modal */

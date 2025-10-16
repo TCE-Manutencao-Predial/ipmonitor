@@ -7,9 +7,19 @@ Agora você pode **editar a descrição e o tipo** de qualquer dispositivo diret
 ## 🎯 Como Usar
 
 ### 1️⃣ **Abrir o Modal de Edição**
-Na tabela principal, ao lado da descrição de cada dispositivo, você verá um ícone de lápis (✏️):
-- **Clique no ícone ✏️** para abrir o modal de edição
-- O ícone fica destacado quando você passa o mouse sobre ele
+Existem **DUAS formas** de abrir o modal de edição:
+
+**Opção 1 - Clique no IP (RECOMENDADO):**
+- Clique em qualquer endereço IP na tabela
+- O IP fica destacado em roxo quando você passa o mouse
+- É a forma mais rápida de editar!
+
+**Opção 2 - Clique no ícone:**
+- Ao lado de cada IP, você verá um ícone de lápis (✏️)
+- Clique no ícone para abrir o modal
+- O ícone fica destacado quando você passa o mouse
+
+> 💡 **Dica:** Clique diretamente no IP para editar mais rapidamente!
 
 ### 2️⃣ **Editar as Informações**
 O modal mostra três campos:
@@ -29,10 +39,12 @@ O modal mostra três campos:
 
 ## 🎨 Características
 
-### Visual Atraente
+### Visual Atraente e Padronizado
 - Modal moderno com design gradiente roxo
+- **Fonte Arial padronizada** com o resto do sistema
 - Animações suaves de entrada e saída
 - Efeitos hover nos botões e ícones
+- **IP clicável** com destaque visual em roxo
 
 ### Integração Completa
 - Conectado à API existente (`/api/devices/<vlan>/<ip>`)

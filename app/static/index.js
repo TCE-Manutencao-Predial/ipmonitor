@@ -82,23 +82,31 @@ async function searchByVlan() {
                 if (data[i + j]) {
                     const device = data[i + j];
                     
-                    // Célula de descrição com ícone de edição
-                    const descSpan = document.createElement('span');
-                    descSpan.textContent = device.descricao;
+                    // Célula de descrição (sem ícone agora)
+                    descriptionCell.textContent = device.descricao;
+                    
+                    // Célula de IP clicável com ícone de edição
+                    ipCell.className = 'ip-cell';
+                    ipCell.title = 'Clique para editar este dispositivo';
+                    
+                    const ipText = document.createElement('span');
+                    ipText.className = 'ip-text';
+                    ipText.textContent = device.ip;
                     
                     const editIcon = document.createElement('span');
                     editIcon.innerHTML = '✏️';
                     editIcon.className = 'edit-icon';
                     editIcon.title = 'Editar dispositivo';
-                    editIcon.onclick = function() {
+                    
+                    // Fazer toda a célula de IP clicável
+                    ipCell.onclick = function() {
                         openEditModal(device.ip, device.descricao, device.tipo, vlan);
                     };
                     
-                    descriptionCell.appendChild(descSpan);
-                    descriptionCell.appendChild(editIcon);
+                    ipCell.appendChild(ipText);
+                    ipCell.appendChild(editIcon);
                     
                     tipoCell.textContent = device.tipo || '-';
-                    ipCell.textContent = device.ip;
 
                     // Verifica o status do dispositivo e aplica a classe correta
                     if (device.status === "on") {
