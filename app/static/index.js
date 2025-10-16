@@ -80,14 +80,30 @@ async function searchByVlan() {
 
                 // Verifica se há dados para a célula atual
                 if (data[i + j]) {
-                    descriptionCell.textContent = data[i + j].descricao;
-                    tipoCell.textContent = data[i + j].tipo || '-';
-                    ipCell.textContent = data[i + j].ip;
+                    const device = data[i + j];
+                    
+                    // Célula de descrição com ícone de edição
+                    const descSpan = document.createElement('span');
+                    descSpan.textContent = device.descricao;
+                    
+                    const editIcon = document.createElement('span');
+                    editIcon.innerHTML = '✏️';
+                    editIcon.className = 'edit-icon';
+                    editIcon.title = 'Editar dispositivo';
+                    editIcon.onclick = function() {
+                        openEditModal(device.ip, device.descricao, device.tipo, vlan);
+                    };
+                    
+                    descriptionCell.appendChild(descSpan);
+                    descriptionCell.appendChild(editIcon);
+                    
+                    tipoCell.textContent = device.tipo || '-';
+                    ipCell.textContent = device.ip;
 
                     // Verifica o status do dispositivo e aplica a classe correta
-                    if (data[i + j].status === "on") {
+                    if (device.status === "on") {
                         circle.classList.add('circle', 'green'); // Aplica a classe 'green' para dispositivos online
-                    } else if (data[i + j].status === "off") {
+                    } else if (device.status === "off") {
                         circle.classList.add('circle', 'red'); // Aplica a classe 'red' para dispositivos offline
                     }
                 } else {
@@ -159,3 +175,154 @@ window.onload = function() {
 
 // Eu acho que isso não é mais necessário?
 setInterval(searchByVlan, 20000);
+
+// ====================================
+// MODAL DE EDIÇÃO DE DISPOSITIVO
+// ====================================
+
+let currentEditDevice = null; // Armazena o dispositivo sendo editado
+
+// Função para abrir o modal de edição
+function openEditModal(ip, descricao, tipo, vlan) {
+    const modal = document.getElementById('editModal');
+    const ipInput = document.getElementById('edit-ip');
+    const descricaoInput = document.getElementById('edit-descricao');
+    const tipoInput = document.getElementById('edit-tipo');
+    
+    // Preencher os campos
+    ipInput.value = ip;
+    descricaoInput.value = descricao;
+    tipoInput.value = tipo || '';
+    
+    // Armazenar informações do dispositivo atual
+    currentEditDevice = { ip, vlan };
+    
+    // Carregar tipos de dispositivos disponíveis
+    loadDeviceTypes(vlan);
+    
+    // Mostrar o modal
+    modal.style.display = 'block';
+    
+    // Focar no campo descrição
+    setTimeout(() => descricaoInput.focus(), 100);
+}
+
+// Função para fechar o modal
+function closeEditModal() {
+    const modal = document.getElementById('editModal');
+    modal.style.display = 'none';
+    currentEditDevice = null;
+}
+
+// Função para carregar tipos de dispositivos disponíveis
+async function loadDeviceTypes(vlan) {
+    try {
+        const baseUrl = getApiBaseUrl();
+        const response = await fetch(`${baseUrl}/api/device-types/${vlan}`);
+        
+        if (response.ok) {
+            const data = await response.json();
+            const datalist = document.getElementById('device-types');
+            datalist.innerHTML = '';
+            
+            // Adicionar opções ao datalist
+            if (data.types && data.types.length > 0) {
+                data.types.forEach(type => {
+                    const option = document.createElement('option');
+                    option.value = type;
+                    datalist.appendChild(option);
+                });
+            }
+        }
+    } catch (error) {
+        console.error('Erro ao carregar tipos de dispositivos:', error);
+    }
+}
+
+// Função para salvar as alterações do dispositivo
+async function saveDevice() {
+    if (!currentEditDevice) return;
+    
+    const descricao = document.getElementById('edit-descricao').value.trim();
+    const tipo = document.getElementById('edit-tipo').value.trim();
+    
+    // Validação
+    if (!descricao) {
+        alert('⚠️ A descrição não pode estar vazia!');
+        return;
+    }
+    
+    const saveBtn = document.querySelector('.btn-save');
+    saveBtn.disabled = true;
+    saveBtn.textContent = '⏳ Salvando...';
+    
+    try {
+        const baseUrl = getApiBaseUrl();
+        const response = await fetch(
+            `${baseUrl}/api/devices/${currentEditDevice.vlan}/${currentEditDevice.ip}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    descricao: descricao,
+                    tipo: tipo
+                })
+            }
+        );
+        
+        const data = await response.json();
+        
+        if (response.ok && data.success) {
+            // Sucesso - fechar modal e atualizar tabela
+            closeEditModal();
+            alert('✅ Dispositivo atualizado com sucesso!');
+            
+            // Recarregar a tabela
+            await searchByVlan();
+        } else {
+            alert('❌ Erro ao salvar: ' + (data.error || 'Erro desconhecido'));
+        }
+    } catch (error) {
+        console.error('Erro ao salvar dispositivo:', error);
+        alert('❌ Erro ao conectar com o servidor: ' + error.message);
+    } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '💾 Salvar';
+    }
+}
+
+// Fechar modal ao clicar no X
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('editModal');
+    const closeBtn = document.querySelector('.close');
+    
+    if (closeBtn) {
+        closeBtn.onclick = closeEditModal;
+    }
+    
+    // Fechar modal ao clicar fora dele
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            closeEditModal();
+        }
+    };
+    
+    // Fechar modal com tecla ESC
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modal.style.display === 'block') {
+            closeEditModal();
+        }
+    });
+    
+    // Salvar com Enter (quando não estiver no campo de tipo com datalist aberto)
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && modal.style.display === 'block') {
+            const activeElement = document.activeElement;
+            if (activeElement.id !== 'edit-tipo') {
+                saveDevice();
+            }
+        }
+    });
+});

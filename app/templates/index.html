@@ -153,6 +153,37 @@
     <!-- Mensagem Preliminar sem Script -->
     <div id="mensagem_preliminar" >Aguardando obtenção de dados...</div>
 
+    <!-- Modal de Edição de Dispositivo -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>✏️ Editar Dispositivo</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="edit-ip">🌐 IP:</label>
+                    <input type="text" id="edit-ip" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="edit-descricao">📝 Descrição:</label>
+                    <input type="text" id="edit-descricao" placeholder="Digite a descrição do dispositivo">
+                </div>
+                <div class="form-group">
+                    <label for="edit-tipo">🏷️ Tipo:</label>
+                    <input type="text" id="edit-tipo" list="device-types" placeholder="Digite ou selecione o tipo">
+                    <datalist id="device-types">
+                        <!-- Será preenchido dinamicamente -->
+                    </datalist>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeEditModal()">❌ Cancelar</button>
+                <button class="btn-save" onclick="saveDevice()">💾 Salvar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Script -->
     <script>
         // Carregar JavaScript dinamicamente
