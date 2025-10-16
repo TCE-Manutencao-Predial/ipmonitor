@@ -78,53 +78,66 @@
     box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.1);
 }
 
-/* Botões */
+/* ============================================
+   BOTÕES MODERNOS - ESTILO AZUL PADRONIZADO
+   ============================================ */
+
 .btn-primary, .btn-secondary, .btn-info, .btn-danger {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
+    padding: 10px 20px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn-primary {
-    background-color: #007bff;
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
     color: white;
+    border-color: transparent;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
-    transform: translateY(-1px);
+    background: linear-gradient(135deg, #5fa3f5 0%, #4a90e2 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
 }
 
 .btn-secondary {
-    background-color: #6c757d;
+    background: linear-gradient(135deg, #6c8ca8 0%, #5a7d99 100%);
     color: white;
+    border-color: transparent;
 }
 
 .btn-secondary:hover {
-    background-color: #545b62;
-    transform: translateY(-1px);
+    background: linear-gradient(135deg, #7d9db8 0%, #6c8ca8 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 140, 168, 0.4);
 }
 
 .btn-info {
-    background-color: #17a2b8;
+    background: linear-gradient(135deg, #4a90e2 0%, #2a7ac2 100%);
     color: white;
+    border-color: transparent;
 }
 
 .btn-info:hover {
-    background-color: #138496;
-    transform: translateY(-1px);
+    background: linear-gradient(135deg, #5fa3f5 0%, #4a90e2 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
 }
 
 .btn-danger {
-    background-color: #dc3545;
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
     color: white;
-    padding: 6px 12px;
-    font-size: 12px;
+    padding: 8px 16px;
+    font-size: 13px;
+    border-color: transparent;
 }
 
 .btn-danger:hover {

@@ -163,58 +163,65 @@
 }
 
 /* Botões de Ação */
+/* ============================================
+   BOTÕES DE AÇÃO - ESTILO AZUL MODERNO
+   ============================================ */
+
 .action-buttons {
     display: flex;
     justify-content: center;
     gap: 15px;
     margin-top: 30px;
     padding-top: 20px;
-    border-top: 1px solid #eee;
+    border-top: 2px solid #e9ecef;
     flex-wrap: wrap;
 }
 
 .action-buttons button {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 6px;
+    padding: 12px 28px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 160px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 180px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn-primary {
-    background-color: #28a745;
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
     color: white;
 }
 
 .btn-primary:hover {
-    background-color: #218838;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+    background: linear-gradient(135deg, #5fa3f5 0%, #4a90e2 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
 }
 
 .btn-secondary {
-    background-color: #6c757d;
+    background: linear-gradient(135deg, #6c8ca8 0%, #5a7d99 100%);
     color: white;
 }
 
 .btn-secondary:hover {
-    background-color: #5a6268;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+    background: linear-gradient(135deg, #7d9db8 0%, #6c8ca8 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 140, 168, 0.4);
 }
 
 .btn-info {
-    background-color: #17a2b8;
+    background: linear-gradient(135deg, #4a90e2 0%, #2a7ac2 100%);
     color: white;
 }
 
 .btn-info:hover {
-    background-color: #138496;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(23, 162, 184, 0.3);
+    background: linear-gradient(135deg, #5fa3f5 0%, #4a90e2 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
 }
 
 /* Estados de Loading dos Botões */
@@ -222,6 +229,7 @@
     opacity: 0.6;
     cursor: not-allowed;
     transform: none !important;
+    filter: grayscale(0.5);
 }
 
 .action-buttons button.loading {

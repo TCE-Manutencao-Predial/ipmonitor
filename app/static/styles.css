@@ -118,125 +118,156 @@ tr:nth-child(odd) {
     margin-left: auto; /* Empurra o botão para a direita */
 }
 
+/* ============================================
+   MENU SUPERIOR MODERNO - DESIGN AZUL
+   ============================================ */
+
 /* Estilo para a barra de navegação */
 nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px;
-    background-color: #f8f8f8; /* Cor de fundo da barra de navegação */
-    border-bottom: 1px solid #ddd; /* Linha na parte inferior da barra */
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #3366cc 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-bottom: 3px solid #1e3c72;
     flex-wrap: wrap;
+    gap: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Container dos controles de navegação */
+#nav-controls {
+    display: flex;
     gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-/* Estilo para os botões dentro da barra de navegação */
+/* Estilo base para todos os botões de navegação */
 nav button {
-    padding: 8px 12px; /* Espaçamento interno */
-    cursor: pointer; /* Cursor de mão */
-    border: none; /* Remove bordas */
-    border-radius: 4px; /* Bordas arredondadas */
-    margin-right: 5px; /* Espaçamento à direita */
-    font-weight: bold; /* Texto em negrito */
-    transition: all 0.3s ease; /* Transição suave */
-    background-color: #f8f9fa;
-    color: #495057;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
     font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
 }
 
+/* Efeito de brilho ao passar o mouse */
+nav button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+nav button:hover::before {
+    left: 100%;
+}
+
+/* Hover nos botões */
 nav button:hover {
-    background-color: #e9ecef;
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Botão ativo */
+nav button.active {
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    border-color: #4a90e2;
+    color: white;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
     transform: translateY(-1px);
 }
 
-nav button.active {
-    background-color: #007bff;
-    color: white;
-    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+/* Botão ativo com hover */
+nav button.active:hover {
+    background: linear-gradient(135deg, #5fa3f5 0%, #4a90e2 100%);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.6);
 }
 
-#botaoInicio {
-    background-color: #007bff;
-    color: white;
-}
-
-#botaoInicio:hover {
-    background-color: #0056b3;
-}
-
-#botaoInicio.active {
-    background-color: #0056b3;
-    box-shadow: 0 2px 4px rgba(0, 86, 179, 0.3);
-}
-
-#botaoDispositivos {
-    background-color: #17a2b8;
-    color: white;
-}
-
-#botaoDispositivos:hover {
-    background-color: #138496;
-}
-
-#botaoDispositivos.active {
-    background-color: #138496;
-    box-shadow: 0 2px 4px rgba(19, 132, 150, 0.3);
-}
-
-#botaoConfiguracoes {
-    background-color: #6c757d;
-    color: white;
-}
-
-#botaoConfiguracoes:hover {
-    background-color: #5a6268;
-}
-
-#botaoConfiguracoes.active {
-    background-color: #6c757d !important;
-    box-shadow: 0 2px 4px rgba(108, 117, 125, 0.3);
-}
-
-/* Estilo para o contêiner do filtro VLAN */
+/* Container do filtro VLAN - estilo moderno azul */
 #filtroVLAN-container {
     display: flex;
     align-items: center;
-    margin: 4px 0;
-    background-color: #28a745; /* Cor verde de fundo */
-    border-radius: 5px; /* Bordas arredondadas */
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
 }
 
-/* Estilo para o label do filtro VLAN */
+#filtroVLAN-container:hover {
+    box-shadow: 0 6px 18px rgba(74, 144, 226, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Label do filtro VLAN */
 #filtroVLAN-container label {
-    padding: 8px 12px; /* Espaçamento interno */
+    padding: 0 8px 0 0;
     font-family: Arial, sans-serif;
-    font-size: 14px; /* Tamanho da fonte */
-    font-weight: bold; /* Texto em negrito */
-    color: white; /* Cor do texto */
-    margin-right: 10px; /* Espaçamento à direita */
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-right: 8px;
+    white-space: nowrap;
 }
 
-/* Estilo para o select do filtro VLAN */
+/* Select do filtro VLAN */
 #filtroVLAN {
-    padding: 6px 10px; /* Espaçamento interno */
-    font-size: 14px; /* Tamanho da fonte */
-    border: none; /* Remove bordas */
-    border-radius: 5px; /* Bordas arredondadas */
-    background-color: #28a745; /* Cor de fundo verde */
-    font-weight: bold; /* Texto em negrito */
-    color: white; /* Cor do texto */
-    cursor: pointer; /* Cursor de mão */
-    outline: none; /* Remove borda ao focar */
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.95);
+    font-weight: 600;
+    color: #1e3c72;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    min-width: 220px;
 }
 
-/* Efeito hover no select */
+/* Hover no select */
 #filtroVLAN:hover {
-    background-color: #81c784; /* Fundo verde mais escuro ao passar o mouse */
+    background: white;
+    border-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Efeito focus no select */
+/* Focus no select */
 #filtroVLAN:focus {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra leve ao focar */
+    background: white;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
+}
+
+/* Opções do select */
+#filtroVLAN option {
+    padding: 10px;
+    font-weight: 600;
+    color: #1e3c72;
+    background: white;
 }
 
 /* Estilo para o botão home */
@@ -301,42 +332,49 @@ footer {
 }
 
 /* Estilo para as informações de rede */
+/* ============================================
+   INFORMAÇÕES DE REDE - DESIGN MODERNO AZUL
+   ============================================ */
+
 #network-info {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 12px;
     margin-left: auto;
 }
 
 .network-info-item {
-    padding: 6px 12px;
-    background-color: #e9ecef;
-    border-radius: 5px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
     font-family: Arial, sans-serif;
     font-size: 13px;
-    font-weight: normal;
-    color: #495057;
-    border: 1px solid #ced4da;
+    font-weight: 500;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
     cursor: help;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+    backdrop-filter: blur(10px);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .network-info-item:hover {
-    background-color: #dee2e6;
-    border-color: #adb5bd;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .gateway-info:hover {
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-    color: #0c5460;
+    background: rgba(74, 144, 226, 0.4);
+    border-color: rgba(74, 144, 226, 0.6);
 }
 
 .network-info-item strong {
-    color: #212529;
+    color: white;
+    font-weight: 700;
+    margin-right: 5px;
 }
 
 #nav-controls {
@@ -629,39 +667,43 @@ footer {
     border-top: 1px solid #e0e0e0;
 }
 
-/* Botões do modal */
+/* Botões do modal - Estilo Azul Moderno */
 .modal-footer button {
-    padding: 12px 24px;
-    border: none;
+    padding: 12px 28px;
+    border: 2px solid transparent;
     border-radius: 8px;
+    font-family: Arial, sans-serif;
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn-cancel {
-    background-color: #6c757d;
+    background: linear-gradient(135deg, #6c8ca8 0%, #5a7d99 100%);
     color: white;
 }
 
 .btn-cancel:hover {
-    background-color: #5a6268;
+    background: linear-gradient(135deg, #7d9db8 0%, #6c8ca8 100%);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+    box-shadow: 0 6px 20px rgba(108, 140, 168, 0.4);
 }
 
 .btn-save {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
     color: white;
 }
 
 .btn-save:hover {
+    background: linear-gradient(135deg, #5fa3f5 0%, #4a90e2 100%);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
 }
 
 /* Ícone de edição nas células */
