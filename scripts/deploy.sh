@@ -65,6 +65,33 @@ deploy_frontend() {
 # Deploy Backend
 # ----------------------------
 
+migrate_data_files() {
+    echo "[Deploy] Verificando migração de arquivos de dados..."
+    
+    # Arquivos de dados que devem estar no diretório do backend
+    DATA_FILES=("app_config.json" "ip_devices.json" "ips_list.json")
+    
+    for file in "${DATA_FILES[@]}"; do
+        # Caminho do arquivo no diretório atual (desenvolvimento)
+        local_file="$file"
+        # Caminho de destino no backend
+        backend_file="$ROOT_BACKEND/$file"
+        
+        # Se o arquivo existe localmente e não existe no backend, copiar
+        if [ -f "$local_file" ] && [ ! -f "$backend_file" ]; then
+            echo "[Deploy] Migrando arquivo de dados: $file"
+            sudo cp "$local_file" "$backend_file"
+            sudo chown $(whoami) "$backend_file"
+        elif [ -f "$local_file" ]; then
+            echo "[Deploy] Arquivo de dados já existe: $file"
+        else
+            echo "[Deploy] Arquivo não encontrado localmente: $file"
+        fi
+    done
+    
+    echo "[Deploy] Verificação de migração concluída."
+}
+
 deploy_backend() {
     echo "[Deploy] Iniciando instalação do Backend..."
 
@@ -134,6 +161,7 @@ main() {
     atualizar_projeto_local
     deploy_frontend
     deploy_backend
+    migrate_data_files
     deploy_servico
     echo "[Deploy] Processo de Deploy concluído com sucesso!"
 }
