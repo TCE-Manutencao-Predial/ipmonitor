@@ -13,6 +13,7 @@ SERVICE_NAME="ipmonitor.service"
 ROOT_FRONTEND=/var/www/automacao.tce.go.gov.br/$PROJECT_NAME
 ROOT_SOFTWARES=/var/softwaresTCE
 ROOT_BACKEND="$ROOT_SOFTWARES/$PROJECT_NAME"
+ROOT_DATA="$ROOT_SOFTWARES/dados/$PROJECT_NAME"
 
 GIT_REPO_NAME="ipmonitor"
 GIT_REPO_LINK="https://github.com/TCE-Manutencao-Predial/$GIT_REPO_NAME.git"
@@ -68,28 +69,41 @@ deploy_frontend() {
 migrate_data_files() {
     echo "[Deploy] Verificando migração de arquivos de dados..."
     
-    # Arquivos de dados que devem estar no diretório do backend
+    # Criar diretório de dados se não existir
+    if [ ! -d "$ROOT_DATA" ]; then
+        echo "[Deploy] Criando diretório de dados: $ROOT_DATA"
+        sudo mkdir -p "$ROOT_DATA"
+        sudo chown $(whoami) "$ROOT_DATA"
+    fi
+    
+    # Arquivos de dados que devem estar no diretório de dados
     DATA_FILES=("app_config.json" "ip_devices.json" "ips_list.json")
     
     for file in "${DATA_FILES[@]}"; do
-        # Caminho do arquivo no diretório atual (desenvolvimento)
-        local_file="$file"
-        # Caminho de destino no backend
+        # Caminho do arquivo no backend (localização antiga)
         backend_file="$ROOT_BACKEND/$file"
+        # Caminho de destino no diretório de dados (localização correta)
+        data_file="$ROOT_DATA/$file"
         
-        # Se o arquivo existe localmente e não existe no backend, copiar
-        if [ -f "$local_file" ] && [ ! -f "$backend_file" ]; then
-            echo "[Deploy] Migrando arquivo de dados: $file"
-            sudo cp "$local_file" "$backend_file"
-            sudo chown $(whoami) "$backend_file"
-        elif [ -f "$local_file" ]; then
-            echo "[Deploy] Arquivo de dados já existe: $file"
+        # Se o arquivo existe no backend e não existe no diretório de dados, mover
+        if [ -f "$backend_file" ] && [ ! -f "$data_file" ]; then
+            echo "[Deploy] Movendo arquivo de dados do backend para diretório de dados: $file"
+            sudo mv "$backend_file" "$data_file"
+            sudo chown $(whoami) "$data_file"
+        elif [ -f "$data_file" ]; then
+            echo "[Deploy] Arquivo de dados já existe no local correto: $file"
+            # Remover do backend se ainda existir
+            if [ -f "$backend_file" ]; then
+                echo "[Deploy] Removendo arquivo duplicado do backend: $file"
+                sudo rm "$backend_file"
+            fi
         else
-            echo "[Deploy] Arquivo não encontrado localmente: $file"
+            echo "[Deploy] Arquivo de dados não encontrado: $file"
         fi
     done
     
     echo "[Deploy] Verificação de migração concluída."
+    echo "[Deploy] Diretório de dados: $ROOT_DATA"
 }
 
 deploy_backend() {
