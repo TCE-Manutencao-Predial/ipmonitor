@@ -2,6 +2,13 @@ import os
 from flask import Flask
 from werkzeug.middleware.proxy_fix import ProxyFix
 
+# Executar migração de dados na inicialização
+from app.migration import migrate_data_files, ensure_data_directory
+
+# Garantir que o diretório de dados existe e migrar arquivos se necessário
+ensure_data_directory()
+migrate_data_files()
+
 # Configurar os caminhos explicitamente
 template_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates'))
 static_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'static'))

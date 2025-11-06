@@ -1,12 +1,13 @@
 import json
 import os
 from threading import Lock
+from app.migration import get_data_file_path
 
 class ConfigManager:
     """Gerenciador de configurações do sistema IP Monitor"""
     
     def __init__(self, config_file='app_config.json'):
-        self.config_file = config_file
+        self.config_file = get_data_file_path(config_file)
         self.config_lock = Lock()
         self.config = self._load_default_config()
         self.load_config()

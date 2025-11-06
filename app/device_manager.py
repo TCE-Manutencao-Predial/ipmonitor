@@ -4,6 +4,7 @@ import logging
 from threading import Lock
 from datetime import datetime
 from app.config_manager import config_manager
+from app.migration import get_data_file_path
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -12,7 +13,7 @@ class IPDeviceManager:
     """Gerenciador de dispositivos IP com tipos"""
     
     def __init__(self, devices_file='ip_devices.json'):
-        self.devices_file = devices_file
+        self.devices_file = get_data_file_path(devices_file)
         self.devices_lock = Lock()
         self.devices = self._load_devices()
     
@@ -40,8 +41,9 @@ class IPDeviceManager:
     def _migrate_from_ips_list(self):
         """Migra dados do ips_list.json existente"""
         try:
-            if os.path.exists('ips_list.json'):
-                with open('ips_list.json', 'r', encoding='utf-8') as f:
+            ips_list_path = get_data_file_path('ips_list.json')
+            if os.path.exists(ips_list_path):
+                with open(ips_list_path, 'r', encoding='utf-8') as f:
                     old_data = json.load(f)
                 
                 new_structure = {"vlans": {}}
