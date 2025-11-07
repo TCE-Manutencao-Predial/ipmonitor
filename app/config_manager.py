@@ -15,6 +15,12 @@ class ConfigManager:
         self.config_lock = Lock()
         self.config = self._load_default_config()
         self.load_config()
+        
+        # Se o arquivo não existir, criar com as configurações padrão
+        if not os.path.exists(self.config_file):
+            logging.info('[CONFIG_MANAGER] Arquivo de configuração não existe, criando com valores padrão...')
+            self.save_config()
+            logging.info(f'[CONFIG_MANAGER] ✅ Arquivo criado em: {self.config_file}')
     
     def _load_default_config(self):
         """Carrega configurações padrão do sistema"""
