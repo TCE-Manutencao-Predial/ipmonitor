@@ -23,14 +23,18 @@ class ConfigManager {
     }
     
     initializeEventListeners() {
+        console.log('[CONFIG] Inicializando event listeners...');
+        
         // Evento de submit do formulário
         this.form.addEventListener('submit', (e) => {
+            console.log('[CONFIG] Formulário submetido');
             e.preventDefault();
             this.saveConfiguration();
         });
         
         // Botão de reset
         this.resetBtn.addEventListener('click', () => {
+            console.log('[CONFIG] Botão de reset clicado');
             this.showConfirmDialog('Tem certeza que deseja restaurar as configurações padrão?', () => {
                 this.resetToDefaults();
             });
@@ -38,6 +42,7 @@ class ConfigManager {
         
         // Botão de teste
         this.testBtn.addEventListener('click', () => {
+            console.log('[CONFIG] Botão de teste clicado');
             this.testConfiguration();
         });
         
@@ -50,6 +55,8 @@ class ConfigManager {
         this.form.addEventListener('change', () => {
             this.saveDraft();
         });
+        
+        console.log('[CONFIG] Event listeners configurados com sucesso');
     }
     
     setupDependentFields() {
@@ -89,12 +96,18 @@ class ConfigManager {
     }
     
     async saveConfiguration() {
+        console.log('[CONFIG] Iniciando salvamento de configurações...');
         this.setButtonLoading(this.saveBtn, true);
         
         try {
             const formData = this.getFormData();
+            console.log('[CONFIG] Dados do formulário coletados:', formData);
             
-            const response = await fetch(`${this.apiBaseUrl}/api/config/save`, {
+            const url = `${this.apiBaseUrl}/api/config/save`;
+            console.log('[CONFIG] URL de destino:', url);
+            console.log('[CONFIG] Dados a serem enviados (JSON):', JSON.stringify(formData, null, 2));
+            
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -102,9 +115,13 @@ class ConfigManager {
                 body: JSON.stringify(formData)
             });
             
+            console.log('[CONFIG] Resposta recebida - Status:', response.status, response.statusText);
+            
             const result = await response.json();
+            console.log('[CONFIG] Resultado da resposta:', result);
             
             if (response.ok) {
+                console.log('[CONFIG] ✅ Configurações salvas com sucesso!');
                 this.showMessage('✅ Configurações salvas com sucesso!', 'success');
                 this.clearDraft();
                 
@@ -114,13 +131,16 @@ class ConfigManager {
                     timestampElement.textContent = new Date().toLocaleString('pt-BR');
                 }
             } else {
-                throw new Error(result.message || 'Erro ao salvar configurações');
+                console.error('[CONFIG] ❌ Erro na resposta do servidor:', result);
+                throw new Error(result.message || result.error || 'Erro ao salvar configurações');
             }
         } catch (error) {
-            console.error('Erro ao salvar configurações:', error);
+            console.error('[CONFIG] ❌ Exceção ao salvar configurações:', error);
+            console.error('[CONFIG] Stack trace:', error.stack);
             this.showMessage(`❌ Erro ao salvar: ${error.message}`, 'error');
         } finally {
             this.setButtonLoading(this.saveBtn, false);
+            console.log('[CONFIG] Finalizando salvamento de configurações');
         }
     }
     
@@ -180,20 +200,24 @@ class ConfigManager {
     }
     
     getFormData() {
+        console.log('[CONFIG] Coletando dados do formulário...');
         const formData = new FormData(this.form);
         const config = {};
         
         // Converter FormData para estrutura de configuração aninhada
         for (let [name, value] of formData.entries()) {
+            console.log(`[CONFIG] Campo: ${name} = ${value}`);
             this.setNestedProperty(config, name, value);
         }
         
         // Processar checkboxes separadamente (não aparecem no FormData se não marcados)
         const checkboxes = this.form.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(checkbox => {
+            console.log(`[CONFIG] Checkbox: ${checkbox.name} = ${checkbox.checked}`);
             this.setNestedProperty(config, checkbox.name, checkbox.checked);
         });
         
+        console.log('[CONFIG] Estrutura de configuração final:', config);
         return config;
     }
     
@@ -339,10 +363,13 @@ class ConfigValidators {
 
 // Inicializar quando o DOM estiver carregado
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('[CONFIG] DOM carregado, inicializando ConfigManager...');
+    console.log('[CONFIG] API Base URL:', getApiBaseUrl());
     window.configManager = new ConfigManager();
     
     // Mostrar informações de ajuda ao clicar em campos específicos
     setupHelpTooltips();
+    console.log('[CONFIG] Inicialização completa');
 });
 
 function setupHelpTooltips() {

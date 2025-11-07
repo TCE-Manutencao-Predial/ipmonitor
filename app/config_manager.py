@@ -1,7 +1,11 @@
 import json
 import os
+import logging
 from threading import Lock
 from app.migration import get_data_file_path
+
+# Configurar logging para o módulo
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class ConfigManager:
     """Gerenciador de configurações do sistema IP Monitor"""
@@ -68,14 +72,22 @@ class ConfigManager:
     
     def load_config(self):
         """Carrega configurações do arquivo"""
+        logging.info('[CONFIG_MANAGER] Carregando configurações...')
+        logging.info(f'[CONFIG_MANAGER] Arquivo de configuração: {self.config_file}')
         try:
             if os.path.exists(self.config_file):
+                logging.info('[CONFIG_MANAGER] Arquivo de configuração encontrado')
                 with open(self.config_file, 'r', encoding='utf-8') as f:
                     loaded_config = json.load(f)
+                    logging.info(f'[CONFIG_MANAGER] Configurações carregadas: {json.dumps(loaded_config, indent=2, ensure_ascii=False)}')
                     # Merge com configurações padrão para garantir integridade
                     self._merge_config(loaded_config)
+                    logging.info('[CONFIG_MANAGER] ✅ Configurações mescladas com sucesso')
+            else:
+                logging.warning(f'[CONFIG_MANAGER] ⚠️ Arquivo {self.config_file} não existe, usando configurações padrão')
         except Exception as e:
-            print(f"Erro ao carregar configurações: {e}. Usando configurações padrão.")
+            logging.error(f'[CONFIG_MANAGER] ❌ Erro ao carregar configurações: {e}. Usando configurações padrão.')
+            logging.error('[CONFIG_MANAGER] Stack trace:', exc_info=True)
     
     def _merge_config(self, loaded_config):
         """Mescla configurações carregadas com as padrão"""
@@ -93,17 +105,38 @@ class ConfigManager:
     
     def save_config(self):
         """Salva configurações no arquivo"""
+        logging.info('[CONFIG_MANAGER] ========== SALVANDO CONFIGURAÇÕES ==========')
         try:
             with self.config_lock:
                 # Atualiza timestamp
                 from datetime import datetime
                 self.config['system_info']['last_updated'] = datetime.now().isoformat()
+                logging.info(f'[CONFIG_MANAGER] Timestamp atualizado: {self.config["system_info"]["last_updated"]}')
+                
+                logging.info(f'[CONFIG_MANAGER] Arquivo de destino: {self.config_file}')
+                logging.info(f'[CONFIG_MANAGER] Configuração a salvar: {json.dumps(self.config, indent=2, ensure_ascii=False)}')
+                
+                # Verificar se diretório existe
+                config_dir = os.path.dirname(self.config_file)
+                if not os.path.exists(config_dir):
+                    logging.warning(f'[CONFIG_MANAGER] Diretório {config_dir} não existe, criando...')
+                    os.makedirs(config_dir, exist_ok=True)
                 
                 with open(self.config_file, 'w', encoding='utf-8') as f:
                     json.dump(self.config, f, indent=4, ensure_ascii=False)
+                
+                # Verificar se arquivo foi salvo
+                if os.path.exists(self.config_file):
+                    file_size = os.path.getsize(self.config_file)
+                    logging.info(f'[CONFIG_MANAGER] ✅ Arquivo salvo com sucesso! Tamanho: {file_size} bytes')
+                else:
+                    logging.error('[CONFIG_MANAGER] ❌ Arquivo não foi criado!')
+                    return False
+                
                 return True
         except Exception as e:
-            print(f"Erro ao salvar configurações: {e}")
+            logging.error(f'[CONFIG_MANAGER] ❌ Erro ao salvar configurações: {e}')
+            logging.error('[CONFIG_MANAGER] Stack trace:', exc_info=True)
             return False
     
     def get_config(self, section=None):
@@ -127,15 +160,28 @@ class ConfigManager:
     
     def update_section(self, section, data):
         """Atualiza uma seção inteira de configurações"""
+        logging.info(f'[CONFIG_MANAGER] Atualizando seção: {section}')
+        logging.info(f'[CONFIG_MANAGER] Dados da seção: {data}')
         try:
             with self.config_lock:
                 if section in self.config:
+                    logging.info(f'[CONFIG_MANAGER] Seção {section} existe, atualizando...')
+                    logging.info(f'[CONFIG_MANAGER] Valores antigos: {self.config[section]}')
                     self.config[section].update(data)
+                    logging.info(f'[CONFIG_MANAGER] Valores novos: {self.config[section]}')
                 else:
+                    logging.info(f'[CONFIG_MANAGER] Seção {section} não existe, criando...')
                     self.config[section] = data
-                return self.save_config()
+                
+                result = self.save_config()
+                if result:
+                    logging.info(f'[CONFIG_MANAGER] ✅ Seção {section} salva com sucesso')
+                else:
+                    logging.error(f'[CONFIG_MANAGER] ❌ Falha ao salvar seção {section}')
+                return result
         except Exception as e:
-            print(f"Erro ao atualizar seção {section}: {e}")
+            logging.error(f'[CONFIG_MANAGER] ❌ Erro ao atualizar seção {section}: {e}')
+            logging.error('[CONFIG_MANAGER] Stack trace:', exc_info=True)
             return False
     
     def get_ping_interval(self, vlan):

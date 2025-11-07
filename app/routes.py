@@ -5,6 +5,7 @@ import threading  # Módulo para rodar threads em paralelo (execução simultân
 from app import app  # Importa a instância 'app' da aplicação Flask.
 import concurrent.futures  # Para execução concorrente de múltiplas tarefas.
 import logging  # Adicionar logging
+import json  # Para serialização de dados em logs
 from app.config_manager import config_manager  # Importa o gerenciador de configurações.
 from app.device_manager import device_manager  # Importa o gerenciador de dispositivos.
 
@@ -96,28 +97,50 @@ def check(vlan):
 @app.route('/api/config/save', methods=['POST'])
 @app.route(RAIZ + '/api/config/save', methods=['POST'])
 def save_config():
+    logging.info('[CONFIG] ========== INÍCIO SALVAMENTO DE CONFIGURAÇÕES ==========')
     try:
+        # Log da requisição recebida
+        logging.info(f'[CONFIG] Método: {request.method}')
+        logging.info(f'[CONFIG] Content-Type: {request.content_type}')
+        logging.info(f'[CONFIG] Headers: {dict(request.headers)}')
+        
         data = request.get_json()
+        logging.info(f'[CONFIG] Dados recebidos (JSON): {json.dumps(data, indent=2, ensure_ascii=False)}')
         
         # Validar dados antes de salvar
+        logging.info('[CONFIG] Validando dados de configuração...')
         if not validate_config_data(data):
+            logging.error('[CONFIG] ❌ Validação falhou - dados inválidos')
             return jsonify({'error': 'Dados de configuração inválidos'}), 400
         
+        logging.info('[CONFIG] ✅ Validação passou')
+        
         # Atualizar configurações por seção
+        logging.info('[CONFIG] Atualizando configurações por seção...')
         for section, values in data.items():
+            logging.info(f'[CONFIG] Atualizando seção: {section}')
+            logging.info(f'[CONFIG] Valores da seção {section}: {values}')
+            
             if not config_manager.update_section(section, values):
+                logging.error(f'[CONFIG] ❌ Erro ao atualizar seção {section}')
                 return jsonify({'error': f'Erro ao atualizar seção {section}'}), 500
+            
+            logging.info(f'[CONFIG] ✅ Seção {section} atualizada com sucesso')
         
         # Reiniciar serviço de background com novas configurações
+        logging.info('[CONFIG] Reiniciando serviço de background...')
         restart_background_service()
+        logging.info('[CONFIG] ✅ Serviço de background reiniciado')
         
+        logging.info('[CONFIG] ========== CONFIGURAÇÕES SALVAS COM SUCESSO ==========')
         return jsonify({
             'success': True,
             'message': 'Configurações salvas com sucesso'
         })
     
     except Exception as e:
-        print(f"Erro ao salvar configurações: {e}")
+        logging.error(f'[CONFIG] ❌ EXCEÇÃO ao salvar configurações: {e}')
+        logging.error(f'[CONFIG] Stack trace:', exc_info=True)
         return jsonify({'error': str(e)}), 500
 
 # Endpoint para resetar configurações
@@ -336,29 +359,45 @@ def delete_device_type(vlan):
 # Função para validar dados de configuração
 def validate_config_data(data):
     """Valida se os dados de configuração estão corretos"""
+    logging.info('[VALIDATION] Iniciando validação de dados...')
+    logging.info(f'[VALIDATION] Dados a validar: {json.dumps(data, indent=2, ensure_ascii=False)}')
     try:
         # Validar intervalos de ping
         if 'ping_intervals' in data:
+            logging.info('[VALIDATION] Validando ping_intervals...')
             for vlan, interval in data['ping_intervals'].items():
+                logging.info(f'[VALIDATION] VLAN {vlan}: intervalo = {interval} (tipo: {type(interval).__name__})')
                 if not isinstance(interval, (int, float)) or interval < 5 or interval > 300:
+                    logging.error(f'[VALIDATION] ❌ Intervalo inválido para {vlan}: {interval}')
                     return False
+            logging.info('[VALIDATION] ✅ ping_intervals válido')
         
         # Validar configurações de rede
         if 'network_settings' in data:
+            logging.info('[VALIDATION] Validando network_settings...')
             network = data['network_settings']
             if 'ping_timeout' in network:
+                logging.info(f'[VALIDATION] ping_timeout = {network["ping_timeout"]} (tipo: {type(network["ping_timeout"]).__name__})')
                 if not isinstance(network['ping_timeout'], (int, float)) or network['ping_timeout'] < 1 or network['ping_timeout'] > 10:
+                    logging.error(f'[VALIDATION] ❌ ping_timeout inválido: {network["ping_timeout"]}')
                     return False
             if 'max_concurrent_pings' in network:
+                logging.info(f'[VALIDATION] max_concurrent_pings = {network["max_concurrent_pings"]} (tipo: {type(network["max_concurrent_pings"]).__name__})')
                 if not isinstance(network['max_concurrent_pings'], int) or network['max_concurrent_pings'] < 1 or network['max_concurrent_pings'] > 10:
+                    logging.error(f'[VALIDATION] ❌ max_concurrent_pings inválido: {network["max_concurrent_pings"]}')
                     return False
             if 'retry_attempts' in network:
+                logging.info(f'[VALIDATION] retry_attempts = {network["retry_attempts"]} (tipo: {type(network["retry_attempts"]).__name__})')
                 if not isinstance(network['retry_attempts'], int) or network['retry_attempts'] < 0 or network['retry_attempts'] > 5:
+                    logging.error(f'[VALIDATION] ❌ retry_attempts inválido: {network["retry_attempts"]}')
                     return False
+            logging.info('[VALIDATION] ✅ network_settings válido')
         
+        logging.info('[VALIDATION] ✅ Todos os dados são válidos')
         return True
     except Exception as e:
-        print(f"Erro na validação: {e}")
+        logging.error(f'[VALIDATION] ❌ Erro na validação: {e}')
+        logging.error('[VALIDATION] Stack trace:', exc_info=True)
         return False
 
 # Função para reiniciar o serviço de background
