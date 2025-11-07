@@ -127,13 +127,23 @@ class ConfigManager {
             console.log('[CONFIG] URL de destino:', url);
             console.log('[CONFIG] Dados a serem enviados (JSON):', JSON.stringify(formData, null, 2));
             
+            // Criar AbortController para timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => {
+                console.error('[CONFIG] ⏱️ Timeout de 10 segundos atingido');
+                controller.abort();
+            }, 10000); // 10 segundos
+            
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(formData),
+                signal: controller.signal
             });
+            
+            clearTimeout(timeoutId); // Limpar timeout se resposta chegou
             
             console.log('[CONFIG] Resposta recebida - Status:', response.status, response.statusText);
             
@@ -155,9 +165,14 @@ class ConfigManager {
                 throw new Error(result.message || result.error || 'Erro ao salvar configurações');
             }
         } catch (error) {
-            console.error('[CONFIG] ❌ Exceção ao salvar configurações:', error);
-            console.error('[CONFIG] Stack trace:', error.stack);
-            this.showMessage(`❌ Erro ao salvar: ${error.message}`, 'error');
+            if (error.name === 'AbortError') {
+                console.error('[CONFIG] ❌ Requisição cancelada por timeout');
+                this.showMessage('⏱️ Timeout: O servidor demorou muito para responder. As configurações podem ter sido salvas. Por favor, verifique.', 'error');
+            } else {
+                console.error('[CONFIG] ❌ Exceção ao salvar configurações:', error);
+                console.error('[CONFIG] Stack trace:', error.stack);
+                this.showMessage(`❌ Erro ao salvar: ${error.message}`, 'error');
+            }
         } finally {
             this.setButtonLoading(this.saveBtn, false);
             console.log('[CONFIG] Finalizando salvamento de configurações');
@@ -224,17 +239,28 @@ class ConfigManager {
         const formData = new FormData(this.form);
         const config = {};
         
+        // Primeiro, processar checkboxes para inicializá-los como false
+        const checkboxes = this.form.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            // Inicializar todos os checkboxes como false
+            this.setNestedProperty(config, checkbox.name, false);
+        });
+        
         // Converter FormData para estrutura de configuração aninhada
         for (let [name, value] of formData.entries()) {
             console.log(`[CONFIG] Campo: ${name} = ${value}`);
             this.setNestedProperty(config, name, value);
         }
         
-        // Processar checkboxes separadamente (não aparecem no FormData se não marcados)
-        const checkboxes = this.form.querySelectorAll('input[type="checkbox"]');
+        // Agora processar checkboxes marcados (sobrescreve os false acima)
         checkboxes.forEach(checkbox => {
-            console.log(`[CONFIG] Checkbox: ${checkbox.name} = ${checkbox.checked}`);
-            this.setNestedProperty(config, checkbox.name, checkbox.checked);
+            if (checkbox.checked) {
+                console.log(`[CONFIG] Checkbox MARCADO: ${checkbox.name} = true`);
+                this.setNestedProperty(config, checkbox.name, true);
+            } else {
+                console.log(`[CONFIG] Checkbox DESMARCADO: ${checkbox.name} = false`);
+                // Já foi setado como false acima
+            }
         });
         
         console.log('[CONFIG] Estrutura de configuração final:', config);

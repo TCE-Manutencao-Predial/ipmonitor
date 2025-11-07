@@ -405,15 +405,29 @@ def restart_background_service():
     """Reinicia o serviço de background com as novas configurações"""
     global should_stop, background_thread
     
+    logging.info('[CONFIG] Solicitando parada do serviço de background...')
     # Sinalizar para parar o thread atual
     should_stop = True
     
-    # Aguardar um pouco para o thread atual parar
-    time.sleep(2)
+    # NÃO aguardar aqui - deixar o thread parar naturalmente
+    # O novo thread será iniciado imediatamente
+    logging.info('[CONFIG] Flag should_stop definida como True')
     
-    # Resetar flag e iniciar novo serviço
-    should_stop = False
-    start_background_service()
+    # Resetar flag e iniciar novo serviço em uma thread separada
+    # para não bloquear a resposta HTTP
+    def restart_async():
+        global should_stop
+        logging.info('[CONFIG] Aguardando 1 segundo antes de reiniciar...')
+        time.sleep(1)
+        should_stop = False
+        logging.info('[CONFIG] Iniciando novo serviço de background...')
+        start_background_service()
+        logging.info('[CONFIG] Serviço de background reiniciado')
+    
+    # Executar restart em thread separada
+    restart_thread = threading.Thread(target=restart_async, daemon=True)
+    restart_thread.start()
+    logging.info('[CONFIG] Thread de restart iniciada')
 
 # Função que inicia o serviço de verificação de IPs em segundo plano.
 def start_background_service():
