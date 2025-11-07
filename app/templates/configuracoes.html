@@ -353,8 +353,9 @@
 
     <!-- Script -->
     <script>
-        // Carregar JavaScript dinamicamente
-        const scriptSrc = getStaticPath() + 'config.js';
+        // Carregar JavaScript dinamicamente com cache buster
+        const cacheBuster = '?v=' + Date.now();
+        const scriptSrc = getStaticPath() + 'config.js' + cacheBuster;
         console.log('[MAIN] Carregando script de:', scriptSrc);
         
         const script = document.createElement('script');

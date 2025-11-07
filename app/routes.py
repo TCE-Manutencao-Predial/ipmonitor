@@ -102,7 +102,6 @@ def save_config():
         # Log da requisição recebida
         logging.info(f'[CONFIG] Método: {request.method}')
         logging.info(f'[CONFIG] Content-Type: {request.content_type}')
-        logging.info(f'[CONFIG] Headers: {dict(request.headers)}')
         
         data = request.get_json()
         logging.info(f'[CONFIG] Dados recebidos (JSON): {json.dumps(data, indent=2, ensure_ascii=False)}')
@@ -115,17 +114,23 @@ def save_config():
         
         logging.info('[CONFIG] ✅ Validação passou')
         
-        # Atualizar configurações por seção
-        logging.info('[CONFIG] Atualizando configurações por seção...')
-        for section, values in data.items():
-            logging.info(f'[CONFIG] Atualizando seção: {section}')
-            logging.info(f'[CONFIG] Valores da seção {section}: {values}')
-            
-            if not config_manager.update_section(section, values):
-                logging.error(f'[CONFIG] ❌ Erro ao atualizar seção {section}')
-                return jsonify({'error': f'Erro ao atualizar seção {section}'}), 500
-            
-            logging.info(f'[CONFIG] ✅ Seção {section} atualizada com sucesso')
+        # Atualizar configurações em memória (SEM salvar ainda)
+        logging.info('[CONFIG] Atualizando configurações em memória...')
+        with config_manager.config_lock:
+            for section, values in data.items():
+                logging.info(f'[CONFIG] Atualizando seção em memória: {section}')
+                if section in config_manager.config:
+                    config_manager.config[section].update(values)
+                else:
+                    config_manager.config[section] = values
+        
+        # Salvar arquivo UMA ÚNICA VEZ no final
+        logging.info('[CONFIG] Salvando arquivo de configuração...')
+        if not config_manager.save_config():
+            logging.error('[CONFIG] ❌ Erro ao salvar arquivo de configuração')
+            return jsonify({'error': 'Erro ao salvar configurações no arquivo'}), 500
+        
+        logging.info('[CONFIG] ✅ Arquivo salvo com sucesso')
         
         # Reiniciar serviço de background com novas configurações
         logging.info('[CONFIG] Reiniciando serviço de background...')
