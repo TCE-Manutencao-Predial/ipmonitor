@@ -286,14 +286,34 @@
                     e.preventDefault();
                     e.stopPropagation();
                     
-                    // Verificar se o ConfigManager está disponível
-                    if (window.configManager && typeof window.configManager.saveConfiguration === 'function') {
-                        console.log('[INLINE] ConfigManager disponível, chamando saveConfiguration()');
-                        window.configManager.saveConfiguration();
-                    } else {
-                        console.error('[INLINE] ❌ ConfigManager não disponível! Script config.js não foi carregado corretamente.');
-                        alert('ERRO: Script de configurações não carregado. Por favor, atualize a página (F5).');
-                    }
+                    // Aguardar até que ConfigManager esteja disponível
+                    const tryToSave = () => {
+                        console.log('[INLINE] Verificando disponibilidade do ConfigManager...');
+                        console.log('[INLINE] window.configManager:', window.configManager);
+                        console.log('[INLINE] window.ConfigManagerClass:', window.ConfigManagerClass);
+                        
+                        if (window.configManager && typeof window.configManager.saveConfiguration === 'function') {
+                            console.log('[INLINE] ✅ ConfigManager disponível, chamando saveConfiguration()');
+                            window.configManager.saveConfiguration();
+                        } else if (window.ConfigManagerClass) {
+                            // Se a classe está disponível mas a instância não, criar uma nova instância
+                            console.log('[INLINE] ⚠️ ConfigManager não inicializado, criando nova instância...');
+                            window.configManager = new window.ConfigManagerClass();
+                            if (window.configManager && typeof window.configManager.saveConfiguration === 'function') {
+                                console.log('[INLINE] ✅ Nova instância criada, chamando saveConfiguration()');
+                                window.configManager.saveConfiguration();
+                            } else {
+                                console.error('[INLINE] ❌ Falha ao criar instância do ConfigManager');
+                                alert('ERRO: Não foi possível inicializar o gerenciador de configurações.');
+                            }
+                        } else {
+                            // Tentar novamente após um pequeno delay
+                            console.log('[INLINE] ConfigManager ainda não disponível, tentando novamente em 100ms...');
+                            setTimeout(tryToSave, 100);
+                        }
+                    };
+                    
+                    tryToSave();
                     
                     return false;
                 }, true); // Use capture phase para garantir que executa primeiro

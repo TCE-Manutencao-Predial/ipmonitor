@@ -385,12 +385,19 @@ class ConfigValidators {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('[CONFIG] DOM carregado, inicializando ConfigManager...');
     console.log('[CONFIG] API Base URL:', getApiBaseUrl());
+    
+    // Inicializar ConfigManager e expor globalmente
     window.configManager = new ConfigManager();
+    console.log('[CONFIG] ConfigManager criado e exposto em window.configManager:', window.configManager);
     
     // Mostrar informações de ajuda ao clicar em campos específicos
     setupHelpTooltips();
     console.log('[CONFIG] Inicialização completa');
 });
+
+// Garantir que ConfigManager está disponível globalmente mesmo antes do DOMContentLoaded
+console.log('[CONFIG] Expondo ConfigManager globalmente antes do DOMContentLoaded');
+window.ConfigManagerClass = ConfigManager;
 
 function setupHelpTooltips() {
     const helpData = {
