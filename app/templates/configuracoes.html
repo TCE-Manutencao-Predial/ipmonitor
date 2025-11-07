@@ -270,6 +270,41 @@
         </form>
     </div>
 
+    <!-- Script INLINE para garantir que o formulário não faça submit tradicional -->
+    <script>
+        console.log('[INLINE] Adicionando proteção contra submit tradicional...');
+        
+        // Adicionar listener imediatamente para prevenir submit tradicional
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('config-form');
+            if (form) {
+                console.log('[INLINE] Formulário encontrado, adicionando listener de emergência');
+                
+                // Listener de emergência que sempre previne o submit padrão
+                form.addEventListener('submit', (e) => {
+                    console.log('[INLINE] ⚠️ Submit interceptado pelo listener de emergência!');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Verificar se o ConfigManager está disponível
+                    if (window.configManager && typeof window.configManager.saveConfiguration === 'function') {
+                        console.log('[INLINE] ConfigManager disponível, chamando saveConfiguration()');
+                        window.configManager.saveConfiguration();
+                    } else {
+                        console.error('[INLINE] ❌ ConfigManager não disponível! Script config.js não foi carregado corretamente.');
+                        alert('ERRO: Script de configurações não carregado. Por favor, atualize a página (F5).');
+                    }
+                    
+                    return false;
+                }, true); // Use capture phase para garantir que executa primeiro
+                
+                console.log('[INLINE] ✅ Proteção contra submit tradicional ativada');
+            } else {
+                console.error('[INLINE] ❌ Formulário não encontrado!');
+            }
+        });
+    </script>
+
     <!-- Script para navegação e recursos -->
     <script>
         // Função para detectar ambiente e gerar URLs corretas
@@ -300,8 +335,21 @@
     <script>
         // Carregar JavaScript dinamicamente
         const scriptSrc = getStaticPath() + 'config.js';
+        console.log('[MAIN] Carregando script de:', scriptSrc);
+        
         const script = document.createElement('script');
         script.src = scriptSrc;
+        
+        script.onload = () => {
+            console.log('[MAIN] ✅ Script config.js carregado com sucesso');
+        };
+        
+        script.onerror = (error) => {
+            console.error('[MAIN] ❌ ERRO ao carregar config.js:', error);
+            console.error('[MAIN] URL tentada:', scriptSrc);
+            alert('ERRO: Não foi possível carregar o script de configurações. Por favor, atualize a página.');
+        };
+        
         document.head.appendChild(script);
     </script>
 

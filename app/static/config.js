@@ -11,12 +11,32 @@ function getApiBaseUrl() {
 // Configurações JavaScript para página de configurações
 class ConfigManager {
     constructor() {
+        console.log('[CONFIG] Constructor chamado');
         this.form = document.getElementById('config-form');
         this.statusMessage = document.getElementById('status-message');
         this.saveBtn = document.getElementById('save-btn');
         this.resetBtn = document.getElementById('reset-btn');
         this.testBtn = document.getElementById('test-btn');
         this.apiBaseUrl = getApiBaseUrl();
+        
+        console.log('[CONFIG] Elementos do formulário:', {
+            form: this.form,
+            statusMessage: this.statusMessage,
+            saveBtn: this.saveBtn,
+            resetBtn: this.resetBtn,
+            testBtn: this.testBtn,
+            apiBaseUrl: this.apiBaseUrl
+        });
+        
+        if (!this.form) {
+            console.error('[CONFIG] ❌ ERRO: Formulário não encontrado! ID esperado: config-form');
+            return;
+        }
+        
+        if (!this.saveBtn) {
+            console.error('[CONFIG] ❌ ERRO: Botão de salvar não encontrado! ID esperado: save-btn');
+            return;
+        }
         
         this.initializeEventListeners();
         this.setupDependentFields();
