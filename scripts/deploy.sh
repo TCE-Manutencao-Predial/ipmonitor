@@ -15,7 +15,7 @@ ROOT_SOFTWARES=/var/softwaresTCE
 ROOT_BACKEND="$ROOT_SOFTWARES/$PROJECT_NAME"
 ROOT_DATA="$ROOT_SOFTWARES/dados/$PROJECT_NAME"
 
-GIT_REPO_NAME="ipmonitor"
+GIT_REPO_NAME="ip-monitor"
 GIT_REPO_LINK="https://github.com/TCE-Manutencao-Predial/$GIT_REPO_NAME.git"
 
 # Atualizar projeto do git

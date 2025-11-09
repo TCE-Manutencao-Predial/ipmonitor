@@ -35,7 +35,7 @@ undeploy:
 
 # Configurações do Servico
 # ----------------------------
-SERVICE_NAME=ipmonitor
+SERVICE_NAME=ip-monitor
 
 service-reload:
 	sudo systemctl daemon-reload
