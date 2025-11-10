@@ -10,7 +10,13 @@ services:
       - "5000:5000"
     volumes:
       - ipmonitor-data:/var/softwaresTCE/dados/ipmonitor
+    networks:
+      - multiplicador_network
 
 volumes:
   ipmonitor-data:
     name: ipmonitor-data
+
+networks:
+  multiplicador_network:
+    external: true
