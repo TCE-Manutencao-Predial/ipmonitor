@@ -35,7 +35,10 @@ undeploy:
 
 # Configurações do Servico
 # ----------------------------
-SERVICE_NAME=ip-monitor
+# ATENÇÃO: O nome do serviço deve corresponder ao arquivo .service
+# Arquivo: scripts/ipmonitor.service
+# NÃO altere este valor sem renomear o arquivo .service correspondente
+SERVICE_NAME=ipmonitor
 
 service-reload:
 	sudo systemctl daemon-reload
