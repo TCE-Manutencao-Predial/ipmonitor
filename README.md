@@ -52,3 +52,5 @@ make deploy
 O sistema usará:
 - Código em `/var/softwaresTCE/ipmonitor/`
 - Dados em `/var/softwaresTCE/dados/ipmonitor/`
+
+:D
