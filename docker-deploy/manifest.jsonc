@@ -1,0 +1,11 @@
+{
+    // Nome de Exibição do app
+    "display": "IP Monitor",
+
+    // Endpoint onde o app estará localizado
+    "endpoint": "/ipmonitor",
+
+    // Endereço e porta do entrypoint na rede multiplicador_network
+    "address": "ipmonitor",
+    "port": 5000
+}
