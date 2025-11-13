@@ -5,7 +5,7 @@
     // Endpoint onde o app estará localizado
     "endpoint": "/ipmonitor",
 
-    // Endereço e porta do entrypoint na rede multiplicador_network
+    // Endereço e porta do container na rede multiplicador_network
     "address": "ipmonitor",
     "port": 5000
 }
