@@ -1,0 +1,19 @@
+.idea/
+.vscode/
+.venv*/
+venv*/
+__pycache__/
+dist/
+.coverage*
+htmlcov/
+.tox/
+docs/_build/
+.vscode
+
+# Configurações locais (sobrescrevem .env.deploy se necessário)
+.env.local
+.env.*.local
+
+# Arquivos gerados
+scripts/.config.generated.sh
+scripts/*.service
