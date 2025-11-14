@@ -9,3 +9,10 @@ htmlcov/
 .tox/
 docs/_build/
 .vscode
+
+# Configurações de deploy (local)
+.env.deploy
+
+# Arquivos gerados
+scripts/.config.generated.sh
+scripts/*.service

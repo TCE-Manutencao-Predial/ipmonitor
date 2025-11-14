@@ -1,0 +1,20 @@
+[Unit]
+Description={{PROJECT_NAME_DISPLAY}} - TCE Sistema de Monitoramento
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory={{ROOT_BACKEND}}
+ExecStart={{ROOT_BACKEND}}/scripts/run.sh
+Restart=always
+RestartSec=9
+StandardOutput=journal
+StandardError=journal
+
+# Security hardening
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

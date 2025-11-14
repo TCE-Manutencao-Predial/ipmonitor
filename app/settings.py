@@ -5,28 +5,55 @@ Configurações Centralizadas do IP Monitor
 Este arquivo centraliza TODAS as configurações e variáveis globais do projeto.
 Objetivo: Padronizar e facilitar migração futura, SEM quebrar código existente.
 
-IMPORTANTE: Este arquivo é APENAS para centralização de configurações.
-O código existente continua funcionando normalmente.
+IMPORTANTE: 
+- Configurações de DEPLOY são lidas de .env.deploy (produção)
+- Configurações de DESENVOLVIMENTO usam valores padrão ou .env local
 
 Data de criação: 2025-11-14
-Versão: 1.0.0
+Versão: 2.0.0 - Migrado para .env.deploy
 """
 
 import os
 import platform
+from pathlib import Path
+from dotenv import load_dotenv
+
+
+# ============================================================================
+# CARREGAR CONFIGURAÇÕES DE .env.deploy
+# ============================================================================
+# Em produção: usa .env.deploy (fonte única de verdade)
+# Em desenvolvimento: usa .env (opcional) ou valores padrão
+
+# Localizar arquivo .env apropriado
+BASE_DIR = Path(__file__).parent.parent
+env_file_deploy = BASE_DIR / '.env.deploy'
+env_file_dev = BASE_DIR / '.env'
+
+# Carregar em ordem de preferência
+if env_file_deploy.exists():
+    load_dotenv(env_file_deploy)
+    print(f"[SETTINGS] Configurações carregadas de: {env_file_deploy}")
+elif env_file_dev.exists():
+    load_dotenv(env_file_dev)
+    print(f"[SETTINGS] Configurações carregadas de: {env_file_dev}")
+else:
+    print("[SETTINGS] Usando valores padrão (nenhum arquivo .env encontrado)")
 
 
 # ============================================================================
 # SEÇÃO 1: IDENTIFICAÇÃO DO PROJETO
 # ============================================================================
-# Estas variáveis definem a identidade única do projeto no ecossistema Zapdos
+# Valores lidos de .env.deploy ou fallback para desenvolvimento
 
-PROJECT_NAME = "ip-monitor"           # Nome do projeto (kebab-case) - usado para repositório git
-PROJECT_NAME_SERVICE = "ipmonitor"    # Nome usado para systemd service (sem hífen)
-PROJECT_NAME_DISPLAY = "IP Monitor"   # Nome para exibição em interfaces
+PROJECT_NAME = os.getenv('PROJECT_NAME', 'ipmonitor')
+PROJECT_NAME_DISPLAY = os.getenv('PROJECT_NAME_DISPLAY', 'IP Monitor')
+PROJECT_NAME_GIT = os.getenv('PROJECT_NAME_GIT', 'ip-monitor')
+SERVICE_NAME = os.getenv('SERVICE_NAME', 'ipmonitor')
 
-MODULE_NAME = "config"                # Nome do módulo Python principal (para WSGI)
-PORT_DEFAULT = 8000                   # Porta padrão para desenvolvimento local
+# Constantes de aplicação
+MODULE_NAME = "config"
+PORT_DEFAULT = int(os.getenv('PORT', '8000'))
 
 
 # ============================================================================
@@ -34,12 +61,11 @@ PORT_DEFAULT = 8000                   # Porta padrão para desenvolvimento local
 # ============================================================================
 # Define como o serviço é acessado via web
 
-# Prefixo das rotas (usado em produção com proxy reverso)
-ROUTES_PREFIX = "/ipmonitor"          # ATUAL: mantido por compatibilidade
-ROUTES_PREFIX_CANONICAL = f"/{PROJECT_NAME_SERVICE}"  # FUTURO: padronizado
+# Prefixo das rotas (lido de .env.deploy)
+ROUTES_PREFIX = os.getenv('ROUTES_PREFIX', '/ipmonitor')
 
 # Domínio base do sistema
-DOMAIN_BASE = "automacao.tce.go.gov.br"
+DOMAIN_BASE = os.getenv('DOMAIN_BASE', 'automacao.tce.go.gov.br')
 
 # URLs completas
 BASE_URL_PRODUCTION = f"https://{DOMAIN_BASE}{ROUTES_PREFIX}"
@@ -51,20 +77,17 @@ API_BASE_URL_PRODUCTION = f"{BASE_URL_PRODUCTION}/api"
 # ============================================================================
 # Organização padronizada de diretórios no servidor de produção
 
-# Raiz dos softwares TCE
-BACKEND_ROOT = "/var/softwaresTCE"
-FRONTEND_ROOT = f"/var/www/{DOMAIN_BASE}"
+# Raiz dos softwares TCE (lido de .env.deploy)
+BACKEND_ROOT = os.getenv('BACKEND_ROOT', '/var/softwaresTCE')
+FRONTEND_ROOT = os.getenv('FRONTEND_ROOT', f'/var/www/{DOMAIN_BASE}')
+DATA_ROOT = os.getenv('DATA_ROOT', '/var/softwaresTCE/dados')
+LOGS_ROOT = os.getenv('LOGS_ROOT', '/var/softwaresTCE/logs')
 
-# Caminhos específicos deste projeto - ESTRUTURA ATUAL (mantida por compatibilidade)
-PROJECT_BACKEND_CURRENT = os.path.join(BACKEND_ROOT, PROJECT_NAME_SERVICE)
-PROJECT_FRONTEND_CURRENT = os.path.join(FRONTEND_ROOT, PROJECT_NAME_SERVICE)
-PROJECT_DATA_CURRENT = os.path.join(BACKEND_ROOT, "dados", PROJECT_NAME_SERVICE)
-
-# Caminhos específicos deste projeto - ESTRUTURA PADRONIZADA (futura migração)
-PROJECT_ROOT_STANDARD = os.path.join(BACKEND_ROOT, PROJECT_NAME)
-PROJECT_LOGS_STANDARD = os.path.join(PROJECT_ROOT_STANDARD, "logs")
-PROJECT_DATA_STANDARD = os.path.join(PROJECT_ROOT_STANDARD, "data")
-PROJECT_STATIC_STANDARD = os.path.join(PROJECT_ROOT_STANDARD, "static")
+# Caminhos derivados (calculados a partir das raízes)
+PROJECT_BACKEND_DEPLOY = os.path.join(BACKEND_ROOT, PROJECT_NAME)
+PROJECT_FRONTEND_DEPLOY = os.path.join(FRONTEND_ROOT, PROJECT_NAME)
+PROJECT_DATA_DEPLOY = os.path.join(DATA_ROOT, PROJECT_NAME)
+PROJECT_LOGS_DEPLOY = os.path.join(LOGS_ROOT, PROJECT_NAME)
 
 
 # ============================================================================
@@ -73,20 +96,19 @@ PROJECT_STATIC_STANDARD = os.path.join(PROJECT_ROOT_STANDARD, "static")
 # Caminhos para ambiente de desenvolvimento local
 
 if platform.system() == "Linux":
-    # Em produção, usa os caminhos padrão do servidor
-    PROJECT_BACKEND = PROJECT_BACKEND_CURRENT
-    PROJECT_FRONTEND = PROJECT_FRONTEND_CURRENT
-    PROJECT_DATA = PROJECT_DATA_CURRENT
-    PROJECT_LOGS = os.path.join(BACKEND_ROOT, "logs", PROJECT_NAME_SERVICE)
+    # Em produção Linux, usa os caminhos do .env.deploy
+    PROJECT_BACKEND = PROJECT_BACKEND_DEPLOY
+    PROJECT_FRONTEND = PROJECT_FRONTEND_DEPLOY
+    PROJECT_DATA = PROJECT_DATA_DEPLOY
+    PROJECT_LOGS = PROJECT_LOGS_DEPLOY
     PROJECT_STATIC = os.path.join(PROJECT_BACKEND, "app", "static")
 else:
     # Desenvolvimento local - usa diretório relativo ao projeto
-    BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    PROJECT_BACKEND = BASE_DIR
-    PROJECT_FRONTEND = os.path.join(BASE_DIR, "app", "templates")
-    PROJECT_DATA = os.path.join(BASE_DIR, "data")
-    PROJECT_LOGS = os.path.join(BASE_DIR, "logs")
-    PROJECT_STATIC = os.path.join(BASE_DIR, "app", "static")
+    PROJECT_BACKEND = str(BASE_DIR)
+    PROJECT_FRONTEND = str(BASE_DIR / "app" / "templates")
+    PROJECT_DATA = str(BASE_DIR / "data")
+    PROJECT_LOGS = str(BASE_DIR / "logs")
+    PROJECT_STATIC = str(BASE_DIR / "app" / "static")
 
 
 # ============================================================================
@@ -111,18 +133,18 @@ IPS_LIST_PATH = os.path.join(PROJECT_DATA, IPS_LIST_FILE)
 # ============================================================================
 # Configurações para o serviço systemd no servidor
 
-SERVICE_NAME = PROJECT_NAME_SERVICE
 SERVICE_FILE = f"{SERVICE_NAME}.service"
-SERVICE_DESCRIPTION = "TCE IP Monitor - Sistema de Monitoramento de Dispositivos de Rede"
+SERVICE_PATH = f"/usr/lib/systemd/system/{SERVICE_FILE}"
+SERVICE_DESCRIPTION = f"TCE {PROJECT_NAME_DISPLAY} - Sistema de Monitoramento de Dispositivos de Rede"
 
 
 # ============================================================================
 # SEÇÃO 7: CONFIGURAÇÕES DO GIT
 # ============================================================================
-# Informações do repositório
+# Informações do repositório (lido de .env.deploy)
 
-GIT_REPO_NAME = PROJECT_NAME           # Nome do repositório (kebab-case)
-GIT_REPO_OWNER = "TCE-Manutencao-Predial"
+GIT_REPO_NAME = os.getenv('GIT_REPO_NAME', PROJECT_NAME_GIT)
+GIT_REPO_OWNER = os.getenv('GIT_REPO_OWNER', 'TCE-Manutencao-Predial')
 GIT_REPO_URL = f"https://github.com/{GIT_REPO_OWNER}/{GIT_REPO_NAME}.git"
 
 
@@ -141,8 +163,8 @@ VLANS = {
     204: "Telefonia IP Móvel"
 }
 
-# Base de rede para cada VLAN
-NETWORK_BASE = "172.17.{vlan}."
+# Base de rede para cada VLAN (lido de .env.deploy)
+NETWORK_BASE = os.getenv('NETWORK_BASE', '172.17.{vlan}.')
 
 # Configurações padrão de ping
 PING_TIMEOUT_DEFAULT = 2
