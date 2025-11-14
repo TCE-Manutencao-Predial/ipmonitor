@@ -16,7 +16,8 @@ class DeviceManager {
     
     getApiBasePath() {
         const path = window.location.pathname;
-        return path.includes('/ipmonitor/') ? '/ipmonitor/api' : '/api';
+        // Usa APP_CONFIG injetado do settings.py via template
+        return path.includes(APP_CONFIG.routesPrefix + '/') ? APP_CONFIG.routesPrefix + '/api' : '/api';
     }
     
     init() {

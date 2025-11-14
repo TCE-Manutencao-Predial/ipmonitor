@@ -20,6 +20,20 @@ app = Flask(__name__,
 # Configurar middleware para proxy reverso (Apache)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
+# Injetar configurações centralizadas nos templates
+from app import settings
+
+@app.context_processor
+def inject_settings():
+    """Disponibiliza configurações do settings.py em todos os templates"""
+    return {
+        'ROUTES_PREFIX': settings.ROUTES_PREFIX,
+        'DOMAIN_BASE': settings.DOMAIN_BASE,
+        'PROJECT_NAME': settings.PROJECT_NAME,
+        'BASE_URL': settings.BASE_URL_PRODUCTION,
+        'NETWORK_BASE': settings.NETWORK_BASE
+    }
+
 from app import routes
 
 routes.start_background_service()
