@@ -1,12 +1,12 @@
 [Unit]
-Description={{PROJECT_NAME_DISPLAY}} - TCE Sistema de Monitoramento
+Description=${PROJECT_NAME_DISPLAY} - TCE Sistema de Monitoramento
 After=network.target
 
 [Service]
 Type=simple
 User=root
-WorkingDirectory={{ROOT_BACKEND}}
-ExecStart={{ROOT_BACKEND}}/scripts/run.sh
+WorkingDirectory=${ROOT_BACKEND}
+ExecStart=${ROOT_BACKEND}/scripts/run.sh
 Restart=always
 RestartSec=9
 StandardOutput=journal
