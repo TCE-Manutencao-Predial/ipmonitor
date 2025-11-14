@@ -8,6 +8,7 @@ import logging  # Adicionar logging
 import json  # Para serialização de dados em logs
 from app.config_manager import config_manager  # Importa o gerenciador de configurações.
 from app.device_manager import device_manager  # Importa o gerenciador de dispositivos.
+from app.settings import ROUTES_PREFIX, NETWORK_BASE  # Importa configurações centralizadas
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -16,7 +17,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 check_ip = {}
 
 # Constante que define o caminho raiz para os endpoints da API.
-RAIZ = '/ipmonitor'
+RAIZ = ROUTES_PREFIX  # Usa configuração centralizada do settings.py
 
 # Variável global para controlar o loop de verificação
 background_thread = None
@@ -26,7 +27,7 @@ should_stop = False
 # Esta função é chamada pelas threads para rodar verificações assíncronas.
 def background_ip_check(vlan):
     global check_ip
-    rede_base = '172.17.' + str(vlan) + '.'  # Define a base do endereço IP para a VLAN específica.
+    rede_base = NETWORK_BASE.format(vlan=vlan)  # Usa configuração centralizada do settings.py
     
     logging.info(f"[BACKGROUND] Verificando em background a VLAN {vlan} e rede_base {rede_base}")
 

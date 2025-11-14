@@ -1,0 +1,91 @@
+{
+    "ping_intervals": {
+        "vlan_70": 12,
+        "vlan_80": 10,
+        "vlan_85": 8,
+        "vlan_86": 12,
+        "vlan_200": 15,
+        "vlan_204": 15
+    },
+    "network_settings": {
+        "ping_timeout": 2,
+        "max_concurrent_pings": 3,
+        "retry_attempts": 2
+    },
+    "ui_settings": {
+        "auto_refresh": true,
+        "refresh_rate": 5,
+        "show_offline_devices": true,
+        "theme": "default"
+    },
+    "monitoring": {
+        "enable_logging": true,
+        "log_level": "INFO",
+        "max_log_entries": 1000,
+        "alert_on_device_down": false
+    },
+    "vlans": {
+        "active_vlans": [
+            70,
+            80,
+            85,
+            86,
+            200,
+            204
+        ],
+        "vlan_descriptions": {
+            "70": "VLAN 70 - Câmeras",
+            "80": "VLAN 80 - Alarme",
+            "85": "VLAN 85 - Automação Ethernet",
+            "86": "VLAN 86 - Automação WiFi",
+            "200": "VLAN 200 - Telefonia IP Fixa",
+            "204": "VLAN 204 - Telefonia IP Móvel"
+        },
+        "device_types": {
+            "70": [
+                "Câmera IP",
+                "DVR",
+                "NVR",
+                "Switch PoE"
+            ],
+            "80": [
+                "Central de Alarme",
+                "Sensor",
+                "Sirene",
+                "Teclado"
+            ],
+            "85": [
+                "CLP",
+                "IHM",
+                "Inversor",
+                "Controladora",
+                "Sensor",
+                "UPS",
+                "GMG"
+            ],
+            "86": [
+                "Sensor IoT",
+                "Gateway",
+                "Access Point",
+                "Controladora WiFi"
+            ],
+            "200": [
+                "Telefone IP",
+                "Gateway SIP",
+                "PBX",
+                "Conversor"
+            ],
+            "204": [
+                "Softphone",
+                "Gateway Mobile",
+                "Adaptador ATA",
+                "Roteador"
+            ]
+        }
+    },
+    "system_info": {
+        "version": "2.0.0",
+        "last_updated": "2025-11-14T08:44:13.116648",
+        "admin_contact": ""
+    }
+}
