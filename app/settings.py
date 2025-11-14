@@ -22,21 +22,28 @@ from dotenv import load_dotenv
 # ============================================================================
 # CARREGAR CONFIGURAÇÕES DE .env.deploy
 # ============================================================================
-# Em produção: usa .env.deploy (fonte única de verdade)
+# Em produção: usa .env.deploy (versionado com valores padrão)
+# Sobrescritas locais: usa .env.local (opcional, não versionado)
 # Em desenvolvimento: usa .env (opcional) ou valores padrão
 
 # Localizar arquivo .env apropriado
 BASE_DIR = Path(__file__).parent.parent
 env_file_deploy = BASE_DIR / '.env.deploy'
+env_file_local = BASE_DIR / '.env.local'
 env_file_dev = BASE_DIR / '.env'
 
-# Carregar em ordem de preferência
+# Carregar em ordem de preferência (cada um sobrescreve o anterior)
 if env_file_deploy.exists():
     load_dotenv(env_file_deploy)
-    print(f"[SETTINGS] Configurações carregadas de: {env_file_deploy}")
+    print(f"[SETTINGS] Configurações base carregadas de: {env_file_deploy}")
+    
+    # Carregar .env.local se existir (sobrescreve .env.deploy)
+    if env_file_local.exists():
+        load_dotenv(env_file_local, override=True)
+        print(f"[SETTINGS] Configurações locais carregadas de: {env_file_local}")
 elif env_file_dev.exists():
     load_dotenv(env_file_dev)
-    print(f"[SETTINGS] Configurações carregadas de: {env_file_dev}")
+    print(f"[SETTINGS] Configurações de desenvolvimento carregadas de: {env_file_dev}")
 else:
     print("[SETTINGS] Usando valores padrão (nenhum arquivo .env encontrado)")
 

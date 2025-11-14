@@ -74,16 +74,23 @@ O sistema separa código de dados:
 
 ### Arquivo Principal: `.env.deploy`
 
-```bash
-# Copiar template (primeira vez)
-cp .env.deploy.template .env.deploy
+O arquivo `.env.deploy` **é versionado** e contém os valores padrão de produção.
 
-# Editar se necessário
-nano .env.deploy
+```bash
+# Não é necessário copiar template - já está versionado!
+# Arquivo já existe no repositório
+
+# Para sobrescrever valores localmente (opcional):
+cp .env.local.example .env.local
+nano .env.local  # Editar apenas variáveis que deseja sobrescrever
 
 # Validar
 python tools/validate-config.py
 ```
+
+**Hierarquia de configuração:**
+1. `.env.deploy` - Base versionada (valores de produção)
+2. `.env.local` - Sobrescritas locais (opcional, não versionado)
 
 ### Principais Configurações
 

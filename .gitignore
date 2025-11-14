@@ -10,8 +10,9 @@ htmlcov/
 docs/_build/
 .vscode
 
-# Configurações de deploy (local)
-.env.deploy
+# Configurações locais (sobrescrevem .env.deploy se necessário)
+.env.local
+.env.*.local
 
 # Arquivos gerados
 scripts/.config.generated.sh

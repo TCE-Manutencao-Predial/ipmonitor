@@ -17,7 +17,9 @@
 | Arquivo | Descrição | Versionado? |
 |---------|-----------|-------------|
 | `.env.deploy.template` | Template de configuração | ✅ Sim |
-| `.env.deploy` | Configuração real (local) | ❌ Não (gitignore) |
+| `.env.deploy` | Configuração padrão de produção | ✅ Sim |
+| `.env.local` | Sobrescritas locais (opcional) | ❌ Não (gitignore) |
+| `.env.local.example` | Exemplo de configurações locais | ✅ Sim |
 | `scripts/config.sh` | Carrega .env para bash | ✅ Sim |
 | `tools/validate-config.py` | Valida configurações | ✅ Sim |
 
@@ -129,6 +131,20 @@ python tools/validate-config.py
 python tools/validate-config.py --verbose  # Mais detalhes
 ```
 
+### Sobrescrever configurações localmente (desenvolvimento)
+```bash
+# Copiar exemplo
+cp .env.local.example .env.local
+
+# Editar apenas as variáveis que deseja sobrescrever
+nano .env.local
+
+# Exemplo: alterar porta
+echo "PORT=9000" >> .env.local
+
+# .env.local sobrescreve .env.deploy sem modificá-lo
+```
+
 ### Testar carregamento Python
 ```bash
 python -c "from app.settings import *; print(f'Projeto: {PROJECT_NAME}')"
@@ -215,12 +231,14 @@ echo $NOVA_VARIAVEL
 
 ### ✅ FAZER
 - Sempre validar antes do deploy: `python tools/validate-config.py`
-- Manter `.env.deploy.template` atualizado
-- Documentar novas variáveis
+- Usar `.env.local` para configurações temporárias de desenvolvimento
+- Manter `.env.deploy` com valores padrão de produção
+- Documentar novas variáveis no `.env.deploy.template`
 - Usar nomes descritivos: `DATABASE_URL` não `DB`
 
 ### ❌ NÃO FAZER
-- Commitar `.env.deploy` no git (contém secrets)
+- Modificar `.env.deploy` para testes locais (use `.env.local`)
+- Commitar `.env.local` no git (contém configurações pessoais)
 - Hardcoding de valores em scripts
 - Duplicar variáveis em múltiplos lugares
 - Usar nomes genéricos: `VAR1`, `CONFIG`

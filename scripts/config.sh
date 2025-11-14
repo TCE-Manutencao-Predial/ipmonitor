@@ -20,11 +20,20 @@ NC='\033[0m' # No Color
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 ENV_FILE="$PROJECT_ROOT/.env.deploy"
+ENV_TEMPLATE="$PROJECT_ROOT/.env.deploy.template"
 
+# Copiar template se .env.deploy não existir
 if [ ! -f "$ENV_FILE" ]; then
-    echo -e "${RED}[ERRO]${NC} Arquivo .env.deploy não encontrado em: $ENV_FILE"
-    echo -e "${YELLOW}[DICA]${NC} Copie .env.deploy.template para .env.deploy e ajuste os valores."
-    exit 1
+    if [ -f "$ENV_TEMPLATE" ]; then
+        echo -e "${YELLOW}[CONFIG]${NC} Arquivo .env.deploy não encontrado. Copiando do template..."
+        cp "$ENV_TEMPLATE" "$ENV_FILE"
+        echo -e "${GREEN}[CONFIG]${NC} Arquivo .env.deploy criado a partir do template."
+        echo -e "${YELLOW}[CONFIG]${NC} IMPORTANTE: Revise as configurações em $ENV_FILE se necessário."
+    else
+        echo -e "${RED}[ERRO]${NC} Nem .env.deploy nem .env.deploy.template foram encontrados!"
+        echo -e "${RED}[ERRO]${NC} Procurado em: $PROJECT_ROOT"
+        exit 1
+    fi
 fi
 
 echo -e "${GREEN}[CONFIG]${NC} Carregando configurações de: $ENV_FILE"
@@ -33,6 +42,15 @@ echo -e "${GREEN}[CONFIG]${NC} Carregando configurações de: $ENV_FILE"
 set -a  # Exportar todas as variáveis automaticamente
 source "$ENV_FILE"
 set +a
+
+# Carregar .env.local se existir (sobrescreve .env.deploy)
+ENV_LOCAL="$PROJECT_ROOT/.env.local"
+if [ -f "$ENV_LOCAL" ]; then
+    echo -e "${YELLOW}[CONFIG]${NC} Carregando configurações locais de: $ENV_LOCAL"
+    set -a
+    source "$ENV_LOCAL"
+    set +a
+fi
 
 # ----------------------------------------------------------------------------
 # Validar variáveis obrigatórias
