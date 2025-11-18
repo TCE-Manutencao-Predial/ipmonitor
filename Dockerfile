@@ -19,7 +19,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-RUN if [ -f "pyproject.toml" ]; then pip install --no-cache-dir -e .; fi
 
 RUN addgroup -g 1000 appuser && \
     adduser -D -u 1000 -G appuser appuser
