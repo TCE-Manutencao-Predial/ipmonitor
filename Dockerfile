@@ -18,8 +18,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN groupadd -g 1000 appuser && \
-    useradd -m -u 1000 -g appuser appuser
+RUN groupadd -g 1001 appuser && \
+    useradd -m -u 1001 -g appuser appuser
 
 RUN mkdir -p /var/softwaresTCE/ip-monitor/dados \
              /var/softwaresTCE/ip-monitor/logs && \
