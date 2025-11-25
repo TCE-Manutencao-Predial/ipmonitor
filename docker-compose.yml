@@ -11,12 +11,12 @@ services:
     volumes:
       - ipmonitor-data:/var/softwaresTCE/dados/ipmonitor
     networks:
-      - multiplicador_network
+      - docker_deploy_network
 
 volumes:
   ipmonitor-data:
     name: ipmonitor-data
 
 networks:
-  multiplicador_network:
+  docker_deploy_network:
     external: true
