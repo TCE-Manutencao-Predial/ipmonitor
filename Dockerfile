@@ -1,4 +1,4 @@
-FROM python:3.12-alpine
+FROM python:3.12-slim
 
 LABEL maintainer="TCE Manutenção Predial"
 LABEL app="ip-monitor"
@@ -11,18 +11,15 @@ ENV PYTHONUNBUFFERED=1 \
     APP_PORT=5000 \
     CONFIG=docker
 
-RUN apk add --no-cache gcc musl-dev libffi-dev
-
 WORKDIR /app
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-RUN if [ -f "pyproject.toml" ]; then pip install --no-cache-dir -e .; fi
 
-RUN addgroup -g 1000 appuser && \
-    adduser -D -u 1000 -G appuser appuser
+RUN groupadd -g 1001 appuser && \
+    useradd -m -u 1001 -g appuser appuser
 
 RUN mkdir -p /var/softwaresTCE/ip-monitor/dados \
              /var/softwaresTCE/ip-monitor/logs && \

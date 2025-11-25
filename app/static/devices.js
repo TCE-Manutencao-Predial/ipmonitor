@@ -16,7 +16,8 @@ class DeviceManager {
     
     getApiBasePath() {
         const path = window.location.pathname;
-        return path.includes('/ipmonitor/') ? '/ipmonitor/api' : '/api';
+        // Usa APP_CONFIG injetado do settings.py via template
+        return path.includes(APP_CONFIG.routesPrefix + '/') ? APP_CONFIG.routesPrefix + '/api' : '/api';
     }
     
     init() {
@@ -193,14 +194,20 @@ class DeviceManager {
         // Adicionar event listeners para os botões criados dinamicamente
         tbody.querySelectorAll('button[data-action="edit"]').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const ip = e.target.getAttribute('data-ip');
+                // Garante que pegamos o botão, não o conteúdo interno (emoji/texto)
+                const button = e.currentTarget;
+                const ip = button.getAttribute('data-ip');
+                console.log('[DeviceManager] Botão Editar clicado - IP:', ip);
                 this.editDevice(ip);
             });
         });
         
         tbody.querySelectorAll('button[data-action="delete"]').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const ip = e.target.getAttribute('data-ip');
+                // Garante que pegamos o botão, não o conteúdo interno (emoji/texto)
+                const button = e.currentTarget;
+                const ip = button.getAttribute('data-ip');
+                console.log('[DeviceManager] Botão Excluir clicado - IP:', ip);
                 this.deleteDevice(ip);
             });
         });
@@ -445,7 +452,9 @@ class DeviceManager {
         // Adicionar event listeners para os botões de remover tipo
         typesList.querySelectorAll('.type-remove').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const tipo = e.target.getAttribute('data-type');
+                e.stopPropagation(); // Evita propagação do evento
+                const tipo = e.currentTarget.getAttribute('data-type');
+                console.log('[DeviceManager] Removendo tipo:', tipo);
                 this.removeType(tipo);
             });
         });

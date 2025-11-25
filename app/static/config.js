@@ -1,8 +1,9 @@
 // Função para obter a base URL da API dependendo do ambiente
+// Usa APP_CONFIG injetado do settings.py via template
 function getApiBaseUrl() {
     // Verifica se estamos em produção (domínio tce.go.gov.br) ou desenvolvimento
     if (window.location.hostname.includes('tce.go.gov.br')) {
-        return '/ipmonitor';
+        return APP_CONFIG.routesPrefix;
     } else {
         return '';
     }

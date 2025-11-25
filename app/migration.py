@@ -6,8 +6,10 @@ from pathlib import Path
 # Configurar logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Diretório de dados centralizado (separado do código)
-DATA_DIR = '/var/softwaresTCE/dados/ipmonitor'
+# Importar configuração centralizada (sem fallback - força uso do settings.py)
+from app.settings import PROJECT_DATA
+
+DATA_DIR = PROJECT_DATA
 
 def ensure_data_directory():
     """Garante que o diretório de dados existe"""
