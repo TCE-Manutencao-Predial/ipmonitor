@@ -28,9 +28,8 @@ RUN mkdir -p /var/softwaresTCE/ip-monitor/dados \
 USER appuser
 
 EXPOSE 5000
+# Healthcheck removed - conflicts with authentication or missing dependencies
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:5000/ || exit 1
 
 CMD ["waitress-serve", "--host=0.0.0.0", "--port=5000", "config:app"]
 
